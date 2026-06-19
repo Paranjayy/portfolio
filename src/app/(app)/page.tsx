@@ -9,7 +9,7 @@ import { Blog } from "@/features/portfolio/components/blog"
 import { Bookmarks } from "@/features/portfolio/components/bookmarks"
 import { Certifications } from "@/features/portfolio/components/certifications"
 import { Components } from "@/features/portfolio/components/components"
-import { Experiences } from "@/features/portfolio/components/experiences"
+import { Education } from "@/features/portfolio/components/education"
 import { Hello } from "@/features/portfolio/components/hello"
 import {
   Insights,
@@ -54,7 +54,7 @@ export default function HomePage() {
           <Blog />
           <Separator />
 
-          <Experiences />
+          <Education />
           <Separator />
 
           <Projects />
