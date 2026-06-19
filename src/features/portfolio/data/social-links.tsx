@@ -87,3 +87,9 @@ export const SOCIAL_LINKS: SocialLink[] = [
     href: "https://www.chessmonitor.com/u/CVGtzOa4szU1fVg3IHif",
   },
 ]
+
+export function getSocialLinkByName(name: string) {
+  return SOCIAL_LINKS.find(
+    (link) => link.title.toLowerCase() === name.toLowerCase()
+  )
+}

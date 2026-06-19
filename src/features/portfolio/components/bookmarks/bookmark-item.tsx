@@ -34,7 +34,7 @@ export function BookmarkItem({
       <div className="flex-1 space-y-1 border-l border-dashed border-line p-4 pr-2">
         <h3 className="leading-snug font-medium text-balance">
           <a
-            href={addQueryParams(bookmark.url, UTM_PARAMS)}
+            href={addQueryParams(bookmark.href, UTM_PARAMS)}
             target="_blank"
             rel="noopener"
           >
@@ -59,14 +59,16 @@ export function BookmarkItem({
             </>
           )}
 
-          <div>
-            <dt className="sr-only">Bookmarked on</dt>
-            <dd>
-              <time dateTime={new Date(bookmark.bookmarkedAt).toISOString()}>
-                {format(new Date(bookmark.bookmarkedAt), "dd.MM.yyyy")}
-              </time>
-            </dd>
-          </div>
+          {bookmark.bookmarkedAt && (
+            <div>
+              <dt className="sr-only">Bookmarked on</dt>
+              <dd>
+                <time dateTime={new Date(bookmark.bookmarkedAt).toISOString()}>
+                  {format(new Date(bookmark.bookmarkedAt), "dd.MM.yyyy")}
+                </time>
+              </dd>
+            </div>
+          )}
         </dl>
       </div>
 

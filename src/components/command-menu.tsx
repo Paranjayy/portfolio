@@ -55,7 +55,7 @@ type CommandLinkItem = {
   title: string
   href: string
   kind: CommandKind
-  icon?: React.ReactElement
+  icon?: React.ReactNode
   iconImage?: string
   shortcut?: string
   keywords?: string[]
@@ -167,7 +167,7 @@ const PORTFOLIO_LINKS: CommandLinkItem[] = [
 const SOCIAL_LINK_ITEMS: CommandLinkItem[] = SOCIAL_LINKS.map((item) => ({
   title: item.title,
   href: item.href,
-  kind: "link",
+  kind: "link" as const,
   icon: item.icon,
   openInNewTab: true,
 }))

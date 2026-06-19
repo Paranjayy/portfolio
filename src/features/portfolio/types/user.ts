@@ -37,6 +37,13 @@ export type User = {
   dob?: string
   /** Public URL to avatar image */
   avatar: string
+  /** Avatar variant image URLs for light/dark modes */
+  avatarVariants?: {
+    lightOff: string
+    lightOn: string
+    darkOff: string
+    darkOn: string
+  }
   /** Open Graph image URL for social sharing */
   ogImage: string
   /** Audio URL for name pronunciation */

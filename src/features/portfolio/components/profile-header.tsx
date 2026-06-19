@@ -20,10 +20,22 @@ export function ProfileHeader() {
       <div className="flex flex-col sm:row-span-2 sm:row-start-1">
         <div className="screen-line-top mt-auto shrink-0 border-r border-line">
           <AvatarLightsToggle className="group/avatar-lights-toggle mx-0.5 my-0.75 flex outline-none">
-            <AvatarLights
-              className="ring-border ring-offset-background group-focus-visible/avatar-lights-toggle:ring-1 group-focus-visible/avatar-lights-toggle:ring-offset-2"
-              variants={USER.avatarVariants}
-            />
+            {USER.avatarVariants ? (
+              <AvatarLights
+                className="ring-border ring-offset-background group-focus-visible/avatar-lights-toggle:ring-1 group-focus-visible/avatar-lights-toggle:ring-offset-2"
+                variants={USER.avatarVariants}
+              />
+            ) : (
+              <AvatarLights
+                className="ring-border ring-offset-background group-focus-visible/avatar-lights-toggle:ring-1 group-focus-visible/avatar-lights-toggle:ring-offset-2"
+                variants={{
+                  lightOff: USER.avatar,
+                  lightOn: USER.avatar,
+                  darkOff: USER.avatar,
+                  darkOn: USER.avatar,
+                }}
+              />
+            )}
           </AvatarLightsToggle>
         </div>
       </div>

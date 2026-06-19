@@ -18,7 +18,7 @@ export function SocialLinks() {
       <PanelContent>
         <ul className="flex flex-wrap gap-2">
           {SOCIAL_LINKS.map((item) => (
-            <li key={item.name}>
+            <li key={item.title}>
               <Tooltip>
                 <TooltipTrigger
                   render={
