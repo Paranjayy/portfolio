@@ -2,54 +2,82 @@ import fs from "fs"
 import path from "path"
 
 const DATA_DIR = "src/features/portfolio/data"
+const SPONSOR_DIR = "src/features/sponsor"
 const CONTENT_DIR = "src/features/doc/content"
 
-const FILES_TO_EMPTY = [
-  "awards.ts",
-  "bookmarks.tsx",
-  "certifications.ts",
-  "experiences.tsx",
-  "projects.ts",
-  "social-links.ts",
+interface FileConfig {
+  filename: string
+  emptyContent: string
+}
+
+const FILES_TO_EMPTY: FileConfig[] = [
+  {
+    filename: "awards.ts",
+    emptyContent: `import type { Award } from "../types/awards"\n\nexport const AWARDS: Award[] = []\n`,
+  },
+  {
+    filename: "bookmarks.tsx",
+    emptyContent: `import type { Bookmark } from "../types/bookmarks"\n\nexport const BOOKMARKS: Bookmark[] = []\n`,
+  },
+  {
+    filename: "certifications.ts",
+    emptyContent: `import type { Certification } from "../types/certifications"\n\nexport const CERTIFICATIONS: Certification[] = []\n`,
+  },
+  {
+    filename: "education.ts",
+    emptyContent: `import type { Education } from "../types/education"\n\nexport const EDUCATION: Education[] = []\n`,
+  },
+  {
+    filename: "experiences.tsx",
+    emptyContent: `import type { Experience } from "../types/experiences"\n\nexport const EXPERIENCES: Experience[] = []\n`,
+  },
+  {
+    filename: "projects.ts",
+    emptyContent: `import type { Project } from "../types/projects"\n\nexport const PROJECTS: Project[] = []\n`,
+  },
+  {
+    filename: "social-links.tsx",
+    emptyContent: `import type { SocialLink } from "../types/social-links"\n\nexport const SOCIAL_LINKS: SocialLink[] = []\n`,
+  },
+  {
+    filename: "testimonials.ts",
+    emptyContent: `import type { Testimonial } from "../types/testimonials"\n\nexport const TESTIMONIALS_PINNED: Testimonial[] = []\nexport const TESTIMONIALS_1: Testimonial[] = []\nexport const TESTIMONIALS_2: Testimonial[] = []\n`,
+  },
+  {
+    filename: "tech-stack.ts",
+    emptyContent: `import type { TechStack } from "../types/tech-stack"\n\nexport const TECH_STACK: TechStack[] = []\n`,
+  },
+  {
+    filename: "media-stats.ts",
+    emptyContent: `// Media stats - populate with your own Trakt, Letterboxd, Goodreads, Volt.fm data\nexport const MEDIA_STATS: any[] = []\n`,
+  },
 ]
 
 function sanitize() {
   console.log("🚀 Initializing Portfolio Sanitization (Blank Template Mode)...")
 
   // 1. Empty data files
-  FILES_TO_EMPTY.forEach((file) => {
-    const filePath = path.join(DATA_DIR, file)
-    if (!fs.existsSync(filePath)) return
-
-    const varName = path
-      .basename(file, path.extname(file))
-      .toUpperCase()
-      .replace(/-/g, "_")
-    const content = `import type { ${varName.slice(0, -1)} } from "../types/${path.basename(file, path.extname(file))}";\n\nexport const ${varName}: any[] = [];\n`
-
-    // Testimonials is a special case
-    if (file === "testimonials.ts") {
-      fs.writeFileSync(
-        filePath,
-        `export const TESTIMONIALS_1 = [];\nexport const TESTIMONIALS_2 = [];\n`
-      )
-    } else {
-      fs.writeFileSync(filePath, `export const ${varName} = [];\n`)
+  FILES_TO_EMPTY.forEach(({ filename, emptyContent }) => {
+    const filePath = path.join(DATA_DIR, filename)
+    if (!fs.existsSync(filePath)) {
+      console.log(`⚠️  ${filename} not found, skipping`)
+      return
     }
-    console.log(`✅ Emptied ${file}`)
+    fs.writeFileSync(filePath, emptyContent)
+    console.log(`✅ Emptied ${filename}`)
   })
 
-  // 2. Special case for testimonials.ts (different variable names)
-  const testimonialsPath = path.join(DATA_DIR, "testimonials.ts")
-  if (fs.existsSync(testimonialsPath)) {
+  // 2. Empty sponsors data
+  const sponsorPath = path.join(SPONSOR_DIR, "data.tsx")
+  if (fs.existsSync(sponsorPath)) {
     fs.writeFileSync(
-      testimonialsPath,
-      `export const TESTIMONIALS_1 = [];\nexport const TESTIMONIALS_2 = [];\n`
+      sponsorPath,
+      `import type { Sponsor } from "./types"\n\nexport const SPONSORS: Sponsor[] = []\n`
     )
-    console.log(`✅ Emptied testimonials.ts`)
+    console.log("✅ Emptied sponsors/data.tsx")
   }
 
-  // 3. Reset USER data
+  // 3. Reset USER data to generic template
   const userPath = path.join(DATA_DIR, "user.ts")
   const userTemplate = `import type { User } from "@/features/portfolio/types/user"
 
@@ -63,7 +91,7 @@ export const USER: User = {
   bio: "Software Engineer & Designer based in San Francisco.",
   flipSentences: ["Building modern web apps", "Designing pixel-perfect UIs", "Open source enthusiast"],
   address: "San Francisco, CA",
-  email: "aGVsbG9AZXhhbXBsZS5jb20=", // "hello@example.com" in base64
+  email: "aGVsbG9AZXhhbXBsZS5jb20=",
   website: "https://example.com",
   jobTitle: "Software Engineer",
   jobs: [
@@ -76,7 +104,7 @@ export const USER: User = {
   ],
   about: "This is a brief introduction about yourself and your journey in tech.",
   avatar: "https://github.com/shadcn.png",
-  ogImage: "https://chanhdai.com/og.png",
+  ogImage: "https://example.com/og.png",
   namePronunciationUrl: "",
   keywords: ["developer", "portfolio", "nextjs"],
   timeZone: "America/Los_Angeles",
@@ -87,7 +115,35 @@ export const USER: User = {
   fs.writeFileSync(userPath, userTemplate)
   console.log("✅ Reset user.ts to template")
 
-  // 4. Purge Blog Content
+  // 4. Reset site config
+  const sitePath = "src/config/site.ts"
+  if (fs.existsSync(sitePath)) {
+    let siteContent = fs.readFileSync(sitePath, "utf-8")
+    siteContent = siteContent.replace(
+      /X_HANDLE = ".*"/,
+      'X_HANDLE = "@yourhandle"'
+    )
+    siteContent = siteContent.replace(
+      /GITHUB_USERNAME = ".*"/,
+      'GITHUB_USERNAME = "yourusername"'
+    )
+    siteContent = siteContent.replace(
+      /SOURCE_CODE_GITHUB_REPO = ".*"/,
+      'SOURCE_CODE_GITHUB_REPO = "yourusername/yourrepo"'
+    )
+    siteContent = siteContent.replace(
+      /SOURCE_CODE_GITHUB_URL = ".*"/,
+      'SOURCE_CODE_GITHUB_URL = "https://github.com/yourusername/yourrepo"'
+    )
+    siteContent = siteContent.replace(
+      /SPONSORSHIP_URL = ".*"/,
+      'SPONSORSHIP_URL = "https://github.com/sponsors/yourusername"'
+    )
+    fs.writeFileSync(sitePath, siteContent)
+    console.log("✅ Reset site.ts handles")
+  }
+
+  // 5. Purge Blog Content
   if (fs.existsSync(CONTENT_DIR)) {
     const files = fs.readdirSync(CONTENT_DIR)
     files.forEach((file) => {
@@ -96,7 +152,6 @@ export const USER: User = {
       }
     })
 
-    // Create a new welcome post
     const welcomeTemplate = `---
 title: Hello World
 description: Welcome to my new portfolio.
@@ -108,12 +163,20 @@ updatedAt: ${new Date().toISOString().split("T")[0]}
 This is your first blog post. You can edit this file in \`src/features/doc/content/welcome.mdx\`.
 `
     fs.writeFileSync(path.join(CONTENT_DIR, "welcome.mdx"), welcomeTemplate)
-    console.log("✅ Purged legacy blog posts and created a fresh Welcome post")
+    console.log("✅ Purged blog posts and created Welcome post")
   }
 
   console.log(
     "\n✨ Sanitization Complete! The portfolio is now a blank template ready for use."
   )
+  console.log("\n📋 Next steps:")
+  console.log("   1. Edit src/features/portfolio/data/user.ts with your info")
+  console.log(
+    "   2. Edit src/features/portfolio/data/social-links.tsx with your links"
+  )
+  console.log("   3. Edit src/config/site.ts with your handles")
+  console.log("   4. Add your favicon to public/favicon.svg")
+  console.log("   5. Run: pnpm dev")
 }
 
 sanitize()
