@@ -44,6 +44,8 @@ import WorkExperienceDemo from "@/registry/examples/work-experience-demo"
 
 import { GridItem } from "./grid-item"
 
+export const dynamic = "force-dynamic"
+
 const title = "Component Showcase"
 const description = "Pixel-perfect, uniquely crafted."
 
