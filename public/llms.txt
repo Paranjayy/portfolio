@@ -12,7 +12,7 @@ Student @ IIT Madras | Exploring, Learning, and Building. Focused on Data Scienc
 ## Socials
 - GitHub: https://github.com/Paranjayy
 - Website: https://paranjay.dev
-- X/Twitter: https://x.com/paranjay_k
+- X/Twitter: https://x.com/paranjaydotdev
 
 ## Tech Stack
 Next.js, TypeScript, Tailwind CSS, Data Science, Python.
