@@ -1,37 +1,70 @@
 "use client"
 
-import { DownloadIcon, TriangleDashedIcon, TypeIcon } from "lucide-react"
 import Link from "next/link"
-import { useTheme } from "next-themes"
+import { copyText } from "@/utils/copy"
+import { useTiks } from "@rexa-developer/tiks/react"
+import { Download, SquareDashed, Type } from "lucide-react"
 import { toast } from "sonner"
 
-import { copyText } from "@/utils/copy"
-
-import { BrandMark } from "./brand-mark"
 import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuItem,
+  ContextMenuSeparator,
   ContextMenuTrigger,
-} from "./ui/context-menu"
+} from "@/components/ui/context-menu"
+
+import { ChanhDaiMark, getMarkSVG } from "./chanhdai-mark"
+import { getWordmarkSVG } from "./chanhdai-wordmark"
 
 export function BrandContextMenu({ children }: { children: React.ReactNode }) {
-  const { resolvedTheme } = useTheme()
+  const { success } = useTiks()
 
   return (
     <ContextMenu>
-      <ContextMenuTrigger asChild>{children}</ContextMenuTrigger>
+      <ContextMenuTrigger>{children}</ContextMenuTrigger>
 
       <ContextMenuContent className="w-fit">
         <ContextMenuItem
           onClick={() => {
-            toast.info("SVG export not implemented for template placeholders.")
+            copyText(getMarkSVG())
+            toast.success("Mark as SVG copied")
+            success()
           }}
         >
-          <BrandMark className="size-4" />
+          <ChanhDaiMark />
           Copy Mark as SVG
+        </ContextMenuItem>
+
+        <ContextMenuItem
+          onClick={() => {
+            copyText(getWordmarkSVG())
+            toast.success("Logotype as SVG copied")
+            success()
+          }}
+        >
+          <Type />
+          Copy Logotype as SVG
+        </ContextMenuItem>
+
+        <ContextMenuSeparator />
+
+        <ContextMenuItem asChild>
+          <Link href="/blog/chanhdai-brand">
+            <SquareDashed />
+            Brand Guidelines
+          </Link>
+        </ContextMenuItem>
+
+        <ContextMenuItem asChild>
+          <a href="https://assets.chanhdai.com/chanhdai-brand.zip" download>
+            <Download />
+            Download Brand Assets
+          </a>
         </ContextMenuItem>
       </ContextMenuContent>
     </ContextMenu>
   )
 }
+
+export default BrandContextMenu

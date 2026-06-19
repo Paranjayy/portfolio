@@ -1,6 +1,10 @@
-import { ArrowUpRightIcon } from "lucide-react"
 import type { Metadata } from "next"
+import { addQueryParams } from "@/utils/url"
+import { ArrowUpRightIcon } from "lucide-react"
 
+import { SPONSORSHIP_URL, UTM_PARAMS, X_HANDLE } from "@/config/site"
+import { jsonLdBreadcrumbList, JsonLdScript } from "@/lib/json-ld"
+import { cn } from "@/lib/utils"
 import { Button } from "@/components/base/ui/button"
 import {
   PageHeading,
@@ -8,13 +12,10 @@ import {
   PageHeadingTagline,
   PageHeadingTitle,
 } from "@/components/page-heading"
-import { SPONSORSHIP_URL, UTM_PARAMS, X_HANDLE } from "@/config/site"
 import { SponsorItem } from "@/features/sponsor/components/sponsor-item"
 import { SPONSORS } from "@/features/sponsor/data"
 import type { Sponsor, SponsorTier } from "@/features/sponsor/types"
 import { SPONSOR_TIERS } from "@/features/sponsor/types"
-import { cn } from "@/lib/utils"
-import { addQueryParams } from "@/utils/url"
 
 const title = "Sponsors"
 const description =
@@ -59,57 +60,56 @@ const SPONSORS_BY_TIER = SPONSORS.reduce(
 
 export default function Page() {
   return (
-    <div>
-      <PageHeading>
-        <PageHeadingTagline>Sponsors</PageHeadingTagline>
-        <PageHeadingTitle>Backed by the community.</PageHeadingTitle>
-        <PageHeadingDescription>
-          Grateful to the sponsors who make this open-source work possible.
-        </PageHeadingDescription>
-      </PageHeading>
+    <>
+      <JsonLdScript
+        data={jsonLdBreadcrumbList([
+          {
+            name: "Home",
+            href: "/",
+          },
+          {
+            name: "Sponsors",
+            href: "/sponsors",
+          },
+        ])}
+      />
 
-      <div className="h-4" />
+      <div>
+        <PageHeading>
+          <PageHeadingTagline>Sponsors</PageHeadingTagline>
+          <PageHeadingTitle>Backed by the community.</PageHeadingTitle>
+          <PageHeadingDescription>
+            Grateful to the sponsors who make this open-source work possible.
+          </PageHeadingDescription>
+        </PageHeading>
 
-      <div className="screen-line-bottom h-px" />
+        <div className="h-4" />
 
-      {SPONSOR_TIERS.map((tier) => (
-        <SponsorsGroup
-          key={tier.name}
-          title={tier.title}
-          sponsors={SPONSORS_BY_TIER[tier.name] ?? []}
-        />
-      ))}
+        <div className="screen-line-bottom h-px" />
 
-      <div className="mx-auto max-w-2xl px-4 py-8 text-center sm:py-12">
-        <h2 className="mb-4 text-xl font-semibold tracking-tight">
-          Why sponsor my work?
-        </h2>
-        <p className="mb-8 text-muted-foreground">
-          Your support helps me maintain existing open-source projects, build
-          new developer tools, and continue creating high-quality educational
-          content for the community. Every contribution, no matter the size,
-          makes a difference.
-        </p>
+        {SPONSOR_TIERS.map((tier) => (
+          <SponsorsGroup
+            key={tier.name}
+            title={tier.title}
+            sponsors={SPONSORS_BY_TIER[tier.name] ?? []}
+          />
+        ))}
 
-        <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <div className="flex justify-center py-2">
           <Button
             className="gap-2 border-none pr-2.5 pl-3"
-            size="lg"
+            size="sm"
             nativeButton={false}
             render={<a href={SPONSORSHIP_URL} target="_blank" rel="noopener" />}
           >
-            Sponsor on GitHub
-            <ArrowUpRightIcon className="size-4" />
+            Sponsor My Work
+            <ArrowUpRightIcon />
           </Button>
-          <p className="text-xs text-muted-foreground sm:max-w-xs sm:text-left">
-            Directly supporting the development of next-generation developer
-            tools and open-source templates.
-          </p>
         </div>
-      </div>
 
-      <div className="screen-line-top h-8" />
-    </div>
+        <div className="screen-line-top h-4" />
+      </div>
+    </>
   )
 }
 
@@ -126,9 +126,7 @@ function SponsorsGroup({
 
   return (
     <div>
-      <h2 className="p-4 font-pixel text-sm/none font-medium text-muted-foreground uppercase">
-        {title}
-      </h2>
+      <h2 className="p-4 font-heading text-base/none font-semibold">{title}</h2>
 
       <div className="relative">
         <div className="pointer-events-none absolute inset-0 -z-1 grid grid-cols-1 gap-4 max-sm:hidden sm:grid-cols-2">
@@ -136,24 +134,31 @@ function SponsorsGroup({
           <div className="border-l border-line" />
         </div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {sponsors.map((item) => (
-            <SponsorItem
+            <li
               key={item.name}
-              href={addQueryParams(item.url, UTM_PARAMS)}
-              aria-label={`${item.name} logo`}
-              data-tier={item.tier.replaceAll("_", "-")}
               className={cn(
-                "[&_svg]:w-full [&_svg]:max-w-75 [&_svg]:shrink-0",
-                "data-[tier=osp]:[&_svg]:max-w-60",
-                "data-[tier=silver]:[&_svg]:max-w-60",
-                "data-[tier=spark-supporter]:[&_svg]:max-w-50"
+                "max-sm:screen-line-top max-sm:screen-line-bottom",
+                "sm:nth-[2n+1]:screen-line-top sm:nth-[2n+1]:screen-line-bottom"
               )}
             >
-              <item.logo aria-hidden />
-            </SponsorItem>
+              <SponsorItem
+                href={addQueryParams(item.url, UTM_PARAMS)}
+                aria-label={`${item.name} logo`}
+                data-tier={item.tier.replaceAll("_", "-")}
+                className={cn(
+                  "[&_svg]:w-full [&_svg]:max-w-75 [&_svg]:shrink-0",
+                  "data-[tier=osp]:[&_svg]:max-w-60",
+                  "data-[tier=silver]:[&_svg]:max-w-60",
+                  "data-[tier=spark-supporter]:[&_svg]:max-w-50"
+                )}
+              >
+                <item.logo aria-hidden />
+              </SponsorItem>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </div>
   )

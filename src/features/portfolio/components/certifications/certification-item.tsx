@@ -1,10 +1,10 @@
+import Image from "next/image"
 import { format } from "date-fns"
 import { ArrowUpRightIcon, CircleCheckBigIcon } from "lucide-react"
-import Image from "next/image"
 
-import { getIcon } from "@/components/icons"
-import { Separator } from "@/components/ui/separator"
 import { cn } from "@/lib/utils"
+import { Separator } from "@/components/ui/separator"
+import { getIcon } from "@/components/icons"
 
 import type { Certification } from "../../types/certifications"
 
@@ -16,11 +16,11 @@ export function CertificationItem({
   certification: Certification
 }) {
   return (
-    <a
-      className={cn("flex items-center pr-2 hover:bg-accent-muted", className)}
-      href={certification.credentialURL}
-      target="_blank"
-      rel="noopener"
+    <div
+      className={cn(
+        "relative flex items-center pr-2 hover:bg-accent-muted",
+        className
+      )}
     >
       {certification.issuerLogoURL ? (
         <Image
@@ -47,37 +47,41 @@ export function CertificationItem({
 
       <div className="flex-1 space-y-1 border-l border-dashed border-line p-4 pr-2">
         <h3 className="leading-snug font-medium text-balance">
-          {certification.title}
+          <a href={certification.credentialURL} target="_blank" rel="noopener">
+            <span className="absolute inset-0" aria-hidden />
+            {certification.title}
+          </a>
         </h3>
 
-        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
-          <dl>
+        <dl className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
+          <div>
             <dt className="sr-only">Issued by</dt>
             <dd>
               <span aria-hidden>@</span>
               <span className="ml-0.5">{certification.issuer}</span>
             </dd>
-          </dl>
+          </div>
 
           <Separator
             className="data-vertical:h-4 data-vertical:self-center"
             orientation="vertical"
+            aria-hidden
           />
 
-          <dl>
+          <div>
             <dt className="sr-only">Issued on</dt>
             <dd>
               <time dateTime={new Date(certification.issueDate).toISOString()}>
                 {format(new Date(certification.issueDate), "dd.MM.yyyy")}
               </time>
             </dd>
-          </dl>
-        </div>
+          </div>
+        </dl>
       </div>
 
       {certification.credentialURL && (
         <ArrowUpRightIcon className="size-4 text-muted-foreground" />
       )}
-    </a>
+    </div>
   )
 }

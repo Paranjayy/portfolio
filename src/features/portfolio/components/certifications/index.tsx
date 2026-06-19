@@ -1,22 +1,31 @@
 import { CollapsibleList } from "@/components/collapsible-list"
+import {
+  Panel,
+  PanelHeader,
+  PanelTitle,
+  PanelTitleSup,
+} from "@/features/portfolio/components/panel"
+import { PanelTitleCopy } from "@/features/portfolio/components/panel-title-copy"
+import { CERTIFICATIONS } from "@/features/portfolio/data/certifications"
 
-import { CERTIFICATIONS } from "../../data/certifications"
-import { Panel, PanelHeader, PanelTitle, PanelTitleSup } from "../panel"
 import { CertificationItem } from "./certification-item"
 
-export function Certifications({ className }: { className?: string }) {
+const ID = "certs"
+
+export function Certifications() {
   return (
-    <Panel id="certs" className={className}>
+    <Panel id={ID}>
       <PanelHeader>
         <PanelTitle>
-          Certifications
+          <a href={`#${ID}`}>Certifications</a>
           <PanelTitleSup>({CERTIFICATIONS.length})</PanelTitleSup>
+          <PanelTitleCopy id={ID} />
         </PanelTitle>
       </PanelHeader>
 
       <CollapsibleList
         items={CERTIFICATIONS}
-        max={3}
+        max={6}
         renderItem={(item) => <CertificationItem certification={item} />}
       />
     </Panel>

@@ -1,11 +1,11 @@
 "use client"
 
+import { useMemo } from "react"
 import { ScrollArea } from "@base-ui/react/scroll-area"
 import { useAtom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
-import { TerminalIcon, TextAlignStartIcon } from "lucide-react"
-import { useMemo } from "react"
 
+import { cn } from "@/lib/utils"
 import {
   Tabs,
   TabsContent,
@@ -13,13 +13,14 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/base/ui/tabs"
-import { cn } from "@/lib/utils"
 import { CopyButton } from "@/registry/components/copy-button"
+import { IconSwap, IconSwapItem } from "@/registry/components/icon-swap"
+import { IconPlaceholder } from "@/registry/icons/icon-placeholder"
 
 export type PackageManager = "prompt" | "pnpm" | "yarn" | "npm" | "bun"
 
 const packageManagerAtom = atomWithStorage<PackageManager>(
-  "@acme/packageManager",
+  "packageManager",
   "pnpm"
 )
 
@@ -138,13 +139,17 @@ export function CodeBlockCommand({
         <ScrollArea.Root className="w-full pr-10 shadow-[inset_0_-1px_0_0] shadow-border">
           <TabsList
             className={cn(
-              "h-10 max-w-full justify-start rounded-none bg-transparent p-0 pl-4 dark:bg-transparent [&_svg]:mr-2 [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-muted-foreground",
+              "h-10 max-w-full justify-start rounded-none bg-transparent p-0 pl-4 inset-ring-0 dark:bg-transparent [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-muted-foreground",
               "[--scroll-area-overflow-x-end:inherit] [--scroll-area-overflow-x-start:inherit]",
               "mask-linear-[to_right,transparent_0,black_min(2.5rem,var(--scroll-area-overflow-x-start)),black_calc(100%-min(2.5rem,var(--scroll-area-overflow-x-end,2.5rem))),transparent_100%]"
             )}
             render={<ScrollArea.Viewport />}
           >
-            {getIconForPackageManager(packageManager)}
+            <IconSwap>
+              <IconSwapItem className="mr-2" key={packageManager}>
+                {getIconForPackageManager(packageManager)}
+              </IconSwapItem>
+            </IconSwap>
 
             {tabsFiltered.map(([key]) => {
               return (
@@ -158,7 +163,7 @@ export function CodeBlockCommand({
               )
             })}
 
-            <TabsIndicator className="h-0.5 translate-y-0 rounded-none bg-foreground shadow-none dark:bg-foreground" />
+            <TabsIndicator className="h-0.5 translate-y-0 rounded-none bg-foreground ring-0 dark:bg-foreground" />
           </TabsList>
         </ScrollArea.Root>
 
@@ -186,9 +191,9 @@ export function CodeBlockCommand({
       </Tabs>
 
       <CopyButton
-        className="absolute top-2 right-2 z-10 rounded-md border-none"
-        variant="secondary"
-        size="icon-xs"
+        className="absolute top-2 right-2 z-10 size-6 rounded-md border-none [&_svg:not([class*='size-'])]:size-3.5"
+        variant="ghost"
+        size="icon-sm"
         text={tabs[packageManager] || ""}
         onCopySuccess={(copiedCommand) => {
           onCopySuccess?.({
@@ -205,7 +210,15 @@ export function CodeBlockCommand({
 function getIconForPackageManager(manager: PackageManager) {
   switch (manager) {
     case "prompt":
-      return <TextAlignStartIcon />
+      return (
+        <IconPlaceholder
+          lucide="TextAlignStartIcon"
+          tabler="IconAlignLeft"
+          hugeicons="TextAlignLeftIcon"
+          phosphor="TextAlignLeftIcon"
+          remixicon="RiAlignLeft"
+        />
+      )
     case "pnpm":
       return (
         <svg viewBox="0 0 24 24">
@@ -243,7 +256,15 @@ function getIconForPackageManager(manager: PackageManager) {
         </svg>
       )
     default:
-      return <TerminalIcon />
+      return (
+        <IconPlaceholder
+          lucide="TerminalIcon"
+          tabler="IconTerminal"
+          hugeicons="TerminalIcon"
+          phosphor="TerminalIcon"
+          remixicon="RiTerminalLine"
+        />
+      )
   }
 }
 

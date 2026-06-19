@@ -1,5 +1,5 @@
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { cn } from "@/lib/utils"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 export function Callout({
   title,
@@ -13,7 +13,7 @@ export function Callout({
   return (
     <Alert
       className={cn(
-        "not-prose rounded-xl bg-surface text-surface-foreground retina:border-[0.5px]",
+        "not-prose rounded-xl border-none bg-surface text-surface-foreground inset-ring-1 inset-ring-border/64",
         className
       )}
       {...props}

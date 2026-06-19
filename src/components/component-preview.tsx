@@ -1,10 +1,12 @@
 "use client"
 
-import { RepeatIcon } from "lucide-react"
-import { useTheme } from "next-themes"
 import React, { useMemo, useState } from "react"
+import { Repeat, Settings2 } from "lucide-react"
+import { useTheme } from "next-themes"
 
-import { Index } from "@/__registry__/index"
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { Code as CodeInline } from "@/components/ui/typography"
 import {
   Tabs,
   TabsContent,
@@ -12,18 +14,20 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/base/ui/tabs"
-import { cn } from "@/lib/utils"
-
-import { Tooltip, TooltipContent, TooltipTrigger } from "./base/ui/tooltip"
-import { CodeCollapsibleWrapper } from "./code-collapsible-wrapper"
-import { Button } from "./ui/button"
-import { Code as CodeInline } from "./ui/typography"
-import { OpenInV0Button } from "./v0-open-button"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/base/ui/tooltip"
+import { CodeCollapsibleWrapper } from "@/components/code-collapsible-wrapper"
+import { OpenInV0Button } from "@/components/v0-open-button"
+import { Index } from "@/registry/__index__"
 
 export function ComponentPreview({
   className,
   name,
   openInV0Url,
+  customizeUrl,
   canReplay = false,
   prose = false,
   codeCollapsible = false,
@@ -33,6 +37,7 @@ export function ComponentPreview({
 }: React.ComponentProps<"div"> & {
   name: string
   openInV0Url?: string
+  customizeUrl?: string
   canReplay?: boolean
   prose?: boolean
   codeCollapsible?: boolean
@@ -62,7 +67,7 @@ export function ComponentPreview({
   return (
     <div
       className={cn(
-        "my-[1.25em] rounded-xl bg-code",
+        "my-[1.25em] rounded-xl bg-surface inset-ring-1 inset-ring-border/64",
         prose === false && "not-prose",
         className
       )}
@@ -70,7 +75,7 @@ export function ComponentPreview({
     >
       <Tabs defaultValue="preview" className="gap-0">
         <div className="z-1 px-4">
-          <TabsList className="h-10 rounded-none bg-transparent p-0 dark:bg-transparent [&_svg]:me-2 [&_svg]:size-4 [&_svg]:text-muted-foreground">
+          <TabsList className="h-10 rounded-none bg-transparent p-0 inset-ring-0 dark:bg-transparent [&_svg]:me-2 [&_svg]:size-4 [&_svg]:text-muted-foreground">
             <TabsTrigger className="h-7 rounded-lg p-0 px-2" value="preview">
               Preview
             </TabsTrigger>
@@ -78,17 +83,17 @@ export function ComponentPreview({
               Code
             </TabsTrigger>
 
-            <TabsIndicator className="h-0.5 translate-y-px rounded-none bg-foreground shadow-none dark:bg-foreground" />
+            <TabsIndicator className="h-0.5 translate-y-px rounded-none bg-foreground ring-0 dark:bg-foreground" />
           </TabsList>
         </div>
 
         <TabsContent className="px-1 pb-1" value="preview">
           <div
             data-slot="preview"
-            data-show-buttons={canReplay || !!openInV0Url}
+            data-show-buttons={canReplay || !!customizeUrl || !!openInV0Url}
             className="relative rounded-[9px] border bg-background p-2 data-[show-buttons=true]:py-8.75"
           >
-            {(canReplay || openInV0Url) && (
+            {(canReplay || customizeUrl || openInV0Url) && (
               <div
                 data-slot="buttons"
                 className="absolute top-0.75 right-0.75 flex items-center"
@@ -104,13 +109,36 @@ export function ComponentPreview({
                           aria-label="Replay"
                           onClick={() => setReplay((v) => v + 1)}
                         >
-                          <RepeatIcon />
+                          <Repeat />
                         </Button>
                       }
                     />
-                    <TooltipContent>
-                      <p>Replay</p>
-                    </TooltipContent>
+                    <TooltipContent>Replay</TooltipContent>
+                  </Tooltip>
+                )}
+
+                {customizeUrl && (
+                  <Tooltip>
+                    <TooltipTrigger
+                      render={
+                        <Button
+                          className="size-7 rounded-[5px] border-none"
+                          variant="ghost"
+                          size="icon-sm"
+                          aria-label="Customize"
+                          asChild
+                        >
+                          <a
+                            href={customizeUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <Settings2 />
+                          </a>
+                        </Button>
+                      }
+                    />
+                    <TooltipContent>Customize</TooltipContent>
                   </Tooltip>
                 )}
 
@@ -144,8 +172,8 @@ export function ComponentPreview({
         <TabsContent
           value="code"
           className={cn(
-            "**:data-rehype-pretty-code-figure:m-0 **:data-rehype-pretty-code-figure:pt-0",
-            "**:data-[slot=copy-button]:top-1",
+            "**:data-rehype-pretty-code-figure:m-0 **:data-rehype-pretty-code-figure:bg-transparent **:data-rehype-pretty-code-figure:pt-0 **:data-rehype-pretty-code-figure:inset-ring-0",
+            "**:data-[slot=copy-button]:top-1 **:data-[slot=copy-button]:opacity-100",
             "**:data-fade-overlay:top-px"
           )}
         >

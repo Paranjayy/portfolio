@@ -1,30 +1,26 @@
-import { PlusIcon } from "lucide-react"
-import type { Metadata } from "next"
+import type { Metadata, Route } from "next"
+import Link from "next/link"
+import { addQueryParams } from "@/utils/url"
+import { Grip, LayoutDashboard } from "lucide-react"
 
+import { registryConfig } from "@/config/registry"
+import { UTM_PARAMS, X_HANDLE } from "@/config/site"
+import { jsonLdBreadcrumbList, JsonLdScript } from "@/lib/json-ld"
+import { cn } from "@/lib/utils"
 import { Button } from "@/components/base/ui/button"
 import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/base/ui/dialog"
-import { ComponentIcon } from "@/components/icons"
-import { MDX } from "@/components/mdx"
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/base/ui/tooltip"
+import { ComponentIcon, Icons } from "@/components/icons"
 import {
   PageHeading,
   PageHeadingTagline,
   PageHeadingTitle,
 } from "@/components/page-heading"
 import { RegistryCommandAnimated } from "@/components/registry-command-animated"
-import { registryConfig } from "@/config/registry"
-import { UTM_PARAMS, X_HANDLE } from "@/config/site"
 import { getDocsByCategory } from "@/features/doc/data/documents"
-import { cn } from "@/lib/utils"
-import { addQueryParams } from "@/utils/url"
 
 import {
   ComponentItem,
@@ -62,30 +58,102 @@ export const metadata: Metadata = {
   },
 }
 
-const addRegistryCode = `\`\`\`bash
-npx shadcn@latest registry add ${registryConfig.namespace}
-\`\`\``
+// const addRegistryCode = `\`\`\`bash
+// npx shadcn@latest registry add ${registryConfig.namespace}
+// \`\`\``
 
 export default function Page() {
   const posts = getDocsByCategory("components")
 
+  const trustedRegistryUrl = addQueryParams(
+    "https://ui.shadcn.com/docs/directory",
+    {
+      q: registryConfig.namespace,
+      ...UTM_PARAMS,
+    }
+  )
+
   return (
-    <div className="min-h-svh">
-      <PageHeading>
-        <PageHeadingTagline>Components</PageHeadingTagline>
-        <PageHeadingTitle>Pixel-perfect, uniquely crafted.</PageHeadingTitle>
-      </PageHeading>
+    <>
+      <JsonLdScript
+        data={jsonLdBreadcrumbList([
+          {
+            name: "Home",
+            href: "/",
+          },
+          {
+            name: "Components",
+            href: "/components",
+          },
+        ])}
+      />
 
-      <div className="h-4" />
+      <div>
+        <PageHeading>
+          <PageHeadingTagline>Components</PageHeadingTagline>
+          <PageHeadingTitle>Pixel-perfect, uniquely crafted.</PageHeadingTitle>
+        </PageHeading>
 
-      <div className="screen-line-top screen-line-bottom">
-        <RegistryCommandAnimated />
+        <div className="h-4" />
 
-        <Dialog>
+        <div className="screen-line-top screen-line-bottom">
+          <RegistryCommandAnimated />
+        </div>
+
+        <div className="stripe-divider" />
+
+        <div className="screen-line-bottom h-px" />
+
+        <div className="flex items-center gap-1.5 p-1.5 pl-4">
+          <div className="flex flex-1">
+            <span className="text-sm font-medium text-muted-foreground">
+              {posts.length} components
+            </span>
+          </div>
+
+          <Tooltip>
+            <TooltipTrigger
+              render={
+                <Button
+                  className="size-7"
+                  variant="outline"
+                  size="icon-sm"
+                  aria-label="List"
+                >
+                  <Grip />
+                </Button>
+              }
+            />
+            <TooltipContent>
+              <p>List</p>
+            </TooltipContent>
+          </Tooltip>
+
+          <Tooltip>
+            <TooltipTrigger
+              render={
+                <Button
+                  className="size-7 border-none text-muted-foreground"
+                  variant="ghost"
+                  size="icon-sm"
+                  nativeButton={false}
+                  render={<Link href="/components/showcase" />}
+                  aria-label="Showcase"
+                >
+                  <LayoutDashboard />
+                </Button>
+              }
+            />
+            <TooltipContent>
+              <p>Showcase</p>
+            </TooltipContent>
+          </Tooltip>
+
+          {/* <Dialog>
           <DialogTrigger
             render={
               <Button
-                className="absolute top-1.5 right-10 h-7 gap-1.5 border-none pr-2.5 pl-2"
+                className="h-7 gap-1.5 border-none pr-2.5 pl-2"
                 variant="secondary"
                 size="sm"
               >
@@ -102,10 +170,7 @@ export default function Page() {
                 Run this command to add{" "}
                 <a
                   className="text-foreground link-underline"
-                  href={addQueryParams("https://ui.shadcn.com/docs/directory", {
-                    q: registryConfig.namespace,
-                    ...UTM_PARAMS,
-                  })}
+                  href={trustedRegistryUrl}
                   target="_blank"
                   rel="noopener"
                 >
@@ -123,59 +188,67 @@ export default function Page() {
               <DialogClose render={<Button>Done</Button>} />
             </DialogFooter>
           </DialogContent>
-        </Dialog>
-      </div>
-
-      <Separator />
-
-      <div className="screen-line-bottom h-px" />
-
-      <div className="relative">
-        <div className="absolute inset-0 -z-1 grid grid-cols-1 max-sm:hidden sm:grid-cols-2 md:grid-cols-3">
-          <div className="border-r border-line" />
-          <div className="border-r border-line max-md:hidden" />
+        </Dialog> */}
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-          {posts
-            .slice()
-            .sort((a, b) =>
-              a.metadata.title.localeCompare(b.metadata.title, "en", {
-                sensitivity: "base",
-              })
-            )
-            .map((c) => (
-              <ComponentItem key={c.slug} href={`/components/${c.slug}`}>
-                <ComponentItemIcon>
-                  <ComponentIcon variant={c.slug} />
-                  {(c.metadata.new || c.metadata.updated) && (
-                    <ComponentItemDot
-                      aria-label={c.metadata.new ? "New" : "Updated"}
-                    />
+        <div className="screen-line-bottom h-px" />
+
+        <div className="relative overflow-x-clip">
+          <div className="pointer-events-none absolute inset-0 -z-1 grid grid-cols-1 max-sm:hidden sm:grid-cols-2 md:grid-cols-3">
+            <div className="border-r border-line" />
+            <div className="border-r border-line max-md:hidden" />
+          </div>
+
+          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+            {posts
+              .slice()
+              .sort((a, b) =>
+                a.metadata.title.localeCompare(b.metadata.title, "en", {
+                  sensitivity: "base",
+                })
+              )
+              .map((c) => (
+                <li
+                  key={c.slug}
+                  className={cn(
+                    "max-sm:screen-line-bottom",
+                    "sm:max-md:nth-[2n+1]:screen-line-bottom",
+                    "md:nth-[3n+1]:screen-line-bottom"
                   )}
-                </ComponentItemIcon>
-                <ComponentItemTitle as="h2">
-                  {c.metadata.title}
-                </ComponentItemTitle>
-              </ComponentItem>
-            ))}
+                >
+                  <ComponentItem href={`/components/${c.slug}` as Route}>
+                    <ComponentItemIcon>
+                      <ComponentIcon variant={c.slug} />
+                      {(c.metadata.new || c.metadata.updated) && (
+                        <ComponentItemDot
+                          aria-label={c.metadata.new ? "New" : "Updated"}
+                        />
+                      )}
+                    </ComponentItemIcon>
+                    <ComponentItemTitle as="h2">
+                      {c.metadata.title}
+                    </ComponentItemTitle>
+                  </ComponentItem>
+                </li>
+              ))}
+          </ul>
         </div>
+
+        <div className="screen-line-top flex justify-center p-4 before:-top-px">
+          <a
+            className="flex h-7 items-center gap-1 rounded-full bg-primary pr-2.5 pl-2 text-sm font-medium whitespace-nowrap text-primary-foreground select-none [&>svg]:pointer-events-none [&>svg]:size-4 [&>svg]:shrink-0"
+            href={trustedRegistryUrl}
+            target="_blank"
+            rel="noopener"
+          >
+            <Icons.trustedRegistry />
+            Trusted Registry
+          </a>
+        </div>
+
+        <div className="screen-line-bottom h-px" />
+        <div className="h-4" />
       </div>
-
-      <div className="h-2" />
-    </div>
-  )
-}
-
-function Separator({ className }: { className?: string }) {
-  return (
-    <div
-      className={cn(
-        "relative flex h-8 w-full",
-        "before:absolute before:left-[-100vw] before:-z-1 before:h-8 before:w-[200vw]",
-        "before:bg-[repeating-linear-gradient(315deg,var(--pattern-foreground)_0,var(--pattern-foreground)_1px,transparent_0,transparent_50%)] before:bg-size-[10px_10px] before:[--pattern-foreground:var(--color-line)]/56",
-        className
-      )}
-    />
+    </>
   )
 }

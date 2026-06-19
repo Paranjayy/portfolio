@@ -1,11 +1,11 @@
 import { promises as fs } from "fs"
-import { LRUCache } from "lru-cache"
 import path from "path"
+import { LRUCache } from "lru-cache"
 import type { registryItemFileSchema } from "shadcn/schema"
 import { registryItemSchema } from "shadcn/schema"
 import type { z } from "zod"
 
-import { Index } from "@/__registry__"
+import { Index } from "@/registry/__index__"
 
 // LRU cache for cross-request caching of registry items.
 // File reads are I/O-bound, so caching improves dev server performance.
@@ -154,9 +154,35 @@ function getFileTarget(file: z.infer<typeof registryItemFileSchema>) {
     if (file.type === "registry:lib") {
       target = `lib/${fileName}`
     }
+
+    return target ?? ""
   }
 
-  return target ?? ""
+  return normalizeAliasTarget(target)
+}
+
+function normalizeAliasTarget(target: string) {
+  const regex = /^@(components|ui|hooks|lib)\/(.+)$/
+
+  return target.replace(regex, (_, type, rest) => {
+    if (type === "components") {
+      return `components/${rest}`
+    }
+
+    if (type === "ui") {
+      return `components/ui/${rest}`
+    }
+
+    if (type === "hooks") {
+      return `hooks/${rest}`
+    }
+
+    if (type === "lib") {
+      return `lib/${rest}`
+    }
+
+    return target
+  })
 }
 
 export type FileTree = {

@@ -1,17 +1,15 @@
 import "@/styles/globals.css"
 
-import { GoogleTagManager } from "@next/third-parties/google"
-import { Analytics } from "@vercel/analytics/react"
 import type { Metadata, Viewport } from "next"
 import Script from "next/script"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
 import type { WebSite, WithContext } from "schema-dts"
 
-import { Providers } from "@/components/providers"
-import { CrosshairCursor } from "@/components/ui/crosshair-cursor"
 import { META_THEME_COLORS, SITE_INFO, X_HANDLE } from "@/config/site"
-import { USER } from "@/features/portfolio/data/user"
 import { fontVariables } from "@/lib/fonts"
+import { JsonLdScript } from "@/lib/json-ld"
+import { Providers } from "@/components/providers"
+import { USER } from "@/features/portfolio/data/user"
 
 function getWebSiteJsonLd(): WithContext<WebSite> {
   return {
@@ -48,11 +46,11 @@ export const metadata: Metadata = {
   keywords: SITE_INFO.keywords,
   authors: [
     {
-      name: USER.displayName,
+      name: "ncdai",
       url: SITE_INFO.url,
     },
   ],
-  creator: USER.username,
+  creator: "ncdai",
   openGraph: {
     siteName: SITE_INFO.name,
     url: "/",
@@ -96,6 +94,11 @@ export const metadata: Metadata = {
         media: "(prefers-color-scheme: dark)",
       },
     ],
+    apple: {
+      url: "https://assets.chanhdai.com/images/apple-touch-icon.png",
+      type: "image/png",
+      sizes: "180x180",
+    },
   },
 }
 
@@ -124,23 +127,23 @@ export default function RootLayout({
          */}
         <Script src={`data:text/javascript;base64,${btoa(darkModeScript)}`} />
         <script
-          type="application/ld+json"
+          type="text/javascript"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(getWebSiteJsonLd()).replace(/</g, "\\u003c"),
+            __html: `
+              try {
+                var value = localStorage.getItem('avatarLights');
+                document.documentElement.dataset.avatarLights = JSON.parse(value || '"on"');
+              } catch(_) {}
+            `,
           }}
         />
+        <JsonLdScript data={getWebSiteJsonLd()} />
       </head>
-
-      {process.env.NEXT_PUBLIC_GTM_ID && (
-        <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />
-      )}
 
       <body>
         <Providers>
           <NuqsAdapter>{children}</NuqsAdapter>
         </Providers>
-        <CrosshairCursor />
-        <Analytics />
       </body>
     </html>
   )

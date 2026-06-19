@@ -1,11 +1,11 @@
 "use client"
 
+import { useState } from "react"
 import { ArrowUpIcon } from "lucide-react"
 import { useMotionValueEvent, useScroll } from "motion/react"
-import { useState } from "react"
 
-import { Button } from "@/components/base/ui/button"
 import { cn } from "@/lib/utils"
+import { Button } from "@/components/base/ui/button"
 
 export function ScrollToTop({
   className,
@@ -29,7 +29,7 @@ export function ScrollToTop({
       data-visible={visible}
       data-scroll-direction={scrollDirection}
       className={cn(
-        "[--bottom:0.5rem] lg:[--bottom:2rem]",
+        "[--bottom:0.5rem] sm:[--bottom:1rem] lg:[--bottom:2rem]",
         "fixed right-4 bottom-[calc(var(--bottom,0.5rem)+env(safe-area-inset-bottom,0))] z-50 lg:right-8",
         "transition-[background-color,opacity] duration-300 data-[scroll-direction=down]:opacity-30 data-[scroll-direction=up]:opacity-100 data-[visible=false]:opacity-0",
         "data-[scroll-direction=down]:hover:opacity-100",

@@ -1,27 +1,55 @@
 "use client"
 
 import { useRef } from "react"
+import { useTheme } from "next-themes"
 
-import { BrandContextMenu } from "@/components/brand-context-menu"
-import { BrandMark } from "@/components/brand-mark"
 import { cn } from "@/lib/utils"
+import { ChanhDaiMark } from "@/components/chanhdai-mark"
+import { Magnet } from "@/components/react-bits/magnet"
+import { DotGridSpotlight } from "@/registry/transformed/components/dot-grid-spotlight"
 
+const DOT_COLOR = {
+  light: {
+    default: "rgba(0, 0, 0, 0.06)",
+    active: "rgba(0, 0, 0, 0.12)",
+  },
+  dark: {
+    default: "rgba(255, 255, 255, 0.05)",
+    active: "rgba(255, 255, 255, 0.1)",
+  },
+}
+
+/** @deprecated */
 export function ProfileCover() {
   const containerRef = useRef<HTMLDivElement>(null)
 
+  const { resolvedTheme } = useTheme()
+  const theme = resolvedTheme === "dark" ? "dark" : "light"
+
   return (
-    <BrandContextMenu>
-      <div
-        ref={containerRef}
-        className={cn(
-          "aspect-2/1 border-x border-line select-none sm:aspect-3/1",
-          "flex items-center justify-center",
-          "screen-line-top screen-line-bottom before:-top-px after:-bottom-px",
-          "bg-black/0.75 bg-[radial-gradient(var(--pattern-foreground)_1px,transparent_0)] bg-size-[10px_10px] bg-center [--pattern-foreground:var(--color-zinc-950)]/5 dark:bg-white/0.75 dark:[--pattern-foreground:var(--color-white)]/5"
-        )}
+    <div
+      ref={containerRef}
+      className={cn(
+        "relative flex aspect-2.5/1 items-center justify-center border-x border-line select-none sm:aspect-3.5/1",
+        "screen-line-top screen-line-bottom before:-top-px after:-bottom-px",
+        "bg-black/0.75 dark:bg-white/1"
+      )}
+    >
+      <DotGridSpotlight
+        dotColor={DOT_COLOR[theme]?.default}
+        activeDotColor={DOT_COLOR[theme]?.active}
+      />
+
+      <Magnet
+        containerRef={containerRef}
+        magnetStrength={6}
+        wrapperClassName="pointer-events-none"
       >
-        <BrandMark className="w-2/5 max-w-sm text-foreground opacity-10 sm:w-1/3" />
-      </div>
-    </BrandContextMenu>
+        <ChanhDaiMark
+          id="js-cover-mark"
+          className="h-12 w-24 min-[25rem]:h-14 min-[25rem]:w-28 sm:h-16 sm:w-32"
+        />
+      </Magnet>
+    </div>
   )
 }

@@ -1,6 +1,5 @@
 import fs from "node:fs"
 import path from "node:path"
-
 import type { Browser } from "puppeteer"
 import puppeteer from "puppeteer"
 
@@ -29,12 +28,14 @@ type Theme = "light" | "dark"
 
 async function captureScreenshot({
   browser,
+  name,
   url,
   size,
   themes = ["light"],
   type = "webp",
 }: {
   browser: Browser
+  name: string
   url: string
   size: keyof typeof SIZE
   themes?: Theme[]
@@ -51,16 +52,22 @@ async function captureScreenshot({
   await page.goto(url, { waitUntil: "networkidle2" })
 
   for (const theme of themes) {
+    const fileName = `${name}-${size}-${theme}.${type}`
+    const filePath = path.join(outputDir, fileName) as
+      | `${string}.webp`
+      | `${string}.png`
+      | `${string}.jpeg`
+
+    if (fs.existsSync(filePath)) {
+      console.log(`⚠️ Screenshot already exists, skipping:`, filePath)
+      continue
+    }
+
     await page.emulateMediaFeatures([
       { name: "prefers-color-scheme", value: theme },
     ])
 
     await page.reload({ waitUntil: "networkidle0" })
-
-    const filePath = path.join(
-      outputDir,
-      `screenshot-${size}-${theme}.${type}`
-    ) as `${string}.webp` | `${string}.png` | `${string}.jpeg`
 
     await page.screenshot({
       path: filePath,
@@ -80,6 +87,7 @@ async function main() {
   try {
     await captureScreenshot({
       browser,
+      name: "screenshot",
       url,
       size: "desktop",
       themes: ["light", "dark"],
@@ -87,6 +95,7 @@ async function main() {
 
     await captureScreenshot({
       browser,
+      name: "screenshot",
       url,
       size: "mobile",
       themes: ["light", "dark"],
@@ -94,6 +103,7 @@ async function main() {
 
     await captureScreenshot({
       browser,
+      name: "screenshot",
       url: `${url}/og`,
       size: "og-image",
       themes: ["light", "dark"],

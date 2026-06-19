@@ -1,11 +1,14 @@
-import type { motion } from "motion/react"
 import type { ComponentProps } from "react"
+import type { motion } from "motion/react"
 
 import type { Button } from "@/components/ui/button"
 import type { AppleHelloEffectEnglish } from "@/registry/components/apple-hello-effect/apple-hello-effect-english"
 import type { CopyButton } from "@/registry/components/copy-button"
 import type { GitHubContributions } from "@/registry/components/github-contributions"
-import type { GlowCardGrid } from "@/registry/components/glow-card-grid/glow-card-grid"
+import type {
+  GlowCard,
+  GlowCardGrid,
+} from "@/registry/components/glow-card-grid/glow-card-grid"
 import type { MiddleTruncation } from "@/registry/components/middle-truncation/middle-truncation"
 import type { ScrollFadeEffect } from "@/registry/components/scroll-fade-effect"
 import type { ShimmeringText } from "@/registry/components/shimmering-text"
@@ -13,6 +16,7 @@ import type {
   SlideToUnlock,
   SlideToUnlockText,
 } from "@/registry/components/slide-to-unlock"
+import type { SpinningCircularText } from "@/registry/components/spinning-circular-text"
 import type { TestimonialSpotlight } from "@/registry/components/testimonial-spotlight"
 
 export type AppleHelloEffectProps = Omit<
@@ -69,12 +73,7 @@ export type TestimonialSpotlightProps = Omit<
   ComponentProps<typeof TestimonialSpotlight>,
   keyof Omit<
     React.ComponentPropsWithoutRef<"div">,
-    | "children"
-    | "onFocus"
-    | "onBlur"
-    | "onMouseEnter"
-    | "onMouseLeave"
-    | "onMouseMove"
+    "children" | "className" | "style" | "onMouseMove"
   >
 >
 
@@ -83,6 +82,8 @@ export type GlowCardGridProps = Omit<
   keyof Omit<ComponentProps<"div">, "children">
 >
 
+export type GlowCardProps = ComponentProps<typeof GlowCard>
+
 export type MiddleTruncationProps = Omit<
   ComponentProps<typeof MiddleTruncation>,
   keyof Omit<ComponentProps<"span">, "children" | "className">
@@ -90,4 +91,9 @@ export type MiddleTruncationProps = Omit<
 
 export type GitHubContributionsProps = ComponentProps<
   typeof GitHubContributions
+>
+
+export type SpinningCircularTextProps = Omit<
+  ComponentProps<typeof SpinningCircularText>,
+  keyof ComponentProps<"div">
 >

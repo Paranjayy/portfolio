@@ -13,7 +13,7 @@ import {
   TestimonialAvatarImg,
   TestimonialAvatarRing,
   TestimonialQuote,
-} from "@/registry/components/testimonial"
+} from "@/registry/transformed/components/testimonial"
 
 export default function TestimonialsMarqueeDemo2() {
   return (
@@ -36,7 +36,7 @@ export default function TestimonialsMarqueeDemo2() {
                   rel="noopener noreferrer"
                 >
                   <Testimonial>
-                    <TestimonialQuote>
+                    <TestimonialQuote className="font-serif">
                       <p>{item.quote}</p>
                     </TestimonialQuote>
 
@@ -107,7 +107,7 @@ const TESTIMONIALS_1 = [
   {
     authorAvatar: "https://unavatar.io/x/initjean",
     authorName: "Jean P.D. Meijer",
-    authorTagline: "Building analog.now",
+    authorTagline: "Design Engineer",
     url: "https://x.com/initjean/status/1948159885960438151",
     quote:
       "congrats you deserve it! react wheel picker is so smooth, its insane",
@@ -122,7 +122,7 @@ const TESTIMONIALS_1 = [
   },
 ]
 
-export const TESTIMONIALS_2 = [
+const TESTIMONIALS_2 = [
   {
     authorAvatar: "https://unavatar.io/x/mannupaaji",
     authorName: "Manu Arora",
@@ -133,7 +133,7 @@ export const TESTIMONIALS_2 = [
   {
     authorAvatar: "https://unavatar.io/x/MaxPrilutskiy",
     authorName: "Max Prilutskiy",
-    authorTagline: "Creator of Lingo.dev",
+    authorTagline: "CEO @Lingo.dev",
     url: "https://x.com/MaxPrilutskiy/status/1923952193893466379",
     quote: "i like your style! :)",
   },

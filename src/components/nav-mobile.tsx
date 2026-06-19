@@ -1,25 +1,25 @@
 "use client"
 
+import { useCallback, useState } from "react"
+import type { Route } from "next"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useCallback, useState } from "react"
 
+import type { NavItem } from "@/types/nav"
+import { useMediaQuery } from "@/hooks/use-media-query"
 import { Button } from "@/components/ui/button"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { useMediaQuery } from "@/hooks/use-media-query"
 import { haptic } from "@/registry/lib/haptic"
-import type { NavItem } from "@/types/nav"
 
-import { motion, AnimatePresence } from "motion/react"
-import * as LucideIcons from "lucide-react"
-
-export function NavMobile({ items }: { items: NavItem[] }) {
+export function NavMobile({ items }: { items: NavItem<Route>[] }) {
   const [open, setOpen] = useState(false)
-  const isDesktop = useMediaQuery("(min-width: 40rem)")
+
+  const isDesktop = useMediaQuery("(min-width: 40rem)") // sm breakpoint
+
   const pathname = usePathname()
 
   const handleOpenChange = useCallback((open: boolean) => {
@@ -38,46 +38,30 @@ export function NavMobile({ items }: { items: NavItem[] }) {
       </PopoverTrigger>
 
       <PopoverContent
-        className="w-56 overflow-hidden rounded-2xl p-2"
+        className="w-48 rounded-xl p-1"
         side="top"
         align="center"
-        sideOffset={12}
+        sideOffset={8}
         onCloseAutoFocus={(e) => e.preventDefault()}
       >
-        <div className="flex flex-col gap-1">
-          {items.map((link, idx) => {
-            const active =
+        <div className="flex flex-col">
+          {items.map((link) => {
+            const isActive =
               pathname === link.href ||
-              (link.href === "/"
+              (link.href === "/" // Home page
                 ? ["/", "/index"].includes(pathname || "")
                 : pathname?.startsWith(link.href))
 
-            // @ts-ignore - Dynamic icon resolution
-            const Icon = LucideIcons[link.icon || "Circle"] || LucideIcons.Circle
-
             return (
-              <motion.div
+              <Link
                 key={link.href}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: idx * 0.03 }}
+                href={link.href}
+                aria-current={isActive ? "page" : undefined}
+                className="rounded-lg px-3 py-1.5 text-base aria-[current=page]:bg-accent"
+                onClick={() => handleOpenChange(false)}
               >
-                <Link
-                  href={link.href}
-                  data-active={active}
-                  className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-base transition-colors hover:bg-accent data-active:bg-accent data-active:text-primary"
-                  onClick={() => handleOpenChange(false)}
-                >
-                  <Icon className="h-5 w-5 opacity-70" />
-                  <span className="font-medium">{link.title}</span>
-                  {active && (
-                    <motion.div
-                      layoutId="active-indicator"
-                      className="ml-auto h-1.5 w-1.5 rounded-full bg-primary"
-                    />
-                  )}
-                </Link>
-              </motion.div>
+                {link.title}
+              </Link>
             )
           })}
         </div>
@@ -86,12 +70,14 @@ export function NavMobile({ items }: { items: NavItem[] }) {
   )
 }
 
+export default NavMobile
+
 function NavMobileTrigger(
   props: Omit<React.ComponentProps<typeof Button>, "children">
 ) {
   return (
     <Button
-      className="group relative flex touch-manipulation flex-col gap-1 border-none before:absolute before:-inset-x-2 before:-top-8 before:-bottom-1 active:scale-none data-open:bg-accent"
+      className="group relative flex touch-manipulation flex-col gap-1 border-none before:absolute before:-inset-x-2 before:-top-8 before:-bottom-1 active:scale-none aria-expanded:bg-accent"
       variant="ghost"
       size="icon-sm"
       aria-label="Toggle Menu"

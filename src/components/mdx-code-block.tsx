@@ -1,5 +1,6 @@
-import { cn } from "@/lib/utils"
 import type { NpmCommands } from "@/types/unist"
+import { cn } from "@/lib/utils"
+import { MiddleTruncation } from "@/registry/components/middle-truncation"
 
 import { CodeBlockCommand } from "./code-block-command"
 import { CopyButton } from "./copy-button"
@@ -22,12 +23,19 @@ export const mdxCodeBlockComponents = {
         ? getIconForLanguageExtension(props["data-language"])
         : null
 
-    const hasCodeTitle = "data-rehype-pretty-code-title" in props
+    const hasCodeTitle =
+      "data-rehype-pretty-code-title" in props && typeof children === "string"
 
     return (
       <figcaption {...props}>
         {iconExtension}
-        {hasCodeTitle ? <p className="truncate">{children}</p> : children}
+        {hasCodeTitle ? (
+          <MiddleTruncation className="min-w-0 flex-1" ellipsis="…">
+            {children}
+          </MiddleTruncation>
+        ) : (
+          children
+        )}
       </figcaption>
     )
   },
@@ -61,7 +69,7 @@ export const mdxCodeBlockComponents = {
 
     return (
       <>
-        <div className="rounded-[9px] border bg-background [--code:var(--background)]">
+        <div className="group/pre rounded-[9px] border bg-code">
           <pre
             className={cn(
               __rawString__ && !__withMeta__ && "[--code-padding-right:6rem]",
@@ -69,36 +77,37 @@ export const mdxCodeBlockComponents = {
             )}
             {...props}
           />
-        </div>
 
-        {__rawString__ && (
-          <>
-            <CopyButton
-              data-slot="copy-button"
-              className={cn(
-                "absolute top-2 right-2 z-10 size-7 rounded-[5px] border-none text-muted-foreground [&_svg:not([class*='size-'])]:size-4",
-                __withMeta__ && "top-1.5 right-1.5 rounded-md"
-              )}
-              variant="ghost"
-              size="icon-xs"
-              text={__rawString__}
-              event="copy_code_block"
-            />
-
-            {!__withMeta__ && (
-              <div
-                aria-hidden
-                data-fade-overlay
-                className="top-1.25 right-1.25"
-                style={
-                  {
-                    "--fade-color": "var(--background)",
-                  } as React.CSSProperties
-                }
+          {__rawString__ && (
+            <>
+              <CopyButton
+                data-slot="copy-button"
+                className={cn(
+                  "absolute top-2 right-2 z-10 size-7 rounded-[5px] border-none text-muted-foreground [&_svg:not([class*='size-'])]:size-4",
+                  __withMeta__ && "top-1.5 right-1.5 rounded-md",
+                  !__withMeta__ && "opacity-0 group-hover/pre:opacity-100"
+                )}
+                variant="ghost"
+                size="icon-xs"
+                text={__rawString__}
+                event="copy_code_block"
               />
-            )}
-          </>
-        )}
+
+              {!__withMeta__ && (
+                <div
+                  aria-hidden
+                  data-fade-overlay
+                  className="top-1.25 right-1.25 opacity-0 transition-opacity group-hover/pre:opacity-100"
+                  style={
+                    {
+                      "--fade-color": "var(--code)",
+                    } as React.CSSProperties
+                  }
+                />
+              )}
+            </>
+          )}
+        </div>
       </>
     )
   },

@@ -1,9 +1,10 @@
-import type { Metadata } from "next"
 import { Fragment } from "react"
+import type { Metadata } from "next"
 
-import { BlockDisplay } from "@/app/(preview)/components/block-display"
 import { X_HANDLE } from "@/config/site"
-import { cn } from "@/lib/utils"
+import { jsonLdBreadcrumbList, JsonLdScript } from "@/lib/json-ld"
+import blocks from "@/registry/__blocks__.json"
+import { BlockDisplay } from "@/app/(preview)/components/block-display"
 
 export const dynamic = "force-static"
 export const revalidate = false
@@ -37,16 +38,23 @@ export const metadata: Metadata = {
   },
 }
 
-const FEATURED_BLOCKS = [
-  "github-contributions-01",
-  "wakatime-01",
-  "experience-01",
-]
-
 export default function BlocksPage() {
   return (
     <>
-      {FEATURED_BLOCKS.map((name) => (
+      <JsonLdScript
+        data={jsonLdBreadcrumbList([
+          {
+            name: "Home",
+            href: "/",
+          },
+          {
+            name: "Blocks",
+            href: "/blocks",
+          },
+        ])}
+      />
+
+      {blocks.map(({ name }) => (
         <Fragment key={name}>
           <BlockDisplay name={name} />
           <Separator />
@@ -59,12 +67,7 @@ export default function BlocksPage() {
 function Separator() {
   return (
     <div className="screen-line-top screen-line-bottom">
-      <div
-        className={cn(
-          "h-8 before:absolute before:left-[-100vw] before:-z-1 before:h-full before:w-[200vw]",
-          "before:bg-[repeating-linear-gradient(315deg,var(--pattern-foreground)_0,var(--pattern-foreground)_1px,transparent_0,transparent_50%)] before:bg-size-[10px_10px] before:[--pattern-foreground:var(--color-line)]/56"
-        )}
-      />
+      <div className="stripe-divider" />
     </div>
   )
 }

@@ -3,23 +3,23 @@
 import { registryItemSchema } from "shadcn/schema"
 import type { z } from "zod"
 
-import { registryCategories } from "@/config/registry"
+import { blockCategories } from "@/config/registry"
 
 export async function getAllBlockStaticParams(): Promise<
   Array<{ category: string; name: string }>
 > {
-  const { Index } = await import("@/__registry__")
+  const { Index } = await import("@/registry/__index__")
 
   const params: Array<{ category: string; name: string }> = []
 
-  for (const category of registryCategories) {
+  for (const category of blockCategories) {
     for (const itemName in Index) {
       const item = Index[itemName]
       if (
         item.type === "registry:block" &&
-        item.categories?.includes(category.slug)
+        item.categories?.includes(category.name)
       ) {
-        params.push({ category: category.slug, name: itemName })
+        params.push({ category: category.name, name: itemName })
       }
     }
   }
@@ -39,7 +39,7 @@ export async function getAllBlocks(
   types: z.infer<typeof registryItemSchema>["type"][] = ["registry:block"],
   categories: string[] = []
 ) {
-  const { Index } = await import("@/__registry__")
+  const { Index } = await import("@/registry/__index__")
 
   // Collect all blocks from all styles.
   const allBlocks: z.infer<typeof registryItemSchema>[] = []
@@ -59,10 +59,16 @@ export async function getAllBlocks(
       (block): block is z.infer<typeof registryItemSchema> => block !== null
     )
 
-  return validatedBlocks.filter(
-    (block) =>
-      types.includes(block.type) &&
-      (categories.length === 0 ||
-        block.categories?.some((category) => categories.includes(category)))
-  )
+  return validatedBlocks
+    .filter(
+      (block) =>
+        types.includes(block.type) &&
+        (categories.length === 0 ||
+          block.categories?.some((category) => categories.includes(category)))
+    )
+    .sort((a, b) => {
+      const dateA = new Date(a.meta?.createdAt).getTime()
+      const dateB = new Date(b.meta?.createdAt).getTime()
+      return dateB - dateA
+    })
 }

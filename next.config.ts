@@ -2,6 +2,7 @@ import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  typedRoutes: true,
   transpilePackages: ["next-mdx-remote"],
   allowedDevOrigins: ["ncdai.localhost", "ncdai.local"],
   devIndicators: false,
@@ -49,6 +50,31 @@ const nextConfig: NextConfig = {
       {
         source: "/wall-of-love",
         destination: "/testimonials",
+        permanent: true,
+      },
+      {
+        source: "/blocks/content",
+        destination: "/blocks/marketing",
+        permanent: true,
+      },
+      {
+        source: "/blocks/content/blog-01",
+        destination: "/blocks/marketing/blog-01",
+        permanent: true,
+      },
+      {
+        source: "/blocks/content/blog-02",
+        destination: "/blocks/marketing/blog-02",
+        permanent: true,
+      },
+      {
+        source: "/blocks/content/experience-01",
+        destination: "/blocks/marketing/experience-01",
+        permanent: true,
+      },
+      {
+        source: "/blocks/content/team-01",
+        destination: "/blocks/marketing/team-01",
         permanent: true,
       },
     ]

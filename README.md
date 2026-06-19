@@ -1,11 +1,11 @@
 # [Portfolio Template](https://paranjay.dev) &middot; [![GitHub License](https://img.shields.io/github/license/your-handle/portfolio-template?label=License)](https://github.com/your-handle/portfolio-template/blob/main/LICENSE) ![GitHub Repo Views](https://gitviews.com/repo/your-handle/portfolio-template.svg?style=flat&label-color=%23555&color=%23f59e0b)
 
-A minimal, pixel-perfect dev portfolio, shadcn registry, and blog to showcase my work as a Design Engineer.
+A pixel-perfect dev portfolio and shadcn registry showcasing my work as a Design Engineer.
 
 → Check out the live site: [paranjay.dev](https://paranjay.dev)
 
-[![screenshot-dark](https://assets.chanhdai.com/images/screenshot-desktop-dark.webp?v=9#gh-dark-mode-only)](https://chanhdai.com#gh-dark-mode-only)
-[![screenshot-light](https://assets.chanhdai.com/images/screenshot-desktop-light.webp?v=9#gh-light-mode-only)](https://chanhdai.com#gh-light-mode-only)
+[![screenshot-dark](https://assets.chanhdai.com/images/screenshot-desktop-dark.webp?t=1778602757#gh-dark-mode-only)](https://chanhdai.com#gh-dark-mode-only)
+[![screenshot-light](https://assets.chanhdai.com/images/screenshot-desktop-light.webp?t=1778602757#gh-light-mode-only)](https://chanhdai.com#gh-light-mode-only)
 
 ## Overview
 
@@ -25,7 +25,6 @@ A minimal, pixel-perfect dev portfolio, shadcn registry, and blog to showcase my
 - Spam-protected email
 - Installable as PWA
 - Analytics with [PostHog](https://posthog.com) and [OpenPanel](https://openpanel.dev)
-- Consent management via [c15t](https://c15t.com)
 
 ### Content
 
@@ -137,13 +136,13 @@ This project is proudly supported by:
     </tr>
     <tr>
       <td>
-        <a href="https://shadcncraft.com?utm_source=chanhdai.com#gh-light-mode-only">
+        <a href="https://shadcncraft.com?atp=ncdai&utm_source=chanhdai.com#gh-light-mode-only">
           <img
             src="https://assets.chanhdai.com/images/sponsors/shadcncraft.svg?v=1#gh-light-mode-only"
             alt="shadcncraft"
           />
         </a>
-        <a href="https://shadcncraft.com?utm_source=chanhdai.com#gh-dark-mode-only">
+        <a href="https://shadcncraft.com?atp=ncdai&utm_source=chanhdai.com#gh-dark-mode-only">
           <img
             src="https://assets.chanhdai.com/images/sponsors/shadcncraft-dark.svg?v=1#gh-dark-mode-only"
             alt="shadcncraft"
@@ -151,13 +150,13 @@ This project is proudly supported by:
         </a>
       </td>
       <td>
-        <a href="https://www.shadcnblocks.com?utm_source=chanhdai.com#gh-light-mode-only">
+        <a href="https://www.shadcnblocks.com?via=ncdai&utm_source=chanhdai.com#gh-light-mode-only">
           <img
             src="https://assets.chanhdai.com/images/sponsors/shadcnblocks.svg?v=1#gh-light-mode-only"
             alt="Shadcnblocks"
           />
         </a>
-        <a href="https://www.shadcnblocks.com?utm_source=chanhdai.com#gh-dark-mode-only">
+        <a href="https://www.shadcnblocks.com?via=ncdai&utm_source=chanhdai.com#gh-dark-mode-only">
           <img
             src="https://assets.chanhdai.com/images/sponsors/shadcnblocks-dark.svg?v=1#gh-dark-mode-only"
             alt="Shadcnblocks"
@@ -224,5 +223,4 @@ This project is proudly supported by:
 
 ## Star History
 
-[![RepoStars-dark](https://www.repostars.dev/api/embed?repo=ncdai%2Fchanhdai.com&theme=dark#gh-dark-mode-only)](https://www.repostars.dev/?repos=ncdai%2Fchanhdai.com&theme=dark#gh-dark-mode-only)
-[![RepoStars-light](https://www.repostars.dev/api/embed?repo=ncdai%2Fchanhdai.com&theme=light#gh-light-mode-only)](https://www.repostars.dev/?repos=ncdai%2Fchanhdai.com&theme=light#gh-light-mode-only)
+[![Star History](https://starchart.cc/ncdai/chanhdai.com.svg?variant=adaptive&line=%23f59e0b)](https://starchart.cc/ncdai/chanhdai.com)

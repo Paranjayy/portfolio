@@ -3,9 +3,9 @@ import { TestimonialList } from "@/registry/blocks/testimonials-02/components/te
 
 export default function Testimonials02() {
   return (
-    <div className="max-w-screen overflow-x-hidden">
-      <div className="container mx-auto px-4 py-8">
-        <div className="border-x border-line">
+    <div className="max-w-screen overflow-x-clip">
+      <div className="container mx-auto px-4">
+        <div className="border-x border-line py-8">
           <h2 className="screen-line-top screen-line-bottom ml-4 font-heading text-3xl font-semibold tracking-tight">
             Loved by Devs Worldwide
           </h2>
@@ -92,7 +92,7 @@ const TESTIMONIALS_2: TestimonialType[] = [
   {
     authorAvatar: "https://unavatar.io/x/MaxPrilutskiy",
     authorName: "Max Prilutskiy",
-    authorTagline: "Creator of Lingo.dev",
+    authorTagline: "CEO @Lingo.dev",
     url: "https://x.com/MaxPrilutskiy/status/1923952193893466379",
     quote: "i like your style! :)",
   },
@@ -127,7 +127,7 @@ const TESTIMONIALS_2: TestimonialType[] = [
   {
     authorAvatar: "https://unavatar.io/x/uixmat",
     authorName: "Matt",
-    authorTagline: "Building bklit.com & ui.bklit.com",
+    authorTagline: "Creator of ui.bklit.com",
     url: "https://x.com/uixmat/status/2023145872771436904",
     quote: "great work bro",
   },

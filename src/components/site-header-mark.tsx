@@ -1,12 +1,10 @@
 "use client"
 
-import { useMotionValueEvent, useScroll } from "motion/react"
-import { usePathname } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
+import { usePathname } from "next/navigation"
+import { useMotionValueEvent, useScroll } from "motion/react"
 
-import { cn } from "@/lib/utils"
-
-import { BrandMark } from "./brand-mark"
+import { ChanhDaiMark } from "./chanhdai-mark"
 
 const calcDistance = (el: HTMLElement) => {
   const rect = el.getBoundingClientRect()
@@ -15,7 +13,7 @@ const calcDistance = (el: HTMLElement) => {
   return scrollTop + rect.top + rect.height - headerHeight
 }
 
-function BrandMarkMotion() {
+function ChanhDaiMarkMotion() {
   const { scrollY } = useScroll()
   const [visible, setVisible] = useState(false)
   const distanceRef = useRef(160)
@@ -41,15 +39,8 @@ function BrandMarkMotion() {
   }, [])
 
   return (
-    <div
-      data-visible={visible}
-      className={cn(
-        "group/mark-motion relative flex data-[visible=true]:before:opacity-0",
-        "before:absolute before:inset-0 before:border before:border-dashed before:border-line",
-        "before:transition-opacity before:duration-500"
-      )}
-    >
-      <BrandMark className="-translate-y-1 opacity-0 transition-[opacity,translate] duration-300 group-data-[visible=true]/mark-motion:translate-y-0 group-data-[visible=true]/mark-motion:opacity-100" />
+    <div data-visible={visible} className="group/mark-motion flex">
+      <ChanhDaiMark className="-translate-y-1 opacity-0 transition-[opacity,translate] duration-300 group-data-[visible=true]/mark-motion:translate-y-0 group-data-[visible=true]/mark-motion:opacity-100" />
     </div>
   )
 }
@@ -57,5 +48,5 @@ function BrandMarkMotion() {
 export function SiteHeaderMark() {
   const pathname = usePathname()
   const isHome = ["/", "/index"].includes(pathname)
-  return isHome ? <BrandMarkMotion /> : <BrandMark />
+  return isHome ? <ChanhDaiMarkMotion /> : <ChanhDaiMark />
 }

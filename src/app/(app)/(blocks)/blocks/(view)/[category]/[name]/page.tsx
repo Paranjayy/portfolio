@@ -1,24 +1,23 @@
-import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react"
-import type { Metadata } from "next"
-import Link from "next/link"
 import { cache } from "react"
+import type { Metadata, Route } from "next"
+import Link from "next/link"
+import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react"
 
-import { BlockDisplay } from "@/app/(preview)/components/block-display"
+import { blockCategories } from "@/config/registry"
+import { X_HANDLE } from "@/config/site"
+import { getAllBlockStaticParams } from "@/lib/blocks"
+import { jsonLdBreadcrumbList, JsonLdScript } from "@/lib/json-ld"
+import { getRegistryItem } from "@/lib/registry"
+import { Button } from "@/components/ui/button"
+import { Kbd } from "@/components/ui/kbd"
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/base/ui/tooltip"
-import { Button } from "@/components/ui/button"
-import { Kbd } from "@/components/ui/kbd"
-import { registryCategories } from "@/config/registry"
-import { X_HANDLE } from "@/config/site"
-import { PostKeyboardShortcuts } from "@/features/blog/components/post-keyboard-shortcuts"
-import { PostShareMenu } from "@/features/blog/components/post-share-menu"
-import { getAllBlockStaticParams } from "@/lib/blocks"
-import { getRegistryItem } from "@/lib/registry"
-import { cn } from "@/lib/utils"
-import type { PageProps } from "@/types/next"
+import { BlockDisplay } from "@/app/(preview)/components/block-display"
+import { DocKeyboardShortcuts } from "@/features/doc/components/doc-keyboard-shortcuts"
+import { DocShareMenu } from "@/features/doc/components/doc-share-menu"
 
 export const revalidate = false
 export const dynamic = "force-static"
@@ -36,7 +35,7 @@ const getCachedRegistryItem = cache(async (name: string) => {
 
 export async function generateMetadata({
   params,
-}: PageProps): Promise<Metadata> {
+}: PageProps<"/blocks/[category]/[name]">): Promise<Metadata> {
   const { category, name } = await params
 
   const item = await getCachedRegistryItem(name)
@@ -76,7 +75,9 @@ export async function generateMetadata({
   }
 }
 
-export default async function BlockViewPage({ params }: PageProps) {
+export default async function BlockViewPage({
+  params,
+}: PageProps<"/blocks/[category]/[name]">) {
   const { category, name } = await params
 
   const blocks = await getCachedStaticParams()
@@ -86,13 +87,34 @@ export default async function BlockViewPage({ params }: PageProps) {
     `${category}/${name}`
   )
 
-  const categoryItem = registryCategories.find((c) => c.slug === category)
+  const categoryItem = blockCategories.find((c) => c.name === category)
 
   return (
     <>
-      <PostKeyboardShortcuts
-        previous={previous ? `/blocks/${previous}` : null}
-        next={next ? `/blocks/${next}` : null}
+      <JsonLdScript
+        data={jsonLdBreadcrumbList([
+          {
+            name: "Home",
+            href: "/",
+          },
+          {
+            name: "Blocks",
+            href: "/blocks",
+          },
+          {
+            name: categoryItem?.title || category,
+            href: `/blocks/${category}`,
+          },
+          {
+            name,
+            href: `/blocks/${category}/${name}`,
+          },
+        ])}
+      />
+
+      <DocKeyboardShortcuts
+        previous={previous ? (`/blocks/${previous}` as Route) : null}
+        next={next ? (`/blocks/${next}` as Route) : null}
       />
 
       <div className="screen-line-bottom flex h-px" />
@@ -106,12 +128,12 @@ export default async function BlockViewPage({ params }: PageProps) {
         >
           <Link href={`/blocks/${category}`}>
             <ArrowLeftIcon />
-            {categoryItem?.name || "Blocks"}
+            {categoryItem?.title || "Blocks"}
           </Link>
         </Button>
 
         <div className="flex items-center gap-2">
-          <PostShareMenu title={name} url={`/blocks/${category}/${name}`} />
+          <DocShareMenu title={name} url={`/blocks/${category}/${name}`} />
 
           {previous && (
             <Tooltip>
@@ -178,12 +200,7 @@ export default async function BlockViewPage({ params }: PageProps) {
 
       <div className="screen-line-top h-px" />
 
-      <div
-        className={cn(
-          "relative h-8 before:absolute before:left-[-100vw] before:-z-1 before:h-full before:w-[200vw]",
-          "before:bg-[repeating-linear-gradient(315deg,var(--pattern-foreground)_0,var(--pattern-foreground)_1px,transparent_0,transparent_50%)] before:bg-size-[10px_10px] before:[--pattern-foreground:var(--color-line)]/56"
-        )}
-      />
+      <div className="stripe-divider" />
     </>
   )
 }

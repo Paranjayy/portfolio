@@ -2,12 +2,12 @@
 
 import { createContext, useContext, useEffect, useRef, useState } from "react"
 
+import { Collapsible as CollapsibleRoot } from "@/components/ui/collapsible"
 import type {
   ChevronDownIconHandle,
   ChevronDownIconProps,
 } from "@/components/animated-icons/chevron-down-icon"
 import { ChevronDownIcon } from "@/components/animated-icons/chevron-down-icon"
-import { Collapsible as CollapsibleRoot } from "@/components/ui/collapsible"
 import type {
   ChevronsUpDownIconHandle,
   ChevronsUpDownIconProps,
@@ -74,7 +74,9 @@ function useCollapsibleAnimation<
   }, [open, ref])
 }
 
-function CollapsibleChevronsIcon(props: Omit<ChevronsUpDownIconProps, "ref">) {
+function CollapsibleChevronsUpDownIcon(
+  props: Omit<ChevronsUpDownIconProps, "ref">
+) {
   const ref = useRef<ChevronsUpDownIconHandle>(null)
   useCollapsibleAnimation(ref)
   return <ChevronsUpDownIcon ref={ref} {...props} />
@@ -89,7 +91,7 @@ function CollapsibleChevronDownIcon(props: Omit<ChevronDownIconProps, "ref">) {
 export {
   CollapsibleWithContext as Collapsible,
   CollapsibleChevronDownIcon,
-  CollapsibleChevronsIcon,
+  CollapsibleChevronsUpDownIcon,
   useCollapsible,
   useCollapsibleAnimation,
 }

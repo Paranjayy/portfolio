@@ -1,13 +1,13 @@
 import { CodeXmlIcon, LightbulbIcon } from "lucide-react"
 
-import type { ExperienceItemType } from "@/registry/components/work-experience"
-import { WorkExperience } from "@/registry/components/work-experience"
+import type { ExperienceItemType } from "@/registry/transformed/components/work-experience"
+import { WorkExperience } from "@/registry/transformed/components/work-experience"
 
 export function Experience01() {
   return (
-    <div className="max-w-screen overflow-x-hidden">
-      <div className="container mx-auto px-4 py-8">
-        <div className="border-x border-line">
+    <div className="max-w-screen overflow-x-clip">
+      <div className="container mx-auto px-4">
+        <div className="border-x border-line py-8">
           <h2 className="screen-line-top screen-line-bottom ml-4 font-heading text-3xl font-semibold tracking-tight">
             Experience
           </h2>
@@ -27,7 +27,7 @@ const EXPERIENCE: ExperienceItemType[] = [
     id: "shadcncraft",
     companyName: "shadcncraft",
     companyLogo: "https://assets.chanhdai.com/images/companies/shadcncraft.svg",
-    companyWebsite: "https://shadcncraft.com",
+    companyWebsite: "https://shadcncraft.com?atp=ncdai",
     positions: [
       {
         id: "1",

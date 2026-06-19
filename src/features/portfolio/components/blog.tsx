@@ -1,21 +1,30 @@
-import { ArrowRightIcon } from "lucide-react"
 import Link from "next/link"
+import { ArrowRightIcon } from "lucide-react"
 
+import { cn } from "@/lib/utils"
 import { Button } from "@/components/base/ui/button"
 import { PostItem } from "@/features/blog/components/post-item"
 import { getAllDocs } from "@/features/doc/data/documents"
+import {
+  Panel,
+  PanelHeader,
+  PanelTitle,
+  PanelTitleSup,
+} from "@/features/portfolio/components/panel"
+import { PanelTitleCopy } from "@/features/portfolio/components/panel-title-copy"
 
-import { Panel, PanelHeader, PanelTitle, PanelTitleSup } from "./panel"
+const ID = "blog"
 
 export function Blog() {
   const allPosts = getAllDocs()
 
   return (
-    <Panel id="blog">
+    <Panel id={ID}>
       <PanelHeader>
         <PanelTitle>
-          Blog
+          <a href={`#${ID}`}>Blog</a>
           <PanelTitleSup>({allPosts.length})</PanelTitleSup>
+          <PanelTitleCopy id={ID} />
         </PanelTitle>
       </PanelHeader>
 
@@ -25,16 +34,25 @@ export function Blog() {
           <div className="border-l border-line"></div>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          {allPosts.slice(0, 4).map((post) => (
-            <PostItem key={post.slug} post={post} imageLoading="lazy" />
+        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {allPosts.slice(0, 6).map((post) => (
+            <li
+              key={post.slug}
+              className={cn(
+                "max-sm:screen-line-top max-sm:screen-line-bottom",
+                "sm:nth-[2n+1]:screen-line-top sm:nth-[2n+1]:screen-line-bottom"
+              )}
+            >
+              <PostItem post={post} headingAs="h3" imageLoading="lazy" />
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
 
       <div className="screen-line-top flex justify-center py-2">
         <Button
-          className="gap-2 border-none pr-2.5 pl-3"
+          className="gap-2 pr-2.5 pl-3"
+          variant="secondary"
           size="sm"
           nativeButton={false}
           render={<Link href="/blog" />}

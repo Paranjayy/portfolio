@@ -1,12 +1,19 @@
-import { USER } from "@/features/portfolio/data/user"
+import type { Route } from "next"
+
 import type { NavItem } from "@/types/nav"
+import { USER } from "@/features/portfolio/data/user"
 
 export const SITE_INFO = {
   name: USER.displayName,
-  url: process.env.APP_URL || "https://paranjay.dev",
+  url: process.env.NEXT_PUBLIC_APP_URL || "https://chanhdai.com",
   ogImage: USER.ogImage,
   description: USER.bio,
   keywords: USER.keywords,
+}
+
+export const LICENSE = {
+  name: "MIT License",
+  url: "https://github.com/ncdai/chanhdai.com/blob/main/LICENSE",
 }
 
 export const META_THEME_COLORS = {
@@ -14,56 +21,40 @@ export const META_THEME_COLORS = {
   dark: "#09090b",
 }
 
-export const MAIN_NAV: NavItem[] = [
-  {
-    title: "Projects",
-    href: "/projects",
-    icon: "FolderGit2",
-  },
+export const MAIN_NAV: NavItem<Route>[] = [
   {
     title: "Components",
     href: "/components",
-    icon: "Cpu",
   },
   {
     title: "Blocks",
     href: "/blocks",
-    icon: "LayoutGrid",
   },
   {
     title: "Blog",
     href: "/blog",
-    icon: "PenTool",
-  },
-  {
-    title: "Gallery",
-    href: "/gallery",
-    icon: "Image",
   },
   {
     title: "Sponsors",
     href: "/sponsors",
-    icon: "Heart",
   },
 ]
 
-export const MOBILE_NAV: NavItem[] = [
+export const MOBILE_NAV: NavItem<Route>[] = [
   {
     title: "Home",
     href: "/",
-    icon: "Home",
   },
   ...MAIN_NAV,
 ]
 
-export const X_HANDLE = "@paranjaydotdev"
-export const GITHUB_USERNAME = "Paranjayy"
-export const SOURCE_CODE_GITHUB_REPO = "Paranjayy/chanhdai.com"
-export const SOURCE_CODE_GITHUB_URL =
-  "https://github.com/Paranjayy/chanhdai.com"
+export const X_HANDLE = "@iamncdai"
+export const GITHUB_USERNAME = "ncdai"
+export const SOURCE_CODE_GITHUB_REPO = "ncdai/chanhdai.com"
+export const SOURCE_CODE_GITHUB_URL = "https://github.com/ncdai/chanhdai.com"
 
-export const SPONSORSHIP_URL = "https://github.com/sponsors/Paranjayy"
+export const SPONSORSHIP_URL = "https://github.com/sponsors/ncdai"
 
 export const UTM_PARAMS = {
-  utm_source: "paranjay.dev",
+  utm_source: "chanhdai.com",
 }

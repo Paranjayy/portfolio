@@ -1,6 +1,9 @@
+import { IconCircle, IconCircleSquare, IconGridDots } from "@tabler/icons-react"
 import {
   BriefcaseBusinessIcon,
+  ChevronsUpDownIcon,
   CopyIcon,
+  Droplet,
   FileIcon,
   GalleryHorizontalEndIcon,
   LayoutGridIcon,
@@ -10,11 +13,12 @@ import {
   QuoteIcon,
   ScissorsIcon,
   SeparatorHorizontalIcon,
+  SquareDashed,
+  Star,
   SunDimIcon,
   TerminalIcon,
   TerminalSquareIcon,
   VibrateIcon,
-  WavesHorizontalIcon,
   ZapIcon,
   LaptopIcon,
   MusicIcon,
@@ -222,6 +226,30 @@ export const Icons = {
       />
     </svg>
   ),
+  dailydotdev: (props: IconProps) => (
+    <svg viewBox="0 0 24 24" aria-hidden {...props}>
+      <path
+        d="M18.29 5.706a1.405 1.405 0 0 0-1.987 0L4.716 17.296l1.324-2.65-2.65-2.649 3.312-3.311 2.65 2.65 1.986-1.988-3.642-3.642a1.405 1.405 0 0 0-1.987 0L.411 11.004a1.404 1.404 0 0 0 0 1.987l4.305 4.304.993.993a1.405 1.405 0 0 0 1.987 0L19.285 6.7l-.993-.994Zm-.332 3.647 2.65 2.65-4.306 4.305a1.404 1.404 0 1 0 1.986 1.986l5.299-5.298a1.404 1.404 0 0 0 0-1.987l-4.305-4.304-1.324 2.648Z"
+        fill="currentColor"
+      />
+    </svg>
+  ),
+  discord: (props: IconProps) => (
+    <svg viewBox="0 0 24 24" aria-hidden {...props}>
+      <path
+        d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"
+        fill="currentColor"
+      />
+    </svg>
+  ),
+  youtube: (props: IconProps) => (
+    <svg viewBox="0 0 24 24" aria-hidden {...props}>
+      <path
+        d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
+        fill="currentColor"
+      />
+    </svg>
+  ),
 
   shadcn: (props: IconProps) => (
     <svg viewBox="0 0 256 256" aria-hidden {...props}>
@@ -297,27 +325,6 @@ export const Icons = {
         d="M14.232 2c3.874 0 6.178 2.304 6.178 5.362 0 3.058-2.304 5.362-6.178 5.362h-1.957L22 22h-6.87l-7.401-7.034c-.53-.489-.775-1.06-.775-1.549 0-.693.49-1.305 1.427-1.57l3.813-1.02c1.447-.387 2.446-1.508 2.446-2.976 0-1.794-1.468-2.834-3.282-2.834H2V2h12.232Z"
         fill="currentColor"
       />
-    </svg>
-  ),
-
-  // Source: https://ui.shadcn.com
-  contrast: (props: IconProps) => (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-      {...props}
-    >
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-      <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
-      <path d="M12 3l0 18"></path>
-      <path d="M12 9l4.65 -4.65"></path>
-      <path d="M12 14.3l7.37 -7.37"></path>
-      <path d="M12 19.6l8.85 -8.85"></path>
     </svg>
   ),
 
@@ -629,21 +636,21 @@ export const Icons = {
     </svg>
   ),
 
-  // Source: tabler.io/icons
-  copy: (props: React.SVGProps<SVGSVGElement>) => (
+  // Designed by @ncdai
+  trustedRegistry: (props: React.SVGProps<SVGSVGElement>) => (
     <svg
+      xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      aria-hidden
       {...props}
     >
-      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-      <path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666" />
-      <path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" />
+      <path d="M6 18.5145C4.76261 17.1236 4 15.3344 4 13.0004V6.00045C4 5.73523 4.10536 5.48088 4.29289 5.29334C4.48043 5.10581 4.73478 5.00045 5 5.00045C7 5.00045 9.5 3.80045 11.24 2.28045C11.4519 2.09945 11.7214 2 12 2C12.2786 2 12.5481 2.09945 12.76 2.28045C14.51 3.81045 17 5.00045 19 5.00045C19.2652 5.00045 19.5196 5.10581 19.7071 5.29334C19.8946 5.48088 20 5.73523 20 6.00045V9" />
+      <path d="M19 17L14 22" />
+      <path d="M18 12L9 21" />
     </svg>
   ),
   laptop: (props: IconProps) => <LaptopIcon {...props} />,
@@ -773,9 +780,25 @@ export function ComponentIcon({ variant, ...props }: ComponentIconProps) {
       return <GalleryHorizontalEndIcon {...props} />
     }
 
-    case "github-stars":
+    case "github-stars": {
+      return <Star {...props} />
+    }
+
     case "github-contributions": {
-      return <Icons.github {...props} />
+      return (
+        // Icon designed by @ncdai
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          aria-hidden
+          {...props}
+        >
+          <path
+            fill="currentColor"
+            d="M11 5h2v2h-2zM15 17h2v2h-2zM7 17h2v2H7zM15 5h2v2h-2zM15 13h2v2h-2zM11 13h2v2h-2zM11 17h2v2h-2zM15 9h2v2h-2zM3 13h2v2H3zM3 17h2v2H3zM3 9h2v2H3zM3 5h2v2H3zM7 9h2v2H7zM19 17h2v2h-2zM19 9h2v2h-2zM7 5h2v2H7z"
+          />
+        </svg>
+      )
     }
 
     case "scroll-fade-effect": {
@@ -885,7 +908,44 @@ export function ComponentIcon({ variant, ...props }: ComponentIconProps) {
     }
 
     case "fluid-gradient-text": {
-      return <WavesHorizontalIcon {...props} />
+      return <Droplet {...props} />
+    }
+
+    case "brand-assets-menu": {
+      return <SquareDashed {...props} />
+    }
+
+    case "icon-swap": {
+      return <IconCircleSquare {...props} />
+    }
+
+    case "dot-grid-spotlight": {
+      return <IconGridDots {...props} />
+    }
+
+    case "spinning-circular-text": {
+      return <IconCircle {...props} />
+    }
+
+    case "mobius-loop-icon": {
+      return (
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden
+          {...props}
+        >
+          <path d="M 6 16 C 11 16 13 8 18 8 C 23.333 8 23.333 16 18 16 C 13 16 11 8 6 8 C 0.667 8 0.667 16 6 16 Z" />
+        </svg>
+      )
+    }
+
+    case "chevrons-up-down-icon": {
+      return <ChevronsUpDownIcon {...props} />
     }
 
     default: {

@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server"
+import { decodeEmail, decodePhoneNumber } from "@/utils/string"
 import sharp from "sharp"
 import VCard from "vcard-creator"
 
 import { USER } from "@/features/portfolio/data/user"
-import { decodeEmail } from "@/utils/string"
 
 export const revalidate = false
 export const dynamic = "force-static"
@@ -14,8 +14,9 @@ export async function GET() {
 
   card
     .addName(USER.lastName, USER.firstName)
+    .addPhoneNumber(decodePhoneNumber(USER.phoneNumberB64))
     .addAddress(USER.address)
-    .addEmail(decodeEmail(USER.email))
+    .addEmail(decodeEmail(USER.emailB64))
     .addURL(USER.website)
 
   const photo = await getVCardPhoto(USER.avatar)

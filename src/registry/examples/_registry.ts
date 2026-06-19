@@ -1,6 +1,5 @@
-import type { Registry } from "shadcn/schema"
-
 import { getRegistryItemUrl } from "@/utils/registry"
+import type { Registry } from "shadcn/schema"
 
 export const examples: Registry["items"] = [
   {
@@ -59,6 +58,22 @@ export const examples: Registry["items"] = [
     ],
   },
   {
+    name: "apple-hello-effect-languages-demo",
+    type: "registry:example",
+    registryDependencies: [
+      getRegistryItemUrl("apple-hello-effect-english"),
+      getRegistryItemUrl("apple-hello-effect-hindi"),
+      getRegistryItemUrl("apple-hello-effect-spanish"),
+      getRegistryItemUrl("apple-hello-effect-vietnamese"),
+    ],
+    files: [
+      {
+        path: "examples/apple-hello-effect-languages-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "theme-switcher-demo",
     type: "registry:example",
     registryDependencies: [getRegistryItemUrl("theme-switcher")],
@@ -103,12 +118,12 @@ export const examples: Registry["items"] = [
     ],
   },
   {
-    name: "shimmering-text-demo-01",
+    name: "shimmering-text-demo",
     type: "registry:example",
     registryDependencies: [getRegistryItemUrl("shimmering-text")],
     files: [
       {
-        path: "examples/shimmering-text-demo-01.tsx",
+        path: "examples/shimmering-text-demo.tsx",
         type: "registry:example",
       },
     ],
@@ -125,7 +140,7 @@ export const examples: Registry["items"] = [
     ],
   },
   {
-    name: "slide-to-unlock-demo-01",
+    name: "slide-to-unlock-demo",
     type: "registry:example",
     registryDependencies: [
       getRegistryItemUrl("slide-to-unlock"),
@@ -133,7 +148,7 @@ export const examples: Registry["items"] = [
     ],
     files: [
       {
-        path: "examples/slide-to-unlock-demo-01.tsx",
+        path: "examples/slide-to-unlock-demo.tsx",
         type: "registry:example",
       },
     ],
@@ -172,12 +187,12 @@ export const examples: Registry["items"] = [
     ],
   },
   {
-    name: "testimonials-marquee-demo-01",
+    name: "testimonials-marquee-demo",
     type: "registry:example",
     registryDependencies: [getRegistryItemUrl("testimonials-marquee")],
     files: [
       {
-        path: "examples/testimonials-marquee-demo-01.tsx",
+        path: "examples/testimonials-marquee-demo.tsx",
         type: "registry:example",
       },
     ],
@@ -205,12 +220,12 @@ export const examples: Registry["items"] = [
     ],
   },
   {
-    name: "scroll-fade-effect-demo-01",
+    name: "scroll-fade-effect-demo",
     type: "registry:example",
     registryDependencies: [getRegistryItemUrl("scroll-fade-effect")],
     files: [
       {
-        path: "examples/scroll-fade-effect-demo-01.tsx",
+        path: "examples/scroll-fade-effect-demo.tsx",
         type: "registry:example",
       },
     ],
@@ -267,12 +282,12 @@ export const examples: Registry["items"] = [
     ],
   },
   {
-    name: "code-block-command-convert-demo",
+    name: "code-block-command-convert",
     type: "registry:example",
     registryDependencies: [getRegistryItemUrl("code-block-command")],
     files: [
       {
-        path: "examples/code-block-command-convert-demo.tsx",
+        path: "examples/code-block-command-convert.tsx",
         type: "registry:example",
       },
     ],
@@ -300,46 +315,35 @@ export const examples: Registry["items"] = [
     ],
   },
   {
-    name: "testimonial-spotlight-demo-01",
+    name: "testimonial-spotlight-demo",
     type: "registry:example",
     registryDependencies: [getRegistryItemUrl("testimonial-spotlight")],
     files: [
       {
-        path: "examples/testimonial-spotlight-demo-01.tsx",
+        path: "examples/testimonial-spotlight-demo.tsx",
         type: "registry:example",
       },
     ],
   },
   {
-    name: "testimonial-spotlight-demo-02",
-    type: "registry:example",
-    registryDependencies: [getRegistryItemUrl("testimonial-spotlight")],
-    files: [
-      {
-        path: "examples/testimonial-spotlight-demo-02.tsx",
-        type: "registry:example",
-      },
-    ],
-  },
-  {
-    name: "glow-card-grid-demo-01",
+    name: "glow-card-grid-demo",
     type: "registry:example",
     registryDependencies: [getRegistryItemUrl("glow-card-grid")],
     files: [
       {
-        path: "examples/glow-card-grid-demo-01.tsx",
+        path: "examples/glow-card-grid-demo.tsx",
         type: "registry:example",
       },
     ],
   },
   {
-    name: "glow-card-grid-dialkit-demo",
+    name: "glow-card-grid-dialkit",
     type: "registry:example",
     dependencies: ["dialkit"],
     registryDependencies: [getRegistryItemUrl("glow-card-grid")],
     files: [
       {
-        path: "examples/glow-card-grid-dialkit-demo.tsx",
+        path: "examples/glow-card-grid-dialkit.tsx",
         type: "registry:example",
       },
     ],
@@ -377,7 +381,7 @@ export const examples: Registry["items"] = [
     type: "registry:example",
     files: [
       {
-        path: "examples/theme-toggle-effect-demo/theme-toggle-effect-demo.tsx",
+        path: "examples/theme-toggle-effect-demo.tsx",
         type: "registry:example",
       },
     ],
@@ -405,6 +409,39 @@ export const examples: Registry["items"] = [
     ],
   },
   {
+    name: "github-contributions-default-theme",
+    type: "registry:example",
+    registryDependencies: [getRegistryItemUrl("github-contributions")],
+    files: [
+      {
+        path: "examples/github-contributions-default-theme.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "github-contributions-winter-theme",
+    type: "registry:example",
+    registryDependencies: [getRegistryItemUrl("github-contributions")],
+    files: [
+      {
+        path: "examples/github-contributions-winter-theme.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "github-contributions-halloween-theme",
+    type: "registry:example",
+    registryDependencies: [getRegistryItemUrl("github-contributions")],
+    files: [
+      {
+        path: "examples/github-contributions-halloween-theme.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
     name: "toc-minimap-demo",
     type: "registry:example",
     registryDependencies: [getRegistryItemUrl("toc-minimap")],
@@ -416,29 +453,106 @@ export const examples: Registry["items"] = [
     ],
   },
   {
-    name: "fluid-gradient-text-demo-01",
+    name: "fluid-gradient-text-demo",
     type: "registry:example",
     registryDependencies: [getRegistryItemUrl("fluid-gradient-text")],
     files: [
       {
-        path: "examples/fluid-gradient-text-demo-01.tsx",
+        path: "examples/fluid-gradient-text-demo.tsx",
         type: "registry:example",
       },
     ],
   },
   {
-    name: "fluid-gradient-text-dialkit-demo",
+    name: "fluid-gradient-text-dialkit",
     type: "registry:example",
     dependencies: ["dialkit"],
     registryDependencies: [getRegistryItemUrl("fluid-gradient-text")],
     files: [
       {
-        path: "examples/fluid-gradient-text-dialkit-demo.tsx",
+        path: "examples/fluid-gradient-text-dialkit.tsx",
         type: "registry:example",
       },
     ],
     meta: {
       previewClassName: "min-h-svh place-items-center-safe content-center-safe",
     },
+  },
+  {
+    name: "brand-assets-menu-demo",
+    type: "registry:example",
+    registryDependencies: [getRegistryItemUrl("brand-assets-menu")],
+    files: [
+      {
+        path: "examples/brand-assets-menu-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "icon-swap-demo",
+    type: "registry:example",
+    registryDependencies: [getRegistryItemUrl("icon-swap")],
+    files: [
+      {
+        path: "examples/icon-swap-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "dot-grid-spotlight-demo",
+    type: "registry:example",
+    registryDependencies: [getRegistryItemUrl("dot-grid-spotlight")],
+    files: [
+      {
+        path: "examples/dot-grid-spotlight-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "spinning-circular-text-demo",
+    type: "registry:example",
+    registryDependencies: [getRegistryItemUrl("spinning-circular-text")],
+    files: [
+      {
+        path: "examples/spinning-circular-text-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "spinning-circular-text-demo-2",
+    type: "registry:example",
+    registryDependencies: [getRegistryItemUrl("spinning-circular-text")],
+    files: [
+      {
+        path: "examples/spinning-circular-text-demo-2.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "mobius-loop-icon-demo",
+    type: "registry:example",
+    registryDependencies: [getRegistryItemUrl("mobius-loop-icon")],
+    files: [
+      {
+        path: "examples/mobius-loop-icon-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "chevrons-up-down-icon-demo",
+    type: "registry:example",
+    registryDependencies: [getRegistryItemUrl("chevrons-up-down-icon")],
+    files: [
+      {
+        path: "examples/chevrons-up-down-icon-demo.tsx",
+        type: "registry:example",
+      },
+    ],
   },
 ]

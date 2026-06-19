@@ -2,6 +2,9 @@
 
 import { useMemo } from "react"
 
+import type { NpmCommands } from "@/types/unist"
+import type { PackageManager } from "@/hooks/use-package-manager"
+import { usePackageManager } from "@/hooks/use-package-manager"
 import {
   Tabs,
   TabsContent,
@@ -9,9 +12,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/base/ui/tabs"
-import type { PackageManager } from "@/hooks/use-package-manager"
-import { usePackageManager } from "@/hooks/use-package-manager"
-import type { NpmCommands } from "@/types/unist"
+import { IconSwap, IconSwapItem } from "@/registry/components/icon-swap"
 
 import { CopyButton } from "./copy-button"
 import { getIconForPackageManager } from "./icons"
@@ -43,8 +44,12 @@ export function CodeBlockCommand({
         }}
       >
         <div className="px-3">
-          <TabsList className="h-10 rounded-none bg-transparent p-0 dark:bg-transparent [&_svg]:mr-2 [&_svg]:size-4 [&_svg]:text-muted-foreground">
-            {getIconForPackageManager(packageManager)}
+          <TabsList className="h-10 rounded-none bg-transparent p-0 inset-ring-0 dark:bg-transparent [&_svg]:size-4 [&_svg]:text-muted-foreground">
+            <IconSwap>
+              <IconSwapItem className="mr-2" key={packageManager}>
+                {getIconForPackageManager(packageManager)}
+              </IconSwapItem>
+            </IconSwap>
 
             {Object.entries(tabs).map(([key]) => {
               return (
@@ -58,7 +63,7 @@ export function CodeBlockCommand({
               )
             })}
 
-            <TabsIndicator className="h-0.5 translate-y-px rounded-none bg-foreground shadow-none dark:bg-foreground" />
+            <TabsIndicator className="h-0.5 translate-y-px rounded-none bg-foreground ring-0 dark:bg-foreground" />
           </TabsList>
         </div>
 
@@ -70,9 +75,9 @@ export function CodeBlockCommand({
                   <code
                     data-slot="code-block"
                     data-language="bash"
+                    data-line=""
                     className="font-mono text-sm/none text-muted-foreground"
                   >
-                    <span className="select-none">$ </span>
                     {value}
                   </code>
                 </pre>

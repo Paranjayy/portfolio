@@ -1,10 +1,15 @@
-import { getTableOfContents } from "fumadocs-core/content/toc"
-import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react"
-import type { Metadata } from "next"
+import type { Metadata, Route } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
+import { getTableOfContents } from "fumadocs-core/content/toc"
+import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react"
 import type { BlogPosting as PageSchema, WithContext } from "schema-dts"
 
+import { SITE_INFO, X_HANDLE } from "@/config/site"
+import { jsonLdBreadcrumbList, JsonLdScript } from "@/lib/json-ld"
+import { Button } from "@/components/ui/button"
+import { Kbd } from "@/components/ui/kbd"
+import { Prose } from "@/components/ui/typography"
 import {
   Tooltip,
   TooltipContent,
@@ -13,13 +18,7 @@ import {
 import { MDX } from "@/components/mdx"
 import { TOCInline } from "@/components/toc-inline"
 import { TOCMinimap } from "@/components/toc-minimap"
-import { Button } from "@/components/ui/button"
-import { Kbd } from "@/components/ui/kbd"
-import { Prose } from "@/components/ui/typography"
-import { SITE_INFO, X_HANDLE } from "@/config/site"
-import { PostKeyboardShortcuts } from "@/features/blog/components/post-keyboard-shortcuts"
-import { LLMCopyButtonWithViewOptions } from "@/features/blog/components/post-page-actions"
-import { PostShareMenu } from "@/features/blog/components/post-share-menu"
+import { DocKeyboardShortcuts } from "@/features/doc/components/doc-keyboard-shortcuts"
 import {
   DocContainer,
   DocContentCol,
@@ -27,7 +26,9 @@ import {
   DocLeftCol,
   DocRightCol,
 } from "@/features/doc/components/doc-layout"
+import { LLMCopyButtonWithViewOptions } from "@/features/doc/components/doc-page-actions"
 import { DocPageRoot } from "@/features/doc/components/doc-page-root"
+import { DocShareMenu } from "@/features/doc/components/doc-share-menu"
 import {
   findNeighbour,
   getAllDocs,
@@ -35,8 +36,6 @@ import {
 } from "@/features/doc/data/documents"
 import type { Doc } from "@/features/doc/types/document"
 import { USER } from "@/features/portfolio/data/user"
-import { cn } from "@/lib/utils"
-import type { PageProps } from "@/types/next"
 
 export const revalidate = false
 export const dynamic = "force-static"
@@ -49,7 +48,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({
   params,
-}: PageProps): Promise<Metadata> {
+}: PageProps<"/blog/[slug]">): Promise<Metadata> {
   const slug = (await params).slug
   const doc = getDocBySlug(slug)
 
@@ -112,7 +111,7 @@ function getPageJsonLd(doc: Doc): WithContext<PageSchema> {
   }
 }
 
-export default async function Page({ params }: PageProps) {
+export default async function Page({ params }: PageProps<"/blog/[slug]">) {
   const slug = (await params).slug
   const doc = getDocBySlug(slug)
 
@@ -127,16 +126,28 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(getPageJsonLd(doc)).replace(/</g, "\\u003c"),
-        }}
+      <JsonLdScript data={getPageJsonLd(doc)} />
+
+      <JsonLdScript
+        data={jsonLdBreadcrumbList([
+          {
+            name: "Home",
+            href: "/",
+          },
+          {
+            name: "Blog",
+            href: "/blog",
+          },
+          {
+            name: doc.metadata.title,
+            href: `/blog/${slug}`,
+          },
+        ])}
       />
 
-      <PostKeyboardShortcuts
-        previous={previous ? `/blog/${previous.slug}` : null}
-        next={next ? `/blog/${next.slug}` : null}
+      <DocKeyboardShortcuts
+        previous={previous ? (`/blog/${previous.slug}` as Route) : null}
+        next={next ? (`/blog/${next.slug}` as Route) : null}
       />
 
       <DocPageRoot>
@@ -162,7 +173,7 @@ export default async function Page({ params }: PageProps) {
                 isComponent={doc.metadata.category === "components"}
               />
 
-              <PostShareMenu title={doc.metadata.title} url={getDocUrl(doc)} />
+              <DocShareMenu title={doc.metadata.title} url={getDocUrl(doc)} />
 
               {previous && (
                 <Tooltip>
@@ -226,14 +237,8 @@ export default async function Page({ params }: PageProps) {
             </div>
           </div>
 
-          <div className="screen-line-top screen-line-bottom">
-            <div
-              className={cn(
-                "h-8",
-                "before:absolute before:left-[-100vw] before:-z-1 before:h-full before:w-[200vw]",
-                "before:bg-[repeating-linear-gradient(315deg,var(--pattern-foreground)_0,var(--pattern-foreground)_1px,transparent_0,transparent_50%)] before:bg-size-[10px_10px] before:[--pattern-foreground:var(--color-line)]/56"
-              )}
-            />
+          <div className="screen-line-top screen-line-bottom py-px">
+            <div className="h-4" />
           </div>
 
           <h1
@@ -248,7 +253,7 @@ export default async function Page({ params }: PageProps) {
           <DocLeftCol />
 
           <DocContentCol>
-            <Prose className="px-4 pt-8">
+            <Prose className="px-(--page-padding) pt-8 [--page-padding:--spacing(4)]">
               <p className="text-muted-foreground">
                 {doc.metadata.description}
               </p>
@@ -264,7 +269,9 @@ export default async function Page({ params }: PageProps) {
           </DocContentCol>
 
           <DocRightCol>
-            <TOCMinimap items={toc} />
+            <div className="sticky top-[calc(var(--doc-cols-top,0)+(--spacing(3)))] translate-x-2 opacity-0 in-data-doc-cols-ready:opacity-100">
+              <TOCMinimap items={toc} />
+            </div>
           </DocRightCol>
         </DocGrid>
       </DocPageRoot>

@@ -1,29 +1,28 @@
-import type { Metadata } from "next"
 import { Fragment } from "react"
+import type { Metadata } from "next"
 
-import { BlockDisplay } from "@/app/(preview)/components/block-display"
-import { registryCategories } from "@/config/registry"
+import { blockCategories } from "@/config/registry"
 import { X_HANDLE } from "@/config/site"
 import { getAllBlockIds } from "@/lib/blocks"
-import { cn } from "@/lib/utils"
-import type { PageProps } from "@/types/next"
+import { jsonLdBreadcrumbList, JsonLdScript } from "@/lib/json-ld"
+import { BlockDisplay } from "@/app/(preview)/components/block-display"
 
 export const revalidate = false
 export const dynamic = "force-static"
 export const dynamicParams = false
 
 export async function generateStaticParams() {
-  return registryCategories.map((category) => ({
-    category: category.slug,
+  return blockCategories.map((category) => ({
+    category: category.name,
   }))
 }
 
 export async function generateMetadata({
   params,
-}: PageProps): Promise<Metadata> {
+}: PageProps<"/blocks/[category]">): Promise<Metadata> {
   const { category } = await params
 
-  const item = registryCategories.find((item) => item.slug === category)
+  const item = blockCategories.find((item) => item.name === category)
 
   if (!item) {
     return {}
@@ -32,7 +31,7 @@ export async function generateMetadata({
   const title = item.name
   const description = item.description
 
-  const categoryUrl = `/blocks/${item.slug}`
+  const categoryUrl = `/blocks/${item.name}`
   const ogImage = `/og/simple?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`
 
   return {
@@ -60,12 +59,34 @@ export async function generateMetadata({
   }
 }
 
-export default async function BlocksPage({ params }: PageProps) {
+export default async function BlocksPage({
+  params,
+}: PageProps<"/blocks/[category]">) {
   const { category } = await params
+
   const blockIds = await getAllBlockIds(["registry:block"], [category])
+
+  const categoryItem = blockCategories.find((item) => item.name === category)
 
   return (
     <>
+      <JsonLdScript
+        data={jsonLdBreadcrumbList([
+          {
+            name: "Home",
+            href: "/",
+          },
+          {
+            name: "Blocks",
+            href: "/blocks",
+          },
+          {
+            name: categoryItem?.title || category,
+            href: `/blocks/${category}`,
+          },
+        ])}
+      />
+
       {blockIds.map((blockId) => (
         <Fragment key={blockId}>
           <BlockDisplay name={blockId} />
@@ -79,12 +100,7 @@ export default async function BlocksPage({ params }: PageProps) {
 function Separator() {
   return (
     <div className="screen-line-top screen-line-bottom">
-      <div
-        className={cn(
-          "h-8 before:absolute before:left-[-100vw] before:-z-1 before:h-full before:w-[200vw]",
-          "before:bg-[repeating-linear-gradient(315deg,var(--pattern-foreground)_0,var(--pattern-foreground)_1px,transparent_0,transparent_50%)] before:bg-size-[10px_10px] before:[--pattern-foreground:var(--color-line)]/56"
-        )}
-      />
+      <div className="stripe-divider" />
     </div>
   )
 }

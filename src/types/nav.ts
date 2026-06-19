@@ -1,5 +1,4 @@
-export type NavItem = {
+export type NavItem<T extends string = string> = {
   title: string
-  href: string
-  icon?: string
+  href: T
 }

@@ -1,9 +1,12 @@
 import { format } from "date-fns"
 import { Crown, Paperclip } from "lucide-react"
 
+import { cn } from "@/lib/utils"
+import { Separator } from "@/components/ui/separator"
+import { Prose } from "@/components/ui/typography"
 import {
   Collapsible,
-  CollapsibleChevronsIcon,
+  CollapsibleChevronsUpDownIcon,
 } from "@/components/base/collapsible-animated"
 import {
   CollapsibleContent,
@@ -15,10 +18,7 @@ import {
   TooltipTrigger,
 } from "@/components/base/ui/tooltip"
 import { Markdown } from "@/components/markdown"
-import { Separator } from "@/components/ui/separator"
-import { Prose } from "@/components/ui/typography"
 import type { Award } from "@/features/portfolio/types/awards"
-import { cn } from "@/lib/utils"
 
 export function AwardItem({
   className,
@@ -38,7 +38,7 @@ export function AwardItem({
             "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:text-muted-foreground [&_svg:not([class*='size-'])]:size-4"
           )}
         >
-          <Crown />
+          {award.icon ?? <Crown />}
         </div>
 
         <div className="flex-1 border-l border-dashed border-line">
@@ -48,36 +48,38 @@ export function AwardItem({
                 {award.title}
               </h3>
 
-              <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
-                <dl>
+              <dl className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
+                <div>
                   <dt className="sr-only">Prize</dt>
                   <dd>{award.prize}</dd>
-                </dl>
+                </div>
 
                 <Separator
                   className="data-vertical:h-4 data-vertical:self-center"
                   orientation="vertical"
+                  aria-hidden
                 />
 
-                <dl>
+                <div>
                   <dt className="sr-only">Awarded in</dt>
                   <dd>
                     <time dateTime={new Date(award.date).toISOString()}>
                       {format(new Date(award.date), "MM.yyyy")}
                     </time>
                   </dd>
-                </dl>
+                </div>
 
                 <Separator
                   className="data-vertical:h-4 data-vertical:self-center"
                   orientation="vertical"
+                  aria-hidden
                 />
 
-                <dl>
+                <div>
                   <dt className="sr-only">Received in Grade</dt>
                   <dd>{award.grade}</dd>
-                </dl>
-              </div>
+                </div>
+              </dl>
             </div>
 
             {award.referenceLink && (
@@ -103,7 +105,7 @@ export function AwardItem({
 
             {canExpand && (
               <div className="shrink-0 text-muted-foreground [&_svg]:size-4">
-                <CollapsibleChevronsIcon duration={0.15} />
+                <CollapsibleChevronsUpDownIcon duration={0.15} />
               </div>
             )}
           </CollapsibleTrigger>

@@ -1,6 +1,5 @@
-import type { Registry } from "shadcn/schema"
-
 import { getRegistryItemUrl, getRegistryItemUrls } from "@/utils/registry"
+import type { Registry } from "shadcn/schema"
 
 export const blocks: Registry["items"] = [
   {
@@ -18,9 +17,11 @@ export const blocks: Registry["items"] = [
       {
         path: "blocks/login-01/components/login-form.tsx",
         type: "registry:component",
+        target: "@components/login-form.tsx",
       },
     ],
-    categories: ["application", "login"],
+    categories: ["application"],
+    meta: { createdAt: "2026-02-22" },
   },
   {
     name: "hero-01",
@@ -32,15 +33,17 @@ export const blocks: Registry["items"] = [
       {
         path: "blocks/hero-01/hero-01.tsx",
         type: "registry:component",
+        target: "@components/hero-01.tsx",
       },
       {
         path: "blocks/hero-01/components/hero-01-icons.tsx",
         type: "registry:component",
+        target: "@components/hero-01-icons.tsx",
       },
     ],
-    categories: ["marketing", "hero"],
+    categories: ["marketing"],
     meta: {
-      previewClassName: "pt-8",
+      createdAt: "2026-03-12",
     },
   },
   {
@@ -54,13 +57,18 @@ export const blocks: Registry["items"] = [
       {
         path: "blocks/blog-01/blog-01.tsx",
         type: "registry:component",
+        target: "@components/blog-01.tsx",
       },
       {
         path: "blocks/blog-01/components/article-item.tsx",
         type: "registry:component",
+        target: "@components/article-item.tsx",
       },
     ],
-    categories: ["content", "blog"],
+    categories: ["marketing"],
+    meta: {
+      createdAt: "2026-03-13",
+    },
   },
   {
     name: "blog-02",
@@ -73,13 +81,18 @@ export const blocks: Registry["items"] = [
       {
         path: "blocks/blog-02/blog-02.tsx",
         type: "registry:component",
+        target: "@components/blog-02.tsx",
       },
       {
         path: "blocks/blog-02/components/article-item.tsx",
         type: "registry:component",
+        target: "@components/article-item.tsx",
       },
     ],
-    categories: ["content", "blog"],
+    categories: ["marketing"],
+    meta: {
+      createdAt: "2026-03-18",
+    },
   },
   {
     name: "testimonials-01",
@@ -94,14 +107,17 @@ export const blocks: Registry["items"] = [
       {
         path: "blocks/testimonials-01/testimonials-01.tsx",
         type: "registry:component",
+        target: "@components/testimonials-01.tsx",
       },
       {
         path: "blocks/testimonials-01/components/testimonial-list.tsx",
         type: "registry:component",
+        target: "@components/testimonial-list.tsx",
       },
     ],
-    categories: ["marketing", "testimonials"],
+    categories: ["marketing"],
     meta: {
+      createdAt: "2026-03-20",
       previewClassName: "container mx-auto min-h-svh content-center-safe",
     },
   },
@@ -118,13 +134,19 @@ export const blocks: Registry["items"] = [
       {
         path: "blocks/testimonials-02/testimonials-02.tsx",
         type: "registry:component",
+        target: "@components/testimonials-02.tsx",
       },
       {
         path: "blocks/testimonials-02/components/testimonial-list.tsx",
         type: "registry:component",
+        target: "@components/testimonial-list.tsx",
       },
     ],
-    categories: ["marketing", "testimonials"],
+    categories: ["marketing"],
+    meta: {
+      createdAt: "2026-03-29",
+      previewClassName: "min-h-svh content-center-safe",
+    },
   },
   {
     name: "experience-01",
@@ -136,9 +158,13 @@ export const blocks: Registry["items"] = [
       {
         path: "blocks/experience-01/experience-01.tsx",
         type: "registry:component",
+        target: "@components/experience-01.tsx",
       },
     ],
-    categories: ["content", "portfolio"],
+    categories: ["marketing"],
+    meta: {
+      createdAt: "2026-03-28",
+    },
   },
   {
     name: "team-01",
@@ -150,39 +176,57 @@ export const blocks: Registry["items"] = [
       {
         path: "blocks/team-01/team-01.tsx",
         type: "registry:component",
+        target: "@components/team-01.tsx",
       },
     ],
-    categories: ["content", "team"],
+    categories: ["marketing"],
     meta: {
+      createdAt: "2026-03-30",
       previewClassName: "min-h-svh place-items-center-safe content-center-safe",
     },
   },
   {
-    name: "github-contributions-01",
-    title: "GitHub Contributions 01",
-    description: "A GitHub contributions graph with mock data.",
+    name: "metrics-01",
+    title: "Metrics 01",
+    description: "A metrics section with a line chart.",
     type: "registry:block",
-    registryDependencies: ["github-contributions"],
+    dependencies: ["date-fns"],
+    registryDependencies: ["@bklit/line-chart", getRegistryItemUrl("style")],
     files: [
       {
-        path: "blocks/github-contributions-01/github-contributions-01.tsx",
+        path: "blocks/metrics-01/metrics-01.tsx",
         type: "registry:component",
+        target: "@components/metrics-01.tsx",
+      },
+      {
+        path: "blocks/metrics-01/components/metric.tsx",
+        type: "registry:component",
+        target: "@components/metric.tsx",
       },
     ],
-    categories: ["content", "portfolio"],
+    categories: ["marketing"],
+    meta: {
+      createdAt: "2026-05-24",
+      previewClassName: "min-h-svh content-center-safe",
+    },
   },
   {
-    name: "wakatime-01",
-    title: "WakaTime 01",
-    description: "A WakaTime coding activity block with mock data.",
+    name: "social-links-01",
+    title: "Social Links 01",
+    description: "A social links section with a lined grid layout.",
     type: "registry:block",
-    registryDependencies: [getRegistryItemUrl("wakatime-stats")],
+    registryDependencies: [getRegistryItemUrl("style")],
     files: [
       {
-        path: "blocks/wakatime-01/wakatime-01.tsx",
+        path: "blocks/social-links-01/social-links-01.tsx",
         type: "registry:component",
+        target: "@components/social-links-01.tsx",
       },
     ],
-    categories: ["content", "portfolio"],
+    categories: ["marketing"],
+    meta: {
+      createdAt: "2026-06-16",
+      previewClassName: "min-h-svh content-center-safe",
+    },
   },
 ]

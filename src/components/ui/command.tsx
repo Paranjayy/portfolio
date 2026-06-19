@@ -1,8 +1,9 @@
 "use client"
 
-import { Command as CommandPrimitive } from "cmdk"
 import * as React from "react"
+import { Command as CommandPrimitive } from "cmdk"
 
+import { cn } from "@/lib/utils"
 import {
   Dialog,
   DialogContent,
@@ -10,7 +11,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { cn } from "@/lib/utils"
 
 function Command({
   className,
@@ -41,20 +41,23 @@ function CommandDialog({
   return (
     <Dialog {...props}>
       <DialogHeader className="sr-only">
-        <DialogTitle>{title}</DialogTitle>
+        <DialogTitle asChild>
+          <span>{title}</span>
+        </DialogTitle>
         <DialogDescription>{description}</DialogDescription>
       </DialogHeader>
 
       <DialogContent
         data-slot="command-dialog-content"
-        className="bg-popover p-0 max-sm:top-16 max-sm:translate-y-0 sm:max-w-lg"
+        className="rounded-2xl bg-surface p-0 outline-none max-sm:top-16 max-sm:translate-y-0 sm:max-w-lg"
         showCloseButton={false}
         showOverlay={false}
       >
         <Command
           className={cn(
+            "px-1 outline-none",
             "**:data-[slot=command-input-wrapper]:h-12 [&_[cmdk-input-wrapper]_svg]:size-5 **:[[cmdk-input]]:h-10",
-            "**:[[cmdk-group]]:px-2",
+            "**:[[cmdk-group]]:px-1",
             "**:[[cmdk-group-heading]]:px-2 **:[[cmdk-group-heading]]:font-medium **:[[cmdk-group-heading]]:text-muted-foreground",
             "[&_[cmdk-item]_svg]:size-5 **:[[cmdk-item]]:px-2 **:[[cmdk-item]]:py-2"
           )}
@@ -73,7 +76,7 @@ function CommandInput({
   return (
     <div
       data-slot="command-input-wrapper"
-      className="flex h-10 items-center gap-2 border-b px-4"
+      className="flex h-10 items-center gap-2 px-3"
     >
       <svg
         className="size-4 shrink-0 opacity-50"
@@ -110,7 +113,7 @@ function CommandList({
     <CommandPrimitive.List
       data-slot="command-list"
       className={cn(
-        "no-scrollbar max-h-80 scroll-py-2 overflow-x-hidden overflow-y-auto",
+        "no-scrollbar max-h-80 scroll-py-2 overflow-x-hidden overflow-y-auto outline-none",
         className
       )}
       {...props}
@@ -138,7 +141,7 @@ function CommandGroup({
     <CommandPrimitive.Group
       data-slot="command-group"
       className={cn(
-        "my-2 overflow-hidden px-2 text-foreground",
+        "mt-2 mb-1 overflow-hidden px-2 text-foreground",
         "**:[[cmdk-group-heading]]:px-2 **:[[cmdk-group-heading]]:py-2 **:[[cmdk-group-heading]]:text-xs **:[[cmdk-group-heading]]:font-medium **:[[cmdk-group-heading]]:text-muted-foreground",
         className
       )}

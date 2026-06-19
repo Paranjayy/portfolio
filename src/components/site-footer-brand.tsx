@@ -1,11 +1,18 @@
 "use client"
 
-import { motion, useMotionValue, useSpring } from "motion/react"
+import {
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+} from "motion/react"
 
 const VIEWBOX_WIDTH = 3200
 const DEFAULT_GRADIENT_X = 1600
 
 export function SiteFooterInteractiveLogotype() {
+  const shouldReduceMotion = useReducedMotion()
+
   const gradientX1Raw = useMotionValue(DEFAULT_GRADIENT_X)
   const gradientX1 = useSpring(gradientX1Raw, {
     stiffness: 200,
@@ -14,6 +21,8 @@ export function SiteFooterInteractiveLogotype() {
   })
 
   const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (shouldReduceMotion) return
+
     const container = event.currentTarget
     const containerRect = container.getBoundingClientRect()
     const mouseX = event.clientX - containerRect.left
@@ -26,11 +35,12 @@ export function SiteFooterInteractiveLogotype() {
   }
 
   const handleMouseLeave = () => {
+    if (shouldReduceMotion) return
     gradientX1Raw.set(DEFAULT_GRADIENT_X)
   }
 
   return (
-    <div className="screen-line-bottom after:z-1 after:bg-foreground/10">
+    <div className="screen-line-bottom after:z-1 after:bg-foreground/15">
       <div
         className="overflow-hidden"
         onMouseMove={handleMouseMove}
@@ -101,6 +111,15 @@ export function SiteFooterInteractiveLogotype() {
           </svg>
         </div>
       </div>
+
+      <div
+        className="pointer-events-none absolute bottom-0 left-1/2 hidden h-px w-[50%] max-w-full -translate-x-1/2 dark:block"
+        style={{
+          background:
+            "linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(255, 255, 255, 0) 0%, rgba(228, 228, 231, 0.3) 50%, rgba(0, 0, 0, 0) 100%)",
+        }}
+        aria-hidden
+      />
     </div>
   )
 }

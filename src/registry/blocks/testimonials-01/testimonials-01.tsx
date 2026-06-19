@@ -77,7 +77,7 @@ const TESTIMONIALS_2: TestimonialType[] = [
   {
     authorAvatar: "https://unavatar.io/x/MaxPrilutskiy",
     authorName: "Max Prilutskiy",
-    authorTagline: "Creator of Lingo.dev",
+    authorTagline: "CEO @Lingo.dev",
     url: "https://x.com/MaxPrilutskiy/status/1923952193893466379",
     quote: "i like your style! :)",
   },
@@ -112,7 +112,7 @@ const TESTIMONIALS_2: TestimonialType[] = [
   {
     authorAvatar: "https://unavatar.io/x/uixmat",
     authorName: "Matt",
-    authorTagline: "Building bklit.com & ui.bklit.com",
+    authorTagline: "Creator of ui.bklit.com",
     url: "https://x.com/uixmat/status/2023145872771436904",
     quote: "great work bro",
   },

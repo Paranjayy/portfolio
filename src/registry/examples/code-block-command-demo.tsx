@@ -1,16 +1,15 @@
 "use client"
 
-import { CodeBlockCommand } from "@/registry/components/code-block-command"
+import { CodeBlockCommand } from "@/registry/transformed/components/code-block-command"
 
 export default function CodeBlockCommandDemo() {
   return (
-    <div className="w-full max-w-md">
+    <div className="w-full max-w-sm">
       <CodeBlockCommand
-        prompt="Add the @ncdai/code-block-command component to my project"
-        pnpm="pnpm dlx shadcn add @ncdai/code-block-command"
-        yarn="yarn shadcn add @ncdai/code-block-command"
-        npm="npx shadcn add @ncdai/code-block-command"
-        bun="bunx --bun shadcn add @ncdai/code-block-command"
+        pnpm="pnpm dlx shadcn add button"
+        yarn="yarn shadcn add button"
+        npm="npx shadcn add button"
+        bun="bunx --bun shadcn add button"
       />
     </div>
   )

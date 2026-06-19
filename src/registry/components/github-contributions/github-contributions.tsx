@@ -1,9 +1,10 @@
 "use client"
 
-import { format } from "date-fns"
-import { LoaderIcon } from "lucide-react"
 import { use } from "react"
+import { format } from "date-fns"
 
+import { cn } from "@/lib/utils"
+import { Spinner } from "@/components/ui/spinner"
 import {
   Tooltip,
   TooltipContent,
@@ -22,15 +23,17 @@ import {
 export function GitHubContributions({
   contributions,
   githubProfileUrl,
+  className,
 }: {
   contributions: Promise<Activity[]>
   githubProfileUrl: string
+  className?: string
 }) {
   const data = use(contributions)
 
   return (
     <ContributionGraph
-      className="mx-auto py-2"
+      className={cn("mx-auto py-2", className)}
       data={data}
       blockSize={11}
       blockMargin={3}
@@ -88,7 +91,7 @@ export function GitHubContributions({
 export function GitHubContributionsFallback() {
   return (
     <div className="flex h-40.5 w-full items-center justify-center">
-      <LoaderIcon className="animate-spin text-muted-foreground" />
+      <Spinner className="text-muted-foreground" />
     </div>
   )
 }

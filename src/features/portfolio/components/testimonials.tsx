@@ -1,20 +1,15 @@
-import { ArrowUpRightIcon } from "lucide-react"
+"use client"
 
+import { useRef } from "react"
+import { useInView, usePageInView } from "motion/react"
+
+import { cn } from "@/lib/utils"
 import {
   Marquee,
   MarqueeContent,
   MarqueeFade,
   MarqueeItem,
 } from "@/components/kibo-ui/marquee"
-import { Button } from "@/components/ui/button"
-import { Panel } from "@/features/portfolio/components/panel"
-import { VerifiedIcon } from "@/features/portfolio/components/verified-icon"
-import {
-  TESTIMONIALS_1,
-  TESTIMONIALS_2,
-  TESTIMONIALS_PINNED,
-} from "@/features/portfolio/data/testimonials"
-import type { Testimonial as TestimonialType } from "@/features/portfolio/types/testimonials"
 import {
   Testimonial,
   TestimonialAuthor,
@@ -24,76 +19,50 @@ import {
   TestimonialAvatarImg,
   TestimonialAvatarRing,
   TestimonialQuote,
-  TestimonialVerifiedBadge,
-} from "@/registry/components/testimonial"
-import { Twemoji } from "@/registry/components/twemoji/twemoji"
+} from "@/registry/transformed/components/testimonial"
+import { TestimonialSpotlight } from "@/registry/transformed/components/testimonial-spotlight"
+import { Twemoji } from "@/registry/transformed/components/twemoji/twemoji"
+import {
+  TESTIMONIALS_1,
+  TESTIMONIALS_2,
+} from "@/features/portfolio/data/testimonials"
+import type { Testimonial as TestimonialType } from "@/features/portfolio/types/testimonials"
+
+const FEATURED_TESTIMONIALS = [...TESTIMONIALS_1, ...TESTIMONIALS_2]
+  .filter((item) => item.isFeatured)
+  .sort((a, b) => Number(a.order ?? 999) - Number(b.order ?? 999))
 
 export function Testimonials() {
+  const ref = useRef<HTMLDivElement>(null)
+  const isPageInView = usePageInView()
+  const isInView = useInView(ref)
+  const play = isPageInView && isInView
+
   return (
-    <Panel
-      id="testimonials"
-      className="before:content-none after:content-none [&_.rfm-initial-child-container]:items-stretch! [&_.rfm-marquee]:items-stretch!"
+    <div
+      ref={ref}
+      className="screen-line-bottom [&_.rfm-initial-child-container]:items-stretch! [&_.rfm-marquee]:items-stretch!"
     >
-      <h2 className="sr-only">Testimonials</h2>
-      <div className="flex flex-col gap-8 py-4">
-        <div className="flex flex-col gap-2">
-          <div className="px-4 font-mono text-[10px] font-bold tracking-widest text-muted-foreground/60 uppercase">
-            Pinned
-          </div>
-          <TestimonialList data={TESTIMONIALS_PINNED.slice(0, 2)} />
+      <h3 className="sr-only">Testimonials</h3>
+
+      <div className="grid gap-2 py-2">
+        <div className="grid gap-2 px-2 [--spotlight-size:50%] sm:grid-cols-2">
+          {FEATURED_TESTIMONIALS.map((item) => (
+            <TestimonialSpotlight key={item.url} className="bg-background">
+              <TestimonialItem {...item} />
+            </TestimonialSpotlight>
+          ))}
         </div>
 
-        <div className="flex flex-col gap-2">
-          <div className="px-4 font-mono text-[10px] font-bold tracking-widest text-muted-foreground/60 uppercase">
-            Community
-          </div>
-          <div className="flex flex-col gap-2">
-            <Marquee className="py-1">
-              <MarqueeFade side="left" />
-              <MarqueeContent pauseOnHover speed={40}>
-                {[...TESTIMONIALS_1, TESTIMONIALS_PINNED[2]].map((item) => (
-                  <MarqueeItem key={item.url}>
-                    <a
-                      href={item.url}
-                      target="_blank"
-                      rel="noopener"
-                      className="block w-80 cursor-crosshair rounded-xl ring-1 ring-foreground/10 transition-[background-color] ease-out ring-inset hover:bg-accent-muted"
-                    >
-                      <TestimonialItem {...item} />
-                    </a>
-                  </MarqueeItem>
-                ))}
-              </MarqueeContent>
-              <MarqueeFade side="right" />
-            </Marquee>
-
-            <Marquee className="py-1">
-              <MarqueeFade side="left" />
-              <MarqueeContent pauseOnHover speed={35} direction="right">
-                {TESTIMONIALS_2.map((item) => (
-                  <MarqueeItem key={item.url}>
-                    <a
-                      href={item.url}
-                      target="_blank"
-                      rel="noopener"
-                      className="block w-80 cursor-crosshair rounded-xl ring-1 ring-foreground/10 transition-[background-color] ease-out ring-inset hover:bg-accent-muted"
-                    >
-                      <TestimonialItem {...item} />
-                    </a>
-                  </MarqueeItem>
-                ))}
-              </MarqueeContent>
-              <MarqueeFade side="right" />
-            </Marquee>
-          </div>
-        </div>
+        <TestimonialList data={TESTIMONIALS_1} play={play} />
+        <TestimonialList data={TESTIMONIALS_2} direction="right" play={play} />
       </div>
 
-      <div className="flex justify-center pt-4 pb-2">
+      {/* <div className="absolute right-2 bottom-2 z-10 rounded-lg bg-background">
         <Button
-          className="gap-2 border-none pr-2.5 pl-3"
-          size="sm"
-          variant="outline"
+          className="size-7 border-none shadow-sm ring-1 ring-foreground/10 dark:ring-foreground/15"
+          variant="ghost"
+          size="icon-sm"
           asChild
         >
           <a
@@ -102,30 +71,47 @@ export function Testimonials() {
             rel="noopener noreferrer"
             aria-label="View more testimonials"
           >
-            View All Testimonials
-            <ArrowUpRightIcon className="size-4" />
+            <ArrowUpRightIcon />
           </a>
         </Button>
-      </div>
-    </Panel>
+      </div> */}
+
+      <div className="flex h-px" />
+    </div>
   )
 }
 
-function TestimonialList({ data }: { data: TestimonialType[] }) {
+function TestimonialList({
+  data,
+  direction,
+  play,
+}: {
+  data: TestimonialType[]
+  direction?: "right" | "left"
+  play?: boolean
+}) {
   return (
-    <div className="grid grid-cols-1 gap-2 px-2 sm:grid-cols-2">
-      {data.map((item) => (
-        <a
-          key={item.url}
-          href={item.url}
-          target="_blank"
-          rel="noopener"
-          className="block h-full cursor-crosshair rounded-xl ring-1 ring-foreground/10 transition-[background-color] ease-out ring-inset hover:bg-accent-muted"
-        >
-          <TestimonialItem {...item} />
-        </a>
-      ))}
-    </div>
+    <Marquee>
+      <MarqueeFade side="left" />
+      <MarqueeFade side="right" />
+
+      <MarqueeContent direction={direction} play={play} speed={40}>
+        {data
+          .filter((item) => !item.isFeatured)
+          .map((item) => (
+            <MarqueeItem
+              key={item.url}
+              className={cn(
+                "mx-1 h-full max-w-xs min-w-2xs rounded-xl bg-background transition-[background-color] ease-out hover:bg-accent-muted",
+                "gradient-border gradient-border-from-foreground/0 gradient-border-to-foreground/15 gradient-border-via-foreground/5 gradient-border-to-t"
+              )}
+              style={item.style}
+            >
+              <TestimonialItem {...item} />
+            </MarqueeItem>
+          ))}
+      </MarqueeContent>
+    </Marquee>
   )
 }
 
@@ -133,33 +119,53 @@ function TestimonialItem({
   authorAvatar,
   authorName,
   authorTagline,
+  url,
   quote,
-  isVerified,
+  icon,
+  // isVerified,
 }: TestimonialType) {
   return (
-    <Testimonial>
-      <TestimonialQuote className="min-h-14 font-serif">
+    <Testimonial className="group/testimonial relative">
+      <TestimonialQuote className="font-serif text-base">
         <p>
-          <Twemoji>{quote}</Twemoji>
+          <Twemoji className="grayscale transition-[filter] duration-300 ease-[cubic-bezier(0.42,0,0.58,1)] group-hover/testimonial:grayscale-0">
+            {quote}
+          </Twemoji>
         </p>
       </TestimonialQuote>
 
       <TestimonialAuthor>
         <TestimonialAvatar>
-          <TestimonialAvatarImg src={authorAvatar} alt={authorName} />
+          <TestimonialAvatarImg
+            className="grayscale transition-[filter] duration-300 ease-[cubic-bezier(0.42,0,0.58,1)] group-hover/testimonial:grayscale-0"
+            src={authorAvatar}
+            alt={authorName}
+          />
           <TestimonialAvatarRing />
         </TestimonialAvatar>
 
         <TestimonialAuthorName>
-          {authorName}
-          {isVerified && (
+          <a href={url} target="_blank" rel="noopener">
+            <span className="absolute inset-0" aria-hidden />
+            {authorName}
+          </a>
+          {/* {isVerified && (
             <TestimonialVerifiedBadge className="text-info">
               <VerifiedIcon />
             </TestimonialVerifiedBadge>
-          )}
+          )} */}
         </TestimonialAuthorName>
         <TestimonialAuthorTagline>{authorTagline}</TestimonialAuthorTagline>
       </TestimonialAuthor>
+
+      {icon && (
+        <div
+          className="pointer-events-none absolute right-2 bottom-2 flex size-8 items-center justify-center [&_svg]:size-4 [&_svg]:text-muted-foreground/80"
+          aria-hidden
+        >
+          {icon}
+        </div>
+      )}
     </Testimonial>
   )
 }

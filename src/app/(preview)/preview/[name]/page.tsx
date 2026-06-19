@@ -1,20 +1,20 @@
+import { cache } from "react"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
-import { cache } from "react"
 
-import { Index } from "@/__registry__"
-import { PreviewProvider } from "@/app/(preview)/components/preview-provider"
-import { getCachedThemes } from "@/app/(preview)/lib/get-themes"
 import { X_HANDLE } from "@/config/site"
 import { getRegistryItem } from "@/lib/registry"
-import type { PageProps } from "@/types/next"
+import { cn } from "@/lib/utils"
+import { Index } from "@/registry/__index__"
+import { PreviewProvider } from "@/app/(preview)/components/preview-provider"
+import { getCachedThemes } from "@/app/(preview)/lib/get-themes"
 
 export const revalidate = false
 export const dynamic = "force-static"
 export const dynamicParams = false
 
 export async function generateStaticParams() {
-  const { Index } = await import("@/__registry__")
+  const { Index } = await import("@/registry/__index__")
 
   const params: Array<{ name: string }> = []
 
@@ -36,7 +36,7 @@ const getCachedRegistryItem = cache(async (name: string) => {
 
 export async function generateMetadata({
   params,
-}: PageProps): Promise<Metadata> {
+}: PageProps<"/preview/[name]">): Promise<Metadata> {
   const { name } = await params
 
   const item = await getCachedRegistryItem(name)
@@ -80,7 +80,9 @@ export async function generateMetadata({
   }
 }
 
-export default async function PreviewPage({ params }: PageProps) {
+export default async function PreviewPage({
+  params,
+}: PageProps<"/preview/[name]">) {
   const name = (await params).name
 
   const [item, themes] = await Promise.all([
@@ -94,7 +96,7 @@ export default async function PreviewPage({ params }: PageProps) {
   }
 
   return (
-    <div className={item?.meta?.previewClassName}>
+    <div className={cn("style-preview", item?.meta?.previewClassName)}>
       <PreviewProvider themes={themes}>
         <Component />
       </PreviewProvider>

@@ -1,10 +1,15 @@
-import { getTableOfContents } from "fumadocs-core/content/toc"
-import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react"
-import type { Metadata } from "next"
+import type { Metadata, Route } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
+import { getTableOfContents } from "fumadocs-core/content/toc"
+import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react"
 import type { BlogPosting as PageSchema, WithContext } from "schema-dts"
 
+import { SITE_INFO, X_HANDLE } from "@/config/site"
+import { jsonLdBreadcrumbList, JsonLdScript } from "@/lib/json-ld"
+import { Button } from "@/components/ui/button"
+import { Kbd } from "@/components/ui/kbd"
+import { Prose } from "@/components/ui/typography"
 import {
   Tooltip,
   TooltipContent,
@@ -13,21 +18,13 @@ import {
 import { MDX } from "@/components/mdx"
 import { TOCInline } from "@/components/toc-inline"
 import { TOCMinimap } from "@/components/toc-minimap"
-import { Button } from "@/components/ui/button"
-import { Kbd } from "@/components/ui/kbd"
-import { Prose } from "@/components/ui/typography"
-import { SITE_INFO, X_HANDLE } from "@/config/site"
-import { PostKeyboardShortcuts } from "@/features/blog/components/post-keyboard-shortcuts"
-import { LLMCopyButtonWithViewOptions } from "@/features/blog/components/post-page-actions"
-import { PostShareMenu } from "@/features/blog/components/post-share-menu"
+import { DocKeyboardShortcuts } from "@/features/doc/components/doc-keyboard-shortcuts"
 import {
-  DocContainer,
   DocContentCol,
-  DocGrid,
-  DocLeftCol,
   DocRightCol,
 } from "@/features/doc/components/doc-layout"
-import { DocPageRoot } from "@/features/doc/components/doc-page-root"
+import { LLMCopyButtonWithViewOptions } from "@/features/doc/components/doc-page-actions"
+import { DocShareMenu } from "@/features/doc/components/doc-share-menu"
 import {
   findNeighbour,
   getDocBySlug,
@@ -35,8 +32,6 @@ import {
 } from "@/features/doc/data/documents"
 import type { Doc } from "@/features/doc/types/document"
 import { USER } from "@/features/portfolio/data/user"
-import { cn } from "@/lib/utils"
-import type { PageProps } from "@/types/next"
 
 export const revalidate = false
 export const dynamic = "force-static"
@@ -49,7 +44,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({
   params,
-}: PageProps): Promise<Metadata> {
+}: PageProps<"/components/[slug]">): Promise<Metadata> {
   const slug = (await params).slug
   const doc = getDocBySlug(slug)
 
@@ -112,7 +107,9 @@ function getPageJsonLd(doc: Doc): WithContext<PageSchema> {
   }
 }
 
-export default async function Page({ params }: PageProps) {
+export default async function Page({
+  params,
+}: PageProps<"/components/[slug]">) {
   const slug = (await params).slug
   const doc = getDocBySlug(slug)
 
@@ -137,149 +134,156 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(getPageJsonLd(doc)).replace(/</g, "\\u003c"),
-        }}
-      />
+      <DocContentCol>
+        <JsonLdScript data={getPageJsonLd(doc)} />
 
-      <PostKeyboardShortcuts
-        previous={previous ? `/components/${previous.slug}` : null}
-        next={next ? `/components/${next.slug}` : null}
-      />
+        <JsonLdScript
+          data={jsonLdBreadcrumbList([
+            {
+              name: "Home",
+              href: "/",
+            },
+            {
+              name: "Components",
+              href: "/components",
+            },
+            {
+              name: doc.metadata.title,
+              href: `/components/${slug}`,
+            },
+          ])}
+        />
 
-      <DocPageRoot>
-        <DocContainer>
-          <div className="screen-line-bottom h-px" />
+        <DocKeyboardShortcuts
+          previous={previous ? (`/components/${previous.slug}` as Route) : null}
+          next={next ? (`/components/${next.slug}` as Route) : null}
+        />
 
-          <div className="flex items-center justify-between p-2 pl-4">
-            <Button
-              className="h-7 gap-2 border-none px-0 text-muted-foreground hover:text-foreground hover:no-underline"
-              variant="link"
-              size="sm"
-              asChild
-            >
-              <Link href="/components">
-                <ArrowLeftIcon />
-                Components
-              </Link>
-            </Button>
+        <div className="screen-dashed-line-bottom after:opacity-80">
+          <div className="screen-line-bottom h-px overflow-x-clip" />
+        </div>
 
-            <div className="flex items-center gap-2">
-              <LLMCopyButtonWithViewOptions
-                markdownUrl={`/components/${doc.slug}.mdx`}
-                isComponent
-              />
+        <div className="flex items-center justify-between p-2 pl-4">
+          <Button
+            className="h-7 gap-2 border-none px-0 text-muted-foreground hover:text-foreground hover:no-underline"
+            variant="link"
+            size="sm"
+            asChild
+          >
+            <Link href="/components">
+              <ArrowLeftIcon />
+              Components
+            </Link>
+          </Button>
 
-              <PostShareMenu
-                title={doc.metadata.title}
-                url={`/components/${doc.slug}`}
-              />
-
-              {previous && (
-                <Tooltip>
-                  <TooltipTrigger
-                    render={
-                      <Button
-                        className="size-7 border-none"
-                        variant="secondary"
-                        size="icon-sm"
-                        asChild
-                      >
-                        <Link
-                          href={`/components/${previous.slug}`}
-                          aria-label="Previous Component"
-                        >
-                          <ArrowLeftIcon />
-                        </Link>
-                      </Button>
-                    }
-                  />
-                  <TooltipContent className="pr-2 pl-3">
-                    <div className="flex items-center gap-3">
-                      Previous Component
-                      <Kbd>
-                        <ArrowLeftIcon />
-                      </Kbd>
-                    </div>
-                  </TooltipContent>
-                </Tooltip>
-              )}
-
-              {next && (
-                <Tooltip>
-                  <TooltipTrigger
-                    render={
-                      <Button
-                        className="size-7 border-none"
-                        variant="secondary"
-                        size="icon-sm"
-                        asChild
-                      >
-                        <Link
-                          href={`/components/${next.slug}`}
-                          aria-label="Next Component"
-                        >
-                          <ArrowRightIcon />
-                        </Link>
-                      </Button>
-                    }
-                  />
-                  <TooltipContent className="pr-2 pl-3">
-                    <div className="flex items-center gap-3">
-                      Next Component
-                      <Kbd>
-                        <ArrowRightIcon />
-                      </Kbd>
-                    </div>
-                  </TooltipContent>
-                </Tooltip>
-              )}
-            </div>
-          </div>
-
-          <div className="screen-line-top screen-line-bottom">
-            <div
-              className={cn(
-                "h-8 before:absolute before:left-[-100vw] before:-z-1 before:h-full before:w-[200vw]",
-                "before:bg-[repeating-linear-gradient(315deg,var(--pattern-foreground)_0,var(--pattern-foreground)_1px,transparent_0,transparent_50%)] before:bg-size-[10px_10px] before:[--pattern-foreground:var(--color-line)]/56"
-              )}
+          <div className="flex items-center gap-2">
+            <LLMCopyButtonWithViewOptions
+              markdownUrl={`/components/${doc.slug}.mdx`}
+              isComponent
             />
-          </div>
 
+            <DocShareMenu
+              title={doc.metadata.title}
+              url={`/components/${doc.slug}`}
+            />
+
+            {previous && (
+              <Tooltip>
+                <TooltipTrigger
+                  render={
+                    <Button
+                      className="size-7 border-none"
+                      variant="secondary"
+                      size="icon-sm"
+                      asChild
+                    >
+                      <Link
+                        href={`/components/${previous.slug}`}
+                        aria-label="Previous Component"
+                      >
+                        <ArrowLeftIcon />
+                      </Link>
+                    </Button>
+                  }
+                />
+                <TooltipContent className="pr-2 pl-3">
+                  <div className="flex items-center gap-3">
+                    Previous Component
+                    <Kbd>
+                      <ArrowLeftIcon />
+                    </Kbd>
+                  </div>
+                </TooltipContent>
+              </Tooltip>
+            )}
+
+            {next && (
+              <Tooltip>
+                <TooltipTrigger
+                  render={
+                    <Button
+                      className="size-7 border-none"
+                      variant="secondary"
+                      size="icon-sm"
+                      asChild
+                    >
+                      <Link
+                        href={`/components/${next.slug}`}
+                        aria-label="Next Component"
+                      >
+                        <ArrowRightIcon />
+                      </Link>
+                    </Button>
+                  }
+                />
+                <TooltipContent className="pr-2 pl-3">
+                  <div className="flex items-center gap-3">
+                    Next Component
+                    <Kbd>
+                      <ArrowRightIcon />
+                    </Kbd>
+                  </div>
+                </TooltipContent>
+              </Tooltip>
+            )}
+          </div>
+        </div>
+
+        <div className="screen-dashed-line-top screen-dashed-line-bottom before:opacity-80 after:opacity-80">
+          <div className="screen-line-top screen-line-bottom overflow-x-clip py-px">
+            <div className="h-4" />
+          </div>
+        </div>
+
+        <div className="screen-dashed-line-bottom after:opacity-80">
           <h1
             data-slot="doc-title"
-            className="screen-line-bottom px-4 text-3xl font-semibold tracking-tight text-balance"
+            className="screen-line-bottom overflow-x-clip px-4 text-3xl font-semibold tracking-tight text-balance"
           >
             {doc.metadata.title}
           </h1>
-        </DocContainer>
+        </div>
 
-        <DocGrid>
-          <DocLeftCol />
+        <Prose className="px-(--page-padding) pt-8 [--page-padding:--spacing(4)]">
+          <p className="text-muted-foreground">{doc.metadata.description}</p>
 
-          <DocContentCol>
-            <Prose className="px-4 pt-8">
-              <p className="text-muted-foreground">
-                {doc.metadata.description}
-              </p>
+          <TOCInline className="lg:hidden" items={toc} />
 
-              <TOCInline className="lg:hidden" items={toc} />
+          <div>
+            <MDX code={doc.content} />
+          </div>
+        </Prose>
 
-              <div>
-                <MDX code={doc.content} />
-              </div>
-            </Prose>
+        <div className="screen-dashed-line-top before:opacity-80">
+          <div className="screen-line-top h-4 overflow-x-clip" />
+        </div>
+      </DocContentCol>
 
-            <div className="screen-line-top h-4" />
-          </DocContentCol>
-
-          <DocRightCol>
-            <TOCMinimap items={toc} />
-          </DocRightCol>
-        </DocGrid>
-      </DocPageRoot>
+      <DocRightCol>
+        <div className="sticky top-[calc(var(--doc-cols-top,0)+(--spacing(3)))] translate-x-2 opacity-0 in-data-doc-cols-ready:opacity-100">
+          <TOCMinimap items={toc} />
+        </div>
+      </DocRightCol>
     </>
   )
 }

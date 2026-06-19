@@ -1,7 +1,16 @@
-// Thanks https://www.kibo-ui.com/components/contribution-graph
+// Credit: https://www.kibo-ui.com/components/contribution-graph
 
 "use client"
 
+import {
+  createContext,
+  Fragment,
+  useContext,
+  useMemo,
+  type CSSProperties,
+  type HTMLAttributes,
+  type ReactNode,
+} from "react"
 import type { Day as WeekDay } from "date-fns"
 import {
   differenceInCalendarDays,
@@ -14,15 +23,6 @@ import {
   parseISO,
   subWeeks,
 } from "date-fns"
-import {
-  createContext,
-  type CSSProperties,
-  Fragment,
-  type HTMLAttributes,
-  type ReactNode,
-  useContext,
-  useMemo,
-} from "react"
 
 import { cn } from "@/lib/utils"
 
@@ -436,7 +436,10 @@ export const ContributionGraphCalendar = ({
       >
         <title>{title}</title>
         {!hideMonthLabels && (
-          <g className="fill-current selection:fill-selection-foreground">
+          <g
+            data-slot="month-labels"
+            className="fill-current selection:fill-selection-foreground"
+          >
             {monthLabels.map(({ label, weekIndex }) => (
               <text
                 dominantBaseline="hanging"
@@ -570,16 +573,19 @@ export const ContributionGraphLegend = ({
   children,
   ...props
 }: ContributionGraphLegendProps) => {
-  const { labels, maxLevel, blockSize, blockRadius } = useContributionGraph()
+  const { labels, maxLevel, blockSize, blockRadius, blockMargin } =
+    useContributionGraph()
 
   return (
     <div
-      className={cn("ml-auto flex items-center gap-0.75", className)}
+      className={cn("ml-auto flex items-center", className)}
+      style={{ gap: blockMargin }}
       {...props}
     >
       <span className="mr-1 text-muted-foreground">
         {labels.legend?.less || "Less"}
       </span>
+
       {new Array(maxLevel + 1).fill(undefined).map((_, level) =>
         children ? (
           <Fragment key={level}>{children({ level })}</Fragment>
@@ -597,6 +603,7 @@ export const ContributionGraphLegend = ({
           </svg>
         )
       )}
+
       <span className="ml-1 text-muted-foreground">
         {labels.legend?.more || "More"}
       </span>

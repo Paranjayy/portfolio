@@ -1,5 +1,5 @@
+import { urlToName } from "@/utils/url"
 import {
-  CakeIcon,
   LinkIcon,
   MapPinIcon,
   MarsIcon,
@@ -7,10 +7,8 @@ import {
   VenusIcon,
 } from "lucide-react"
 
-import { Icons } from "@/components/icons"
 import { USER } from "@/features/portfolio/data/user"
 import type { User } from "@/features/portfolio/types/user"
-import { urlToName } from "@/utils/url"
 
 import { Panel, PanelContent } from "../panel"
 import { CurrentLocalTimeItem } from "./current-local-time-item"
@@ -22,14 +20,14 @@ import {
   IntroItemLink,
 } from "./intro-item"
 import { JobItem } from "./job-item"
-import { LiveAgeCounter } from "./live-age-counter"
+import { PhoneItem } from "./phone-item"
 
 export function Overview() {
   return (
-    <Panel className="after:content-none">
+    <Panel className="screen-line-bottom-none">
       <h2 className="sr-only">Overview</h2>
 
-      <PanelContent className="space-y-2.5">
+      <PanelContent className="grid gap-x-4 gap-y-2.5 sm:grid-cols-2">
         {USER.jobs.map((job, index) => {
           return (
             <JobItem
@@ -38,63 +36,56 @@ export function Overview() {
               company={job.company}
               website={job.website}
               experienceId={job.experienceId}
-              logo={job.logo}
             />
           )
         })}
 
-        <div className="grid gap-x-4 gap-y-2.5 sm:grid-cols-2 lg:grid-cols-3">
-          <IntroItem>
-            <IntroItemIcon>
-              <MapPinIcon />
-            </IntroItemIcon>
-            <IntroItemContent>
-              <IntroItemLink
-                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(USER.address)}`}
-                aria-label={`Location: ${USER.address}`}
-              >
-                {USER.address}
-              </IntroItemLink>
-            </IntroItemContent>
-          </IntroItem>
+        <IntroItem>
+          <IntroItemIcon>
+            <MapPinIcon />
+          </IntroItemIcon>
+          <IntroItemContent>
+            <IntroItemLink
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(USER.address)}`}
+              aria-label={`Location: ${USER.address}`}
+            >
+              {USER.address}
+            </IntroItemLink>
+          </IntroItemContent>
+        </IntroItem>
 
-          <CurrentLocalTimeItem timeZone={USER.timeZone} />
+        <CurrentLocalTimeItem timeZone={USER.timeZone} />
 
-          <EmailItem email={USER.email} />
+        <PhoneItem phoneNumberB64={USER.phoneNumberB64} />
 
-          <IntroItem>
-            <IntroItemIcon>
-              <LinkIcon />
-            </IntroItemIcon>
-            <IntroItemContent>
-              <IntroItemLink
-                href={USER.website}
-                aria-label={`Personal website: ${urlToName(USER.website)}`}
-              >
-                {urlToName(USER.website)}
-              </IntroItemLink>
-            </IntroItemContent>
-          </IntroItem>
+        <EmailItem emailB64={USER.emailB64} />
 
-          <IntroItem>
-            <IntroItemIcon>{getGenderIcon(USER.gender)}</IntroItemIcon>
-            <IntroItemContent aria-label={`Pronouns: ${USER.pronouns}`}>
-              {USER.pronouns}
-            </IntroItemContent>
-          </IntroItem>
+        <IntroItem>
+          <IntroItemIcon>
+            <LinkIcon />
+          </IntroItemIcon>
+          <IntroItemContent>
+            <IntroItemLink
+              href={USER.website}
+              aria-label={`Personal website: ${urlToName(USER.website)}`}
+            >
+              {urlToName(USER.website)}
+            </IntroItemLink>
+          </IntroItemContent>
+        </IntroItem>
 
-          <IntroItem>
-            <IntroItemIcon>
-              <CakeIcon />
-            </IntroItemIcon>
-            <IntroItemContent aria-label="Age">
-              <LiveAgeCounter className="font-mono tabular-nums" />
-              <span className="text-muted-foreground"> years</span>
-            </IntroItemContent>
-          </IntroItem>
-
-        </div>
+        <IntroItem>
+          <IntroItemIcon>{getGenderIcon(USER.gender)}</IntroItemIcon>
+          <IntroItemContent aria-label={`Pronouns: ${USER.pronouns}`}>
+            {USER.pronouns}
+          </IntroItemContent>
+        </IntroItem>
       </PanelContent>
+
+      <div
+        className="pointer-events-none absolute top-px bottom-0 left-1/2 -z-1 w-px -translate-x-2.25 bg-[linear-gradient(to_bottom,var(--line)_4px,transparent_2px)] bg-size-[1px_6px] bg-repeat-y max-sm:hidden"
+        aria-hidden
+      />
     </Panel>
   )
 }

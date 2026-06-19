@@ -1,6 +1,5 @@
 "use client"
 
-import { CheckIcon, ChevronRightIcon } from "lucide-react"
 import React, {
   createContext,
   useContext,
@@ -9,6 +8,9 @@ import React, {
   useRef,
   useState,
 } from "react"
+import { getRegistryItemNamespace, getRegistryItemUrl } from "@/utils/registry"
+import { IconCheck, IconCopy, IconX } from "@tabler/icons-react"
+import { CheckIcon, ChevronRightIcon } from "lucide-react"
 import type { PanelImperativeHandle } from "react-resizable-panels"
 import type {
   RegistryItem,
@@ -17,23 +19,13 @@ import type {
 } from "shadcn/schema"
 import type { z } from "zod"
 
-import { sendToIframe } from "@/app/(preview)/hooks/use-iframe-sync"
-import type { PreviewSearchParams } from "@/app/(preview)/lib/search-params"
-import { serializePreviewSearchParams } from "@/app/(preview)/lib/search-params"
-import {
-  Tabs,
-  TabsContent,
-  TabsIndicator,
-  TabsList,
-  TabsTrigger,
-} from "@/components/base/ui/tabs"
-import { ToggleGroup, ToggleGroupItem } from "@/components/base/ui/toggle-group"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/base/ui/tooltip"
-import { getIconForLanguageExtension, Icons } from "@/components/icons"
+import { trackEvent } from "@/lib/events"
+import type {
+  createFileTreeForRegistryItemFiles,
+  FileTree,
+} from "@/lib/registry"
+import { cn } from "@/lib/utils"
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard"
 import { Button } from "@/components/ui/button"
 import {
   Collapsible,
@@ -70,16 +62,25 @@ import {
   SidebarMenuSub,
   SidebarProvider,
 } from "@/components/ui/sidebar"
+import {
+  Tabs,
+  TabsContent,
+  TabsIndicator,
+  TabsList,
+  TabsTrigger,
+} from "@/components/base/ui/tabs"
+import { ToggleGroup, ToggleGroupItem } from "@/components/base/ui/toggle-group"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/base/ui/tooltip"
+import { getIconForLanguageExtension, Icons } from "@/components/icons"
 import { OpenInV0Button } from "@/components/v0-open-button"
-import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard"
-import { trackEvent } from "@/lib/events"
-import type {
-  createFileTreeForRegistryItemFiles,
-  FileTree,
-} from "@/lib/registry"
-import { cn } from "@/lib/utils"
 import { CopyButton, CopyStateIcon } from "@/registry/components/copy-button"
-import { getRegistryItemNamespace, getRegistryItemUrl } from "@/utils/registry"
+import { sendToIframe } from "@/app/(preview)/hooks/use-iframe-sync"
+import type { PreviewSearchParams } from "@/app/(preview)/lib/search-params"
+import { serializePreviewSearchParams } from "@/app/(preview)/lib/search-params"
 
 type View = "preview" | "code"
 
@@ -219,8 +220,12 @@ function BlockViewerToolbar() {
   return (
     <div className="flex w-full items-center gap-2 px-2 max-lg:hidden">
       <TabsList>
-        <TabsTrigger value="preview">Preview</TabsTrigger>
-        <TabsTrigger value="code">Code</TabsTrigger>
+        <TabsTrigger className="px-3" value="preview">
+          Preview
+        </TabsTrigger>
+        <TabsTrigger className="px-3" value="code">
+          Code
+        </TabsTrigger>
         <TabsIndicator />
       </TabsList>
 
@@ -323,7 +328,7 @@ function BlockViewerToolbar() {
         />
 
         <Button
-          className="w-fit gap-1.5 px-2 font-mono text-[0.8125rem] shadow-none will-change-transform active:scale-none [&_svg]:text-muted-foreground"
+          className="w-fit gap-1.5 px-2 font-mono text-[0.8125rem] font-normal shadow-none active:scale-none [&_svg]:text-muted-foreground"
           variant="outline"
           size="sm"
           onClick={() => {
@@ -372,7 +377,7 @@ function BlockViewerView() {
         <ResizablePanelGroup orientation="horizontal">
           <ResizablePanel
             panelRef={resizablePanelRef}
-            className="relative overflow-hidden rounded-xl after:pointer-events-none after:absolute after:inset-0 after:rounded-xl after:ring-1 after:ring-foreground/10 after:ring-inset"
+            className="relative overflow-hidden rounded-xl after:pointer-events-none after:absolute after:inset-0 after:rounded-xl after:inset-ring-1 after:inset-ring-foreground/10"
             minSize="30%"
             defaultSize="100%"
           >
@@ -469,22 +474,22 @@ function BlockViewerCode() {
       </div>
 
       <figure
-        className="my-0 flex min-w-0 flex-1 flex-col overflow-hidden border p-0"
+        className="my-0 flex min-w-0 flex-1 flex-col overflow-hidden"
         data-rehype-pretty-code-figure=""
       >
         <figcaption
           data-rehype-pretty-code-title
           data-language={language}
-          className="h-10 shrink-0 pe-1.5"
+          className="h-10 shrink-0"
         >
           {getIconForLanguageExtension(language)}
-          <p className="truncate">{file.target}</p>
+          <span className="truncate">{file.target}</span>
           <BlockCopyCodeButton />
         </figcaption>
 
         <div
           key={file?.path}
-          className="no-scrollbar overflow-y-auto border-t"
+          className="h-full overflow-hidden rounded-[9px] border bg-code [&_pre]:no-scrollbar [&_pre]:h-full [&_pre]:overflow-y-auto"
           dangerouslySetInnerHTML={{ __html: file?.highlightedContent ?? "" }}
         />
       </figure>
@@ -500,13 +505,16 @@ function BlockViewerFileTree() {
   }
 
   return (
-    <SidebarProvider className="flex min-h-full flex-col [--sidebar:var(--code)] dark:[--sidebar-accent:var(--muted)]/50">
-      <Sidebar collapsible="none" className="w-full flex-1 rounded-xl border">
+    <SidebarProvider className="flex min-h-full flex-col [--sidebar:var(--surface)] dark:[--sidebar-accent:var(--muted)]/50">
+      <Sidebar
+        collapsible="none"
+        className="w-full flex-1 rounded-xl p-1 pt-0 inset-ring-1 inset-ring-border/64"
+      >
         <SidebarGroupLabel className="h-10 rounded-none px-4 text-sm">
-          Explorer
+          Files
         </SidebarGroupLabel>
 
-        <SidebarGroup className="border-t px-0">
+        <SidebarGroup className="flex-1 rounded-[9px] border bg-background px-0">
           <SidebarGroupContent>
             <SidebarMenu className="translate-x-0 gap-px">
               {tree.map((file, index) => (
@@ -529,7 +537,7 @@ function Tree({ item, index }: { item: FileTree; index: number }) {
       <SidebarMenuItem>
         <SidebarMenuButton
           data-index={index}
-          className="rounded-none pl-(--index) whitespace-nowrap data-active:font-normal"
+          className="rounded-none pl-(--index) whitespace-nowrap data-active:font-normal [&_svg]:text-muted-foreground"
           style={
             {
               "--index": `${index * (index === 2 ? 1.2 : 1.3)}rem`,
@@ -555,7 +563,7 @@ function Tree({ item, index }: { item: FileTree; index: number }) {
         <CollapsibleTrigger asChild>
           <SidebarMenuButton
             className={cn(
-              "rounded-none pl-(--index) whitespace-nowrap",
+              "rounded-none pl-(--index) whitespace-nowrap [&_svg]:text-muted-foreground",
               "data-[state=closed]:*:data-[slot=folder]:block data-[state=open]:*:data-[slot=folder-open]:block"
             )}
             style={
@@ -564,7 +572,7 @@ function Tree({ item, index }: { item: FileTree; index: number }) {
               } as React.CSSProperties
             }
           >
-            <ChevronRightIcon className="text-muted-foreground transition-transform" />
+            <ChevronRightIcon className="transition-transform" />
             <Icons.folder data-slot="folder" className="hidden" />
             <Icons.folderOpen data-slot="folder-open" className="hidden" />
             {item.name}
@@ -598,11 +606,13 @@ function BlockCopyCodeButton() {
 
   return (
     <CopyButton
-      className="absolute top-1.5 right-1.5 size-7 rounded-md border-none [&_svg]:text-foreground [&_svg:not([class*='size-'])]:size-4"
+      className="absolute top-1.5 right-1.5 size-7 rounded-md border-none text-muted-foreground [&_svg]:text-inherit [&_svg:not([class*='size-'])]:size-4"
       variant="ghost"
       size="icon-xs"
       text={content}
-      idleIcon={<Icons.copy />}
+      idleIcon={<IconCopy />}
+      doneIcon={<IconCheck />}
+      errorIcon={<IconX />}
       onCopySuccess={() => {
         trackEvent({
           name: "copy_block_code",
@@ -683,7 +693,11 @@ function ThemePicker() {
         </TooltipContent>
       </Tooltip>
 
-      <PopoverContent className="rounded-2xl p-0">
+      <PopoverContent
+        className="rounded-2xl p-0"
+        align="start"
+        alignOffset={-8}
+      >
         <Command
           className={cn(
             "**:data-[slot=command-input-wrapper]:h-12 [&_[cmdk-input-wrapper]_svg]:size-5 **:[[cmdk-input]]:h-10",
@@ -760,7 +774,7 @@ function ThemePalette({ cssVars }: { cssVars?: RegistryItem["cssVars"] }) {
         <div
           key={key}
           className={cn(
-            "flex h-4 w-2.5 shrink-0 rounded-xs ring-1 ring-foreground/15 ring-inset",
+            "flex h-4 w-2.5 shrink-0 rounded-xs inset-ring-1 inset-ring-foreground/15",
             "bg-(--color-palette) dark:bg-(--color-palette-dark)"
           )}
           style={

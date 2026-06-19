@@ -1,5 +1,5 @@
-import { ChevronDownIcon } from "lucide-react"
 import React from "react"
+import { ChevronDownIcon } from "lucide-react"
 
 import { Button } from "@/components/base/ui/button"
 import {
@@ -23,18 +23,22 @@ export function CollapsibleList<T>({
 }) {
   return (
     <Collapsible className="group/collapsible">
-      {items.slice(0, max).map((item, index) => (
-        <div
-          key={typeof keyExtractor === "function" ? keyExtractor(item) : index}
-          className="border-b border-line"
-        >
-          {renderItem(item)}
-        </div>
-      ))}
+      <ul>
+        {items.slice(0, max).map((item, index) => (
+          <li
+            key={
+              typeof keyExtractor === "function" ? keyExtractor(item) : index
+            }
+            className="border-b border-line"
+          >
+            {renderItem(item)}
+          </li>
+        ))}
+      </ul>
 
-      <CollapsibleContent>
+      <CollapsibleContent render={<ul />}>
         {items.slice(max).map((item, index) => (
-          <div
+          <li
             key={
               typeof keyExtractor === "function"
                 ? keyExtractor(item)
@@ -43,15 +47,19 @@ export function CollapsibleList<T>({
             className="border-b border-line"
           >
             {renderItem(item)}
-          </div>
+          </li>
         ))}
       </CollapsibleContent>
 
       {items.length > max && (
-        <div className="flex h-12 items-center justify-center pb-px">
+        <div className="screen-line-top -mt-px flex h-12 items-center justify-center">
           <CollapsibleTrigger
             render={
-              <Button className="gap-2 border-none pr-2.5 pl-3" size="sm">
+              <Button
+                className="gap-2 pr-2.5 pl-3"
+                variant="secondary"
+                size="sm"
+              >
                 <span className="hidden group-data-closed/collapsible:block">
                   Show More
                 </span>

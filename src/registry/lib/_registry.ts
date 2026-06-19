@@ -2,18 +2,6 @@ import type { Registry } from "shadcn/schema"
 
 export const lib: Registry["items"] = [
   {
-    name: "utils",
-    type: "registry:lib",
-    title: "Utility Functions",
-    dependencies: ["clsx", "tailwind-merge"],
-    files: [
-      {
-        path: "src/lib/utils.ts",
-        type: "registry:lib",
-      },
-    ],
-  },
-  {
     name: "haptic",
     type: "registry:lib",
     title: "Haptic Feedback",
@@ -22,7 +10,10 @@ export const lib: Registry["items"] = [
       {
         path: "lib/haptic/haptic.ts",
         type: "registry:lib",
+        target: "@lib/haptic.ts",
       },
     ],
+    categories: ["utilities"],
+    docs: "https://chanhdai.com/components/haptic-feedback",
   },
 ]

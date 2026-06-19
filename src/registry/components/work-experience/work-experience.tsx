@@ -1,19 +1,19 @@
 "use client"
 
+import { useCallback, useRef, type ComponentProps } from "react"
 import { differenceInMonths, parse } from "date-fns"
-import { BriefcaseBusinessIcon, InfinityIcon } from "lucide-react"
-import { type ComponentProps, useCallback, useRef } from "react"
 import ReactMarkdown from "react-markdown"
 
+import { cn } from "@/lib/utils"
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
 import { Separator } from "@/components/ui/separator"
-import { cn } from "@/lib/utils"
 import type { ChevronsUpDownIconHandle } from "@/registry/components/chevrons-up-down-icon"
 import { ChevronsUpDownIcon } from "@/registry/components/chevrons-up-down-icon"
+import { IconPlaceholder } from "@/registry/icons/icon-placeholder"
 
 export type ExperiencePositionItemType = {
   /** Unique identifier for the position */
@@ -142,10 +142,10 @@ export type ExperiencePositionItemProps = {
 export function ExperiencePositionItem({
   position,
 }: ExperiencePositionItemProps) {
-  const chevronsIconRef = useRef<ChevronsUpDownIconHandle>(null)
+  const chevronsUpDownIconRef = useRef<ChevronsUpDownIconHandle>(null)
 
   const handleOpenChange = useCallback((open: boolean) => {
-    const controls = chevronsIconRef.current
+    const controls = chevronsUpDownIconRef.current
     if (!controls) return
 
     if (open) {
@@ -174,7 +174,7 @@ export function ExperiencePositionItem({
             "data-disabled:before:content-none"
           )}
         >
-          <div className="relative z-1 mb-1 flex items-center gap-3">
+          <div className="relative z-1 mb-1 flex items-start gap-3 text-base">
             <div
               className={cn(
                 "flex size-6 shrink-0 items-center justify-center rounded-lg",
@@ -183,25 +183,33 @@ export function ExperiencePositionItem({
                 "[&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
               )}
             >
-              {position.icon ?? <BriefcaseBusinessIcon />}
+              {position.icon ?? (
+                <IconPlaceholder
+                  lucide="BriefcaseBusinessIcon"
+                  tabler="IconBriefcase"
+                  hugeicons="Briefcase01Icon"
+                  phosphor="BriefcaseIcon"
+                  remixicon="RiBriefcaseLine"
+                />
+              )}
             </div>
 
-            <h4 className="flex-1 text-base font-medium text-balance text-foreground">
+            <h4 className="flex-1 font-medium text-balance text-foreground">
               {position.title}
             </h4>
 
-            <div className="shrink-0 text-muted-foreground group-disabled/experience-position:hidden [&_svg]:size-4">
-              <ChevronsUpDownIcon ref={chevronsIconRef} duration={0.15} />
+            <div className="shrink-0 text-muted-foreground group-disabled/experience-position:hidden [&_svg]:h-lh [&_svg]:w-4">
+              <ChevronsUpDownIcon ref={chevronsUpDownIconRef} duration={0.15} />
             </div>
           </div>
 
-          <div className="relative z-1 flex items-center gap-2 pl-9 text-sm text-muted-foreground">
+          <dl className="relative z-1 flex items-center gap-2 pl-9 text-sm text-muted-foreground">
             {position.employmentType && (
               <>
-                <dl>
+                <div>
                   <dt className="sr-only">Employment Type</dt>
                   <dd>{position.employmentType}</dd>
-                </dl>
+                </div>
 
                 <Separator
                   className="data-vertical:h-4 data-vertical:self-center"
@@ -210,13 +218,18 @@ export function ExperiencePositionItem({
               </>
             )}
 
-            <dl>
+            <div>
               <dt className="sr-only">Employment Period</dt>
               <dd className="flex items-center gap-0.5 tabular-nums">
                 <span>{start}</span>
                 <span className="font-mono">—</span>
                 {isOngoing ? (
-                  <InfinityIcon
+                  <IconPlaceholder
+                    lucide="InfinityIcon"
+                    tabler="IconInfinity"
+                    hugeicons="Infinity01Icon"
+                    phosphor="InfinityIcon"
+                    remixicon="RiInfinityFill"
                     className="size-4.5 translate-y-[0.5px]"
                     aria-label="Present"
                   />
@@ -224,7 +237,7 @@ export function ExperiencePositionItem({
                   <span>{end}</span>
                 )}
               </dd>
-            </dl>
+            </div>
 
             {duration && (
               <>
@@ -232,13 +245,13 @@ export function ExperiencePositionItem({
                   className="data-vertical:h-4 data-vertical:self-center"
                   orientation="vertical"
                 />
-                <dl>
+                <div>
                   <dt className="sr-only">Duration</dt>
                   <dd className="tabular-nums">{duration}</dd>
-                </dl>
+                </div>
               </>
             )}
-          </div>
+          </dl>
         </CollapsibleTrigger>
 
         <CollapsibleContent className="overflow-hidden">

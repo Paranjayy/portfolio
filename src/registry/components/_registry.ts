@@ -1,6 +1,5 @@
-import type { Registry } from "shadcn/schema"
-
 import { getRegistryItemUrl } from "@/utils/registry"
+import type { Registry } from "shadcn/schema"
 
 export const components: Registry["items"] = [
   {
@@ -9,13 +8,15 @@ export const components: Registry["items"] = [
     title: "Theme Switcher",
     description:
       "Toggle between system, light, and dark themes in Next.js apps.",
-    dependencies: ["next-themes", "lucide-react", "motion"],
+    dependencies: ["next-themes", "motion"],
     files: [
       {
         path: "components/theme-switcher/theme-switcher.tsx",
         type: "registry:component",
+        target: "@components/theme-switcher.tsx",
       },
     ],
+    categories: ["controls"],
     docs: "https://chanhdai.com/components/theme-switcher",
   },
   {
@@ -29,8 +30,10 @@ export const components: Registry["items"] = [
       {
         path: "components/text-flip/text-flip.tsx",
         type: "registry:component",
+        target: "@components/text-flip.tsx",
       },
     ],
+    categories: ["text-effects"],
     docs: "https://chanhdai.com/components/text-flip",
   },
   {
@@ -43,8 +46,10 @@ export const components: Registry["items"] = [
       {
         path: "components/apple-hello-effect/apple-hello-effect-english.tsx",
         type: "registry:component",
+        target: "@components/apple-hello-effect-english.tsx",
       },
     ],
+    categories: ["text-effects"],
     docs: "https://chanhdai.com/components/apple-hello-effect",
   },
   {
@@ -57,8 +62,10 @@ export const components: Registry["items"] = [
       {
         path: "components/apple-hello-effect/apple-hello-effect-hindi.tsx",
         type: "registry:component",
+        target: "@components/apple-hello-effect-hindi.tsx",
       },
     ],
+    categories: ["text-effects"],
     docs: "https://chanhdai.com/components/apple-hello-effect",
   },
   {
@@ -71,8 +78,10 @@ export const components: Registry["items"] = [
       {
         path: "components/apple-hello-effect/apple-hello-effect-spanish.tsx",
         type: "registry:component",
+        target: "@components/apple-hello-effect-spanish.tsx",
       },
     ],
+    categories: ["text-effects"],
     docs: "https://chanhdai.com/components/apple-hello-effect",
   },
   {
@@ -85,8 +94,10 @@ export const components: Registry["items"] = [
       {
         path: "components/apple-hello-effect/apple-hello-effect-vietnamese.tsx",
         type: "registry:component",
+        target: "@components/apple-hello-effect-vietnamese.tsx",
       },
     ],
+    categories: ["text-effects"],
     docs: "https://chanhdai.com/components/apple-hello-effect",
   },
   {
@@ -100,21 +111,27 @@ export const components: Registry["items"] = [
       {
         path: "components/wheel-picker/wheel-picker.tsx",
         type: "registry:component",
+        target: "@components/wheel-picker.tsx",
       },
     ],
+    categories: ["controls"],
     docs: "https://chanhdai.com/components/react-wheel-picker",
   },
   {
     name: "chevrons-up-down-icon",
     type: "registry:component",
-    description: "TBD",
+    description:
+      "Animated chevrons icon that morphs between up and down directions.",
     dependencies: ["motion"],
     files: [
       {
         path: "components/chevrons-up-down-icon/chevrons-up-down-icon.tsx",
         type: "registry:component",
+        target: "@components/chevrons-up-down-icon.tsx",
       },
     ],
+    categories: ["effects"],
+    docs: "https://chanhdai.com/components/chevrons-up-down-icon",
   },
   {
     name: "typography",
@@ -149,6 +166,7 @@ export const components: Registry["items"] = [
           {},
       },
     },
+    categories: ["typography"],
   },
   {
     name: "work-experience",
@@ -156,7 +174,7 @@ export const components: Registry["items"] = [
     title: "Work Experience",
     description:
       "Display work experiences with role details, company logos, and durations.",
-    dependencies: ["react-markdown", "lucide-react"],
+    dependencies: ["react-markdown", "date-fns"],
     registryDependencies: [
       "collapsible",
       "separator",
@@ -167,8 +185,10 @@ export const components: Registry["items"] = [
       {
         path: "components/work-experience/work-experience.tsx",
         type: "registry:component",
+        target: "@components/work-experience.tsx",
       },
     ],
+    categories: ["marketing"],
     docs: "https://chanhdai.com/components/work-experience-component",
   },
   {
@@ -181,8 +201,11 @@ export const components: Registry["items"] = [
       {
         path: "components/shimmering-text/shimmering-text.tsx",
         type: "registry:component",
+        target: "@components/shimmering-text.tsx",
       },
     ],
+    categories: ["text-effects"],
+    docs: "https://chanhdai.com/components/shimmering-text",
   },
   {
     name: "slide-to-unlock",
@@ -196,8 +219,10 @@ export const components: Registry["items"] = [
       {
         path: "components/slide-to-unlock/slide-to-unlock.tsx",
         type: "registry:component",
+        target: "@components/slide-to-unlock.tsx",
       },
     ],
+    categories: ["controls"],
     docs: "https://chanhdai.com/components/slide-to-unlock",
   },
   {
@@ -209,6 +234,7 @@ export const components: Registry["items"] = [
       "@kibo-ui/marquee",
       getRegistryItemUrl("testimonial"),
     ],
+    categories: ["marketing"],
     docs: "https://chanhdai.com/components/testimonials-marquee",
   },
   {
@@ -221,8 +247,11 @@ export const components: Registry["items"] = [
       {
         path: "components/testimonial/testimonial.tsx",
         type: "registry:component",
+        target: "@components/testimonial.tsx",
       },
     ],
+    categories: ["marketing"],
+    docs: "https://chanhdai.com/components/testimonial",
   },
   {
     name: "github-stars",
@@ -235,8 +264,11 @@ export const components: Registry["items"] = [
       {
         path: "components/github-stars/github-stars.tsx",
         type: "registry:component",
+        target: "@components/github-stars.tsx",
       },
     ],
+    categories: ["data-display"],
+    docs: "https://chanhdai.com/components/github-stars",
   },
   {
     name: "scroll-fade-effect",
@@ -248,6 +280,7 @@ export const components: Registry["items"] = [
       {
         path: "components/scroll-fade-effect/scroll-fade-effect.tsx",
         type: "registry:component",
+        target: "@components/scroll-fade-effect.tsx",
       },
     ],
     css: {
@@ -332,6 +365,8 @@ export const components: Registry["items"] = [
         "animation-fill-mode": "both",
       },
     },
+    categories: ["effects"],
+    docs: "https://chanhdai.com/components/scroll-fade-effect",
   },
   {
     name: "consent-manager",
@@ -345,8 +380,11 @@ export const components: Registry["items"] = [
       {
         path: "components/consent-manager/consent-manager.tsx",
         type: "registry:component",
+        target: "@components/consent-manager.tsx",
       },
     ],
+    categories: ["utilities"],
+    docs: "https://chanhdai.com/components/consent-manager",
   },
   {
     name: "copy-button",
@@ -354,23 +392,22 @@ export const components: Registry["items"] = [
     title: "Copy Button",
     description:
       "Copy text to clipboard with visual, haptic, and audio feedback.",
-    dependencies: [
-      "lucide-react",
-      "motion",
-      "@rexa-developer/tiks",
-      "web-haptics",
-    ],
-    registryDependencies: ["button"],
+    dependencies: ["motion", "@rexa-developer/tiks", "web-haptics"],
+    registryDependencies: ["button", getRegistryItemUrl("icon-swap")],
     files: [
       {
         path: "components/copy-button/copy-button.tsx",
         type: "registry:component",
+        target: "@components/copy-button.tsx",
       },
       {
         path: "src/hooks/use-copy-to-clipboard.ts",
         type: "registry:hook",
+        target: "@hooks/use-copy-to-clipboard.ts",
       },
     ],
+    categories: ["utilities"],
+    docs: "https://chanhdai.com/components/copy-button",
   },
   {
     name: "code-block-command",
@@ -378,16 +415,21 @@ export const components: Registry["items"] = [
     title: "Code Block Command",
     description:
       "Display install commands with package manager switcher and copy button.",
-    dependencies: ["@base-ui/react", "lucide-react", "motion", "jotai"],
-    registryDependencies: [getRegistryItemUrl("copy-button")],
+    dependencies: ["@base-ui/react", "motion", "jotai"],
+    registryDependencies: [
+      getRegistryItemUrl("icon-swap"),
+      getRegistryItemUrl("copy-button"),
+    ],
     files: [
       {
         path: "components/code-block-command/code-block-command.tsx",
         type: "registry:component",
+        target: "@components/code-block-command.tsx",
       },
       {
         path: "src/components/base/ui/tabs.tsx",
         type: "registry:component",
+        target: "@components/tabs.tsx",
       },
     ],
     cssVars: {
@@ -404,6 +446,8 @@ export const components: Registry["items"] = [
         "color-code-foreground": "var(--code-foreground)",
       },
     },
+    categories: ["data-display"],
+    docs: "https://chanhdai.com/components/code-block-command",
   },
   {
     name: "testimonial-spotlight",
@@ -415,8 +459,11 @@ export const components: Registry["items"] = [
       {
         path: "components/testimonial-spotlight/testimonial-spotlight.tsx",
         type: "registry:component",
+        target: "@components/testimonial-spotlight.tsx",
       },
     ],
+    categories: ["marketing"],
+    docs: "https://chanhdai.com/components/testimonial-spotlight",
   },
   {
     name: "glow-card-grid",
@@ -427,12 +474,10 @@ export const components: Registry["items"] = [
       {
         path: "components/glow-card-grid/glow-card-grid.tsx",
         type: "registry:component",
-      },
-      {
-        path: "components/glow-card-grid/glow-card.tsx",
-        type: "registry:component",
+        target: "@components/glow-card-grid.tsx",
       },
     ],
+    categories: ["effects"],
   },
   {
     name: "middle-truncation",
@@ -443,8 +488,10 @@ export const components: Registry["items"] = [
       {
         path: "components/middle-truncation/middle-truncation.tsx",
         type: "registry:component",
+        target: "@components/middle-truncation.tsx",
       },
     ],
+    categories: ["typography"],
     docs: "https://chanhdai.com/components/middle-truncation",
   },
   {
@@ -456,10 +503,12 @@ export const components: Registry["items"] = [
       {
         path: "components/twemoji/twemoji.tsx",
         type: "registry:component",
+        target: "@components/twemoji.tsx",
       },
       {
         path: "components/twemoji/lib/twemoji-regex.ts",
         type: "registry:lib",
+        target: "@lib/twemoji-regex.ts",
       },
     ],
     css: {
@@ -473,6 +522,7 @@ export const components: Registry["items"] = [
         },
       },
     },
+    categories: ["typography"],
     docs: "https://chanhdai.com/components/twemoji",
   },
   {
@@ -487,8 +537,10 @@ export const components: Registry["items"] = [
       {
         path: "components/elastic-slider/elastic-slider.tsx",
         type: "registry:component",
+        target: "@components/elastic-slider.tsx",
       },
     ],
+    categories: ["controls"],
     docs: "https://chanhdai.com/components/elastic-slider",
   },
   {
@@ -502,8 +554,10 @@ export const components: Registry["items"] = [
       {
         path: "components/contribution-graph/contribution-graph.tsx",
         type: "registry:component",
+        target: "@components/contribution-graph.tsx",
       },
     ],
+    categories: ["data-display"],
     docs: "https://www.kibo-ui.com/components/contribution-graph",
   },
   {
@@ -513,15 +567,21 @@ export const components: Registry["items"] = [
     description:
       "Visualize year-long GitHub contribution activity with daily counts, tooltips, and a profile link.",
     dependencies: ["date-fns"],
-    registryDependencies: ["tooltip", getRegistryItemUrl("contribution-graph")],
+    registryDependencies: [
+      "tooltip",
+      "spinner",
+      getRegistryItemUrl("contribution-graph"),
+    ],
     files: [
       {
         path: "components/github-contributions/github-contributions.tsx",
         type: "registry:component",
+        target: "@components/github-contributions.tsx",
       },
       {
         path: "components/github-contributions/lib/get-cached-contributions.ts",
         type: "registry:lib",
+        target: "@lib/get-cached-contributions.ts",
       },
     ],
     css: {
@@ -530,6 +590,7 @@ export const components: Registry["items"] = [
           {},
       },
     },
+    categories: ["data-display"],
     docs: "https://chanhdai.com/components/github-contributions",
   },
   {
@@ -538,13 +599,15 @@ export const components: Registry["items"] = [
     title: "TOC Minimap",
     description:
       "Navigate page sections with a compact, hoverable TOC minimap.",
-    registryDependencies: ["hover-card"],
+    registryDependencies: ["hover-card", "@soundcn/u-mini-map-open"],
     files: [
       {
         path: "components/toc-minimap/toc-minimap.tsx",
         type: "registry:component",
+        target: "@components/toc-minimap.tsx",
       },
     ],
+    categories: ["navigation"],
     docs: "https://chanhdai.com/components/toc-minimap",
   },
   {
@@ -558,21 +621,105 @@ export const components: Registry["items"] = [
       {
         path: "components/fluid-gradient-text/fluid-gradient-text.tsx",
         type: "registry:component",
+        target: "@components/fluid-gradient-text.tsx",
       },
     ],
+    categories: ["text-effects"],
     docs: "https://chanhdai.com/components/fluid-gradient-text",
   },
   {
-    name: "wakatime-stats",
+    name: "brand-assets-menu",
     type: "registry:component",
-    title: "WakaTime Stats",
-    description:
-      "Visualize coding time across different languages and platforms.",
+    title: "Brand Assets Menu",
+    description: "Context menu for copying brand SVGs and opening asset links.",
+    registryDependencies: ["context-menu", "sonner"],
+    dependencies: ["@rexa-developer/tiks"],
     files: [
       {
-        path: "components/wakatime-stats/wakatime-stats.tsx",
+        path: "components/brand-assets-menu/brand-assets-menu.tsx",
         type: "registry:component",
+        target: "@components/brand-assets-menu.tsx",
       },
     ],
+    categories: ["menus"],
+    docs: "https://chanhdai.com/components/brand-assets-menu",
+  },
+  {
+    name: "icon-swap",
+    type: "registry:component",
+    title: "Icon Swap",
+    description: "Animate icon swaps with scale, blur, and fade transitions.",
+    dependencies: ["motion"],
+    files: [
+      {
+        path: "components/icon-swap/icon-swap.tsx",
+        type: "registry:component",
+        target: "@components/icon-swap.tsx",
+      },
+    ],
+    categories: ["effects"],
+    docs: "https://chanhdai.com/components/icon-swap",
+  },
+  {
+    name: "dot-grid-spotlight",
+    type: "registry:component",
+    title: "Dot Grid Spotlight",
+    description:
+      "Interactive dot grid with a cursor-tracking spotlight effect.",
+    files: [
+      {
+        path: "components/dot-grid-spotlight/dot-grid-spotlight.tsx",
+        type: "registry:component",
+        target: "@components/dot-grid-spotlight.tsx",
+      },
+    ],
+    categories: ["effects"],
+    docs: "https://chanhdai.com/components/dot-grid-spotlight",
+  },
+  {
+    name: "spinning-circular-text",
+    type: "registry:component",
+    title: "Spinning Circular Text",
+    description:
+      "Text arranged in a circle with a continuous spinning animation.",
+    files: [
+      {
+        path: "components/spinning-circular-text/spinning-circular-text.tsx",
+        type: "registry:component",
+        target: "@components/spinning-circular-text.tsx",
+      },
+    ],
+    cssVars: {
+      theme: {
+        "--animate-spin-ccw":
+          "spin-ccw var(--tw-animation-duration, var(--tw-duration, 6s)) linear infinite",
+      },
+    },
+    css: {
+      "@keyframes spin-ccw": {
+        to: {
+          rotate: "-360deg",
+        },
+      },
+    },
+    categories: ["text-effects"],
+    docs: "https://chanhdai.com/components/spinning-circular-text",
+  },
+  {
+    name: "mobius-loop-icon",
+    type: "registry:component",
+    title: "Mobius Loop Icon",
+    description:
+      "Animated Mobius loop icon that morphs between circles and infinity shape.",
+    dependencies: ["motion"],
+    files: [
+      {
+        path: "components/mobius-loop-icon/mobius-loop-icon.tsx",
+        type: "registry:component",
+        target: "@components/mobius-loop-icon.tsx",
+      },
+    ],
+    categories: ["effects"],
+    docs: "https://chanhdai.com/components/mobius-loop-icon",
   },
 ]
