@@ -75,16 +75,23 @@ const DEFAULT_LABELS: Labels = {
 }
 
 const THEME = cn(
-  'data-[level="0"]:fill-muted-foreground/5',
-  'data-[level="1"]:fill-muted-foreground/20',
-  'data-[level="2"]:fill-muted-foreground/40',
-  'data-[level="3"]:fill-muted-foreground/60',
-  'data-[level="4"]:fill-muted-foreground/80'
+  'data-[level="0"]:fill-[var(--contribution-level-0)]',
+  'data-[level="1"]:fill-[var(--contribution-level-1)]',
+  'data-[level="2"]:fill-[var(--contribution-level-2)]',
+  'data-[level="3"]:fill-[var(--contribution-level-3)]',
+  'data-[level="4"]:fill-[var(--contribution-level-4)]'
 )
+
+export type Marker = {
+  label: string
+  color?: string
+  icon?: ReactNode
+}
 
 type ContributionGraphContextType = {
   data: Activity[]
   weeks: Week[]
+  markers?: Record<string, Marker>
   blockMargin: number
   blockRadius: number
   blockSize: number
@@ -233,6 +240,7 @@ const getMonthLabels = (
 
 export type ContributionGraphProps = HTMLAttributes<HTMLDivElement> & {
   data: Activity[]
+  markers?: Record<string, Marker>
   blockMargin?: number
   blockRadius?: number
   blockSize?: number
@@ -248,6 +256,7 @@ export type ContributionGraphProps = HTMLAttributes<HTMLDivElement> & {
 
 export const ContributionGraph = ({
   data,
+  markers,
   blockMargin = 4,
   blockRadius = 2,
   blockSize = 12,
@@ -287,6 +296,7 @@ export const ContributionGraph = ({
       value={{
         data,
         weeks,
+        markers,
         blockMargin,
         blockRadius,
         blockSize,
@@ -323,7 +333,7 @@ export const ContributionGraphBlock = ({
   className,
   ...props
 }: ContributionGraphBlockProps) => {
-  const { blockSize, blockMargin, blockRadius, labelHeight, maxLevel } =
+  const { blockSize, blockMargin, blockRadius, maxLevel, markers } =
     useContributionGraph()
 
   if (activity.level < 0 || activity.level > maxLevel) {
@@ -332,20 +342,40 @@ export const ContributionGraphBlock = ({
     )
   }
 
+  const marker = markers?.[activity.date]
+
+  const x = (blockSize + blockMargin) * weekIndex
+  const y = (blockSize + blockMargin) * dayIndex
+
   return (
-    <rect
-      className={cn(THEME, className)}
-      data-count={activity.count}
-      data-date={activity.date}
-      data-level={activity.level}
-      height={blockSize}
-      rx={blockRadius}
-      ry={blockRadius}
-      width={blockSize}
-      x={(blockSize + blockMargin) * weekIndex}
-      y={labelHeight + (blockSize + blockMargin) * dayIndex}
-      {...props}
-    />
+    <g className="group/block">
+      <rect
+        className={cn(
+          THEME,
+          "transition-[fill,stroke-width] hover:stroke-foreground/20 hover:stroke-[1.5px]",
+          className
+        )}
+        data-count={activity.count}
+        data-date={activity.date}
+        data-level={activity.level}
+        height={blockSize}
+        rx={blockRadius}
+        ry={blockRadius}
+        width={blockSize}
+        x={x}
+        y={y}
+        {...props}
+      />
+      {marker && (
+        <circle
+          cx={x + blockSize / 2}
+          cy={y + blockSize / 2}
+          r={blockSize / 5}
+          className="pointer-events-none fill-background opacity-80 transition-transform group-hover/block:scale-125"
+          style={{ fill: marker.color }}
+        />
+      )}
+    </g>
   )
 }
 
@@ -354,6 +384,7 @@ export type ContributionGraphCalendarProps = Omit<
   "children"
 > & {
   hideMonthLabels?: boolean
+  showWeekNumbers?: boolean
   className?: string
   children: (props: {
     activity: Activity
@@ -365,17 +396,32 @@ export type ContributionGraphCalendarProps = Omit<
 export const ContributionGraphCalendar = ({
   title = "Contribution Graph",
   hideMonthLabels = false,
+  showWeekNumbers = false,
   className,
   children,
   ...props
 }: ContributionGraphCalendarProps) => {
-  const { weeks, width, height, blockSize, blockMargin, labels } =
-    useContributionGraph()
+  const {
+    weeks,
+    width,
+    height,
+    blockSize,
+    blockMargin,
+    labels,
+    fontSize,
+    labelHeight,
+  } = useContributionGraph()
 
   const monthLabels = useMemo(
     () => getMonthLabels(weeks, labels.months),
     [weeks, labels.months]
   )
+
+  const DAY_LABELS = ["", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+  const LABEL_WIDTH = 30
+
+  const calendarHeight =
+    height + labelHeight + (showWeekNumbers ? labelHeight : 0)
 
   return (
     <div
@@ -384,9 +430,9 @@ export const ContributionGraphCalendar = ({
     >
       <svg
         className="block overflow-visible"
-        height={height}
-        viewBox={`0 0 ${width} ${height}`}
-        width={width}
+        height={calendarHeight}
+        viewBox={`-${LABEL_WIDTH} 0 ${width + LABEL_WIDTH} ${calendarHeight}`}
+        width={width + LABEL_WIDTH}
       >
         <title>{title}</title>
         {!hideMonthLabels && (
@@ -399,12 +445,58 @@ export const ContributionGraphCalendar = ({
                 dominantBaseline="hanging"
                 key={weekIndex}
                 x={(blockSize + blockMargin) * weekIndex}
+                y={0}
+                fontSize={fontSize - 4}
+                className="fill-muted-foreground/50 font-mono"
               >
                 {label}
               </text>
             ))}
           </g>
         )}
+
+        {showWeekNumbers && (
+          <g className="fill-current">
+            {weeks.map((_, weekIndex) => {
+              if (weekIndex % 4 !== 0) return null
+              return (
+                <text
+                  key={weekIndex}
+                  dominantBaseline="hanging"
+                  x={(blockSize + blockMargin) * weekIndex}
+                  y={height + labelHeight + 6}
+                  fontSize={fontSize - 7}
+                  className="fill-muted-foreground/40 font-mono font-bold tracking-tighter select-none"
+                >
+                  W{weekIndex + 1}
+                </text>
+              )
+            })}
+          </g>
+        )}
+
+        <g className="fill-current">
+          {DAY_LABELS.map((label, dayIndex) => {
+            if (!label) return null
+            return (
+              <text
+                key={dayIndex}
+                x={-LABEL_WIDTH + 4}
+                y={
+                  labelHeight +
+                  (blockSize + blockMargin) * dayIndex +
+                  blockSize / 2
+                }
+                dominantBaseline="central"
+                fontSize={fontSize - 4}
+                className="fill-muted-foreground/50 font-mono"
+              >
+                {label}
+              </text>
+            )
+          })}
+        </g>
+
         {weeks.map((week, weekIndex) =>
           week.map((activity, dayIndex) => {
             if (!activity) {
@@ -413,7 +505,9 @@ export const ContributionGraphCalendar = ({
 
             return (
               <Fragment key={`${weekIndex}-${dayIndex}`}>
-                {children({ activity, dayIndex, weekIndex })}
+                <g transform={`translate(0, ${labelHeight})`}>
+                  {children({ activity, dayIndex, weekIndex })}
+                </g>
               </Fragment>
             )
           })

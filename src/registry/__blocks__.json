@@ -68,21 +68,5 @@
     "categories": [
       "application"
     ]
-  },
-  {
-    "name": "github-contributions-01",
-    "description": "A GitHub contributions graph with mock data.",
-    "categories": [
-      "content",
-      "portfolio"
-    ]
-  },
-  {
-    "name": "wakatime-01",
-    "description": "A WakaTime coding activity block with mock data.",
-    "categories": [
-      "content",
-      "portfolio"
-    ]
   }
 ]

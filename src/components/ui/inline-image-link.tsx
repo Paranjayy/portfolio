@@ -19,7 +19,7 @@ export function InlineImageLink({
 }: InlineImageLinkProps) {
   return (
     <Link
-      href={href}
+      href={href as never}
       className={cn(
         "group relative inline-flex items-center gap-1 font-medium text-foreground underline decoration-muted-foreground/30 underline-offset-4 transition-colors hover:decoration-foreground",
         className

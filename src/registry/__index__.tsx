@@ -609,23 +609,6 @@ export const Index: Record<string, any> = {
     categories: ["effects"],
     meta: undefined,
   },
-  "wakatime-stats": {
-    name: "wakatime-stats",
-    description: "Visualize coding time across different languages and platforms.",
-    type: "registry:component",
-    files: [{
-      path: "src/registry/components/wakatime-stats/wakatime-stats.tsx",
-      type: "registry:component",
-      target: "",
-    }],
-    component: React.lazy(async () => {
-      const mod = await import("@/registry/components/wakatime-stats/wakatime-stats.tsx")
-      const exportName = Object.keys(mod).find(key => typeof mod[key] === 'function' || typeof mod[key] === 'object') || item.name
-      return { default: mod.default || mod[exportName] }
-    }),
-    categories: undefined,
-    meta: undefined,
-  },
   "login-01": {
     name: "login-01",
     description: "A simple login form.",
@@ -823,40 +806,6 @@ export const Index: Record<string, any> = {
     }),
     categories: ["marketing"],
     meta: {"createdAt":"2026-06-16","previewClassName":"min-h-svh content-center-safe"},
-  },
-  "github-contributions-01": {
-    name: "github-contributions-01",
-    description: "A GitHub contributions graph with mock data.",
-    type: "registry:block",
-    files: [{
-      path: "src/registry/blocks/github-contributions-01/github-contributions-01.tsx",
-      type: "registry:component",
-      target: "",
-    }],
-    component: React.lazy(async () => {
-      const mod = await import("@/registry/blocks/github-contributions-01/github-contributions-01.tsx")
-      const exportName = Object.keys(mod).find(key => typeof mod[key] === 'function' || typeof mod[key] === 'object') || item.name
-      return { default: mod.default || mod[exportName] }
-    }),
-    categories: ["content","portfolio"],
-    meta: undefined,
-  },
-  "wakatime-01": {
-    name: "wakatime-01",
-    description: "A WakaTime coding activity block with mock data.",
-    type: "registry:block",
-    files: [{
-      path: "src/registry/blocks/wakatime-01/wakatime-01.tsx",
-      type: "registry:component",
-      target: "",
-    }],
-    component: React.lazy(async () => {
-      const mod = await import("@/registry/blocks/wakatime-01/wakatime-01.tsx")
-      const exportName = Object.keys(mod).find(key => typeof mod[key] === 'function' || typeof mod[key] === 'object') || item.name
-      return { default: mod.default || mod[exportName] }
-    }),
-    categories: ["content","portfolio"],
-    meta: undefined,
   },
   "text-flip-demo": {
     name: "text-flip-demo",
