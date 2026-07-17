@@ -14,13 +14,13 @@ export const SOCIAL = {
   },
   github: {
     title: "GitHub",
-    handle: "paranjaydotdev",
+    handle: "Paranjayy",
     href: "https://github.com/Paranjayy",
     sameAs: true,
   },
   linkedin: {
     title: "LinkedIn",
-    handle: "paranjaydotdev",
+    handle: "paranjayy",
     href: "https://www.linkedin.com/in/paranjayy/",
     sameAs: true,
   },
