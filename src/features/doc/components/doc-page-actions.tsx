@@ -8,15 +8,27 @@ import { IconCheck, IconCopy, IconX } from "@tabler/icons-react"
 import { ChevronDownIcon } from "lucide-react"
 
 import type { CopyState } from "@/hooks/use-copy-to-clipboard"
-import { Button } from "@/components/ui/button"
-import { ButtonGroup, ButtonGroupSeparator } from "@/components/ui/button-group"
+import { Button } from "@/components/base/ui/button"
+import {
+  ButtonGroup,
+  ButtonGroupSeparator,
+} from "@/components/base/ui/button-group"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Icons } from "@/components/icons"
+} from "@/components/base/ui/dropdown-menu"
+import {
+  ClaudeIcon,
+  CursorIcon,
+  GitHubIcon,
+  GrokIcon,
+  MarkdownIcon,
+  OpenAIIcon,
+  SciraIcon,
+  V0Icon,
+} from "@/components/icons"
 import { CopyStateIcon } from "@/registry/components/copy-button"
 
 const cache = new Map<string, string>()
@@ -82,7 +94,7 @@ export function LLMCopyButton({ markdownUrl }: { markdownUrl: string }) {
         doneIcon={<IconCheck />}
         errorIcon={<IconX />}
       />
-      <span className="max-[28rem]:hidden">Copy Page</span>
+      <span className="max-[28rem]:hidden">Copy page</span>
     </Button>
   )
 }
@@ -117,12 +129,12 @@ export function ViewOptions({
       {
         title: "View as Markdown",
         href: fullMarkdownUrl,
-        icon: Icons.markdown,
+        icon: MarkdownIcon,
       },
       {
         title: "Open in GitHub",
-        href: `https://github.com/ncdai/chanhdai.com/blob/main/src/features/doc/content/${markdownUrl.split("/").slice(-1).join("/")}`,
-        icon: Icons.github,
+        href: `https://github.com/ncdai/chanhdai.com/blob/main/src/features/doc/content/${markdownUrl.replace(/^\//, "")}`,
+        icon: GitHubIcon,
       },
       {
         title: "Open in ChatGPT",
@@ -130,35 +142,35 @@ export function ViewOptions({
           hints: "search",
           q,
         })}`,
-        icon: Icons.openai,
+        icon: OpenAIIcon,
       },
       {
         title: "Open in Claude",
         href: `https://claude.ai/new?${new URLSearchParams({
           q,
         })}`,
-        icon: Icons.claude,
+        icon: ClaudeIcon,
       },
       {
         title: "Open in Cursor",
         href: `https://cursor.com/link/prompt?${new URLSearchParams({
           text: q,
         })}`,
-        icon: Icons.cursor,
+        icon: CursorIcon,
       },
       {
         title: "Open in Grok",
         href: `https://grok.com/?${new URLSearchParams({
           q,
         })}`,
-        icon: Icons.grok,
+        icon: GrokIcon,
       },
       {
         title: "Open in Scira AI",
         href: `https://scira.ai/?${new URLSearchParams({
           q,
         })}`,
-        icon: Icons.scira,
+        icon: SciraIcon,
       },
     ]
 
@@ -168,7 +180,7 @@ export function ViewOptions({
         href: `https://v0.app/?${new URLSearchParams({
           q,
         })}`,
-        icon: Icons.v0,
+        icon: V0Icon,
       })
     }
 
@@ -177,31 +189,36 @@ export function ViewOptions({
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          className="size-7 border-none active:scale-none"
-          variant="secondary"
-          size="icon-sm"
-          aria-label="View Options"
-        >
-          <ChevronDownIcon className="mt-0.5 size-4" />
-        </Button>
-      </DropdownMenuTrigger>
+      <DropdownMenuTrigger
+        render={
+          <Button
+            className="size-7 border-none active:scale-none"
+            variant="secondary"
+            size="icon-sm"
+            aria-label="View Options"
+          >
+            <ChevronDownIcon className="mt-0.5 size-4" />
+          </Button>
+        }
+      />
 
       <DropdownMenuContent
         className="w-fit"
         align="start"
         alignOffset={-6}
         collisionPadding={16}
-        onCloseAutoFocus={(e) => e.preventDefault()}
+        finalFocus={false}
       >
         {items.map(({ title, href, icon: Icon }) => (
-          <DropdownMenuItem key={href} asChild>
-            <a href={href} rel="noopener" target="_blank">
-              <Icon />
-              {title}
-            </a>
-          </DropdownMenuItem>
+          <DropdownMenuItem
+            key={href}
+            render={
+              <a href={href} rel="noopener" target="_blank">
+                <Icon />
+                {title}
+              </a>
+            }
+          />
         ))}
       </DropdownMenuContent>
     </DropdownMenu>

@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react"
 
 import { CountUp } from "@/components/count-up"
-import { Icons } from "@/components/icons"
+import { DiscordIcon } from "@/components/icons"
 import { cn } from "@/lib/utils"
+import { LaptopIcon, MusicIcon, Gamepad2Icon } from "lucide-react"
 
 import { Panel } from "./panel"
 
@@ -74,14 +75,14 @@ export function Dashboard() {
           )
         }
         subtitle={wakatime ? "Last 7 days" : "Loading..."}
-        icon={<Icons.laptop className="size-4" />}
+        icon={<LaptopIcon className="size-4" />}
       />
       <DashboardItem
         title="Spotify"
         value={spotify.isPlaying ? spotify.title! : "Not Playing"}
         subtitle={spotify.isPlaying ? `by ${spotify.artist}` : "Resting"}
         icon={
-          <Icons.music
+          <MusicIcon
             className={cn(
               "size-4",
               spotify.isPlaying && "animate-pulse text-emerald-500"
@@ -94,13 +95,13 @@ export function Dashboard() {
         title="Discord"
         value="Online"
         subtitle="Idle"
-        icon={<Icons.discord className="size-4" />}
+        icon={<DiscordIcon className="size-4" />}
       />
       <DashboardItem
         title="Steam"
         value="Offline"
         subtitle="Last: Elden Ring"
-        icon={<Icons.steam className="size-4" />}
+        icon={<Gamepad2Icon className="size-4" />}
       />
     </Panel>
   )

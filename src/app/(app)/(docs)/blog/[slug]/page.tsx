@@ -5,16 +5,18 @@ import { getTableOfContents } from "fumadocs-core/content/toc"
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react"
 import type { BlogPosting as PageSchema, WithContext } from "schema-dts"
 
-import { SITE_INFO, X_HANDLE } from "@/config/site"
+import { JSON_LD_ID } from "@/config/json-ld"
+import { X_HANDLE } from "@/config/site"
 import { jsonLdBreadcrumbList, JsonLdScript } from "@/lib/json-ld"
-import { Button } from "@/components/ui/button"
+import { absoluteUrl } from "@/lib/utils"
 import { Kbd } from "@/components/ui/kbd"
-import { Prose } from "@/components/ui/typography"
+import { Button } from "@/components/base/ui/button"
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/base/ui/tooltip"
+import { Prose } from "@/components/base/ui/typography"
 import { MDX } from "@/components/mdx"
 import { TOCInline } from "@/components/toc-inline"
 import { TOCMinimap } from "@/components/toc-minimap"
@@ -31,18 +33,17 @@ import { DocPageRoot } from "@/features/doc/components/doc-page-root"
 import { DocShareMenu } from "@/features/doc/components/doc-share-menu"
 import {
   findNeighbour,
-  getAllDocs,
+  getBlogPosts,
   getDocBySlug,
 } from "@/features/doc/data/documents"
 import type { Doc } from "@/features/doc/types/document"
-import { USER } from "@/features/portfolio/data/user"
 
 export const revalidate = false
 export const dynamic = "force-static"
 export const dynamicParams = false
 
 export async function generateStaticParams() {
-  const docs = getAllDocs()
+  const docs = getBlogPosts()
   return docs.map((doc) => ({ slug: doc.slug }))
 }
 
@@ -58,7 +59,7 @@ export async function generateMetadata({
 
   const { title, description, image, createdAt, updatedAt } = doc.metadata
 
-  const postUrl = getDocUrl(doc)
+  const postUrl = `/blog/${doc.slug}`
   const ogImage =
     image ||
     `/og/simple?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`
@@ -91,22 +92,29 @@ export async function generateMetadata({
 }
 
 function getPageJsonLd(doc: Doc): WithContext<PageSchema> {
+  const postUrl = `/blog/${doc.slug}`
+
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
+    "@id": absoluteUrl(postUrl),
     headline: doc.metadata.title,
     description: doc.metadata.description,
     image:
       doc.metadata.image ||
-      `/og/simple?title=${encodeURIComponent(doc.metadata.title)}&description=${encodeURIComponent(doc.metadata.description)}`,
-    url: `${SITE_INFO.url}${getDocUrl(doc)}`,
+      absoluteUrl(
+        `/og/simple?title=${encodeURIComponent(doc.metadata.title)}&description=${encodeURIComponent(doc.metadata.description)}`
+      ),
+    url: absoluteUrl(postUrl),
     datePublished: new Date(doc.metadata.createdAt).toISOString(),
     dateModified: new Date(doc.metadata.updatedAt).toISOString(),
-    author: {
-      "@type": "Person",
-      name: USER.displayName,
-      identifier: USER.username,
-      image: USER.avatar,
+    author: { "@id": JSON_LD_ID.person },
+    mainEntityOfPage: absoluteUrl(postUrl),
+    isPartOf: {
+      "@type": "Blog",
+      "@id": absoluteUrl("/blog"),
+      name: "Blog",
+      url: absoluteUrl("/blog"),
     },
   }
 }
@@ -121,7 +129,7 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
 
   const toc = getTableOfContents(doc.content)
 
-  const allDocs = getAllDocs()
+  const allDocs = getBlogPosts()
   const { previous, next } = findNeighbour(allDocs, slug)
 
   return (
@@ -156,24 +164,27 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
 
           <div className="flex items-center justify-between p-2 pl-4">
             <Button
-              className="h-7 gap-2 border-none px-0 text-muted-foreground hover:text-foreground hover:no-underline"
+              className="h-7 gap-2 border-none px-0 tracking-wider text-muted-foreground hover:text-foreground hover:no-underline"
               variant="link"
               size="sm"
-              asChild
-            >
-              <Link href="/blog">
-                <ArrowLeftIcon />
-                Blog
-              </Link>
-            </Button>
+              nativeButton={false}
+              render={
+                <Link href="/blog">
+                  <ArrowLeftIcon />
+                  Blog
+                </Link>
+              }
+            />
 
             <div className="flex items-center gap-2">
               <LLMCopyButtonWithViewOptions
-                markdownUrl={`${getDocUrl(doc)}.mdx`}
-                isComponent={doc.metadata.category === "components"}
+                markdownUrl={`/blog/${doc.slug}.mdx`}
               />
 
-              <DocShareMenu title={doc.metadata.title} url={getDocUrl(doc)} />
+              <DocShareMenu
+                title={doc.metadata.title}
+                url={`/blog/${doc.slug}`}
+              />
 
               {previous && (
                 <Tooltip>
@@ -183,20 +194,21 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
                         className="size-7 border-none"
                         variant="secondary"
                         size="icon-sm"
-                        asChild
-                      >
-                        <Link
-                          href={`/blog/${previous.slug}`}
-                          aria-label="Previous Post"
-                        >
-                          <ArrowLeftIcon />
-                        </Link>
-                      </Button>
+                        nativeButton={false}
+                        render={
+                          <Link
+                            href={`/blog/${previous.slug}`}
+                            aria-label="Previous post"
+                          >
+                            <ArrowLeftIcon />
+                          </Link>
+                        }
+                      />
                     }
                   />
                   <TooltipContent className="pr-2 pl-3">
                     <div className="flex items-center gap-3">
-                      Previous Post
+                      Previous post
                       <Kbd>
                         <ArrowLeftIcon />
                       </Kbd>
@@ -213,20 +225,21 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
                         className="size-7 border-none"
                         variant="secondary"
                         size="icon-sm"
-                        asChild
-                      >
-                        <Link
-                          href={`/blog/${next.slug}`}
-                          aria-label="Next Post"
-                        >
-                          <ArrowRightIcon />
-                        </Link>
-                      </Button>
+                        nativeButton={false}
+                        render={
+                          <Link
+                            href={`/blog/${next.slug}`}
+                            aria-label="Next post"
+                          >
+                            <ArrowRightIcon />
+                          </Link>
+                        }
+                      />
                     }
                   />
                   <TooltipContent className="pr-2 pl-3">
                     <div className="flex items-center gap-3">
-                      Next Post
+                      Next post
                       <Kbd>
                         <ArrowRightIcon />
                       </Kbd>
@@ -243,7 +256,7 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
 
           <h1
             data-slot="doc-title"
-            className="screen-line-bottom px-4 text-3xl font-semibold tracking-tight text-balance"
+            className="screen-line-bottom px-4 text-4xl font-medium tracking-tight text-balance"
           >
             {doc.metadata.title}
           </h1>
@@ -277,9 +290,4 @@ export default async function Page({ params }: PageProps<"/blog/[slug]">) {
       </DocPageRoot>
     </>
   )
-}
-
-function getDocUrl(doc: Doc) {
-  const isComponent = doc.metadata.category === "components"
-  return isComponent ? `/components/${doc.slug}` : `/blog/${doc.slug}`
 }

@@ -1,13 +1,13 @@
 export type Education = {
   id: string
-  schoolName: string
-  schoolLogo?: string
-  schoolWebsite?: string
-  degree: string
-  fieldOfStudy: string
-  startYear: string
-  endYear?: string
+  school: string
+  degree?: string
+  fieldOfStudy?: string
+  period: {
+    start: string
+    end?: string
+  }
   description?: string
   skills?: string[]
-  isCurrent?: boolean
+  isExpanded?: boolean
 }

@@ -722,4 +722,88 @@ export const components: Registry["items"] = [
     categories: ["effects"],
     docs: "https://chanhdai.com/components/mobius-loop-icon",
   },
+  {
+    name: "logos-carousel",
+    type: "registry:component",
+    title: "Logos Carousel",
+    description: "Cycle through logos column by column in a staggered wave.",
+    dependencies: ["motion"],
+    files: [
+      {
+        path: "components/logos-carousel/logos-carousel.tsx",
+        type: "registry:component",
+        target: "@components/logos-carousel.tsx",
+      },
+    ],
+    categories: ["marketing"],
+    docs: "https://chanhdai.com/components/logos-carousel",
+  },
+  {
+    name: "testimonial-2",
+    type: "registry:component",
+    title: "Testimonial 2",
+    description:
+      "Display a testimonial quote with author attribution and source link.",
+    files: [
+      {
+        path: "components/testimonial-2/testimonial-2.tsx",
+        type: "registry:component",
+        target: "@components/testimonial-2.tsx",
+      },
+    ],
+    categories: ["marketing"],
+    docs: "https://chanhdai.com/components/testimonial-2",
+  },
+  {
+    name: "line-nav",
+    type: "registry:component",
+    title: "Line Nav",
+    description:
+      "Vertical navigation with a line marker that expands on hover and active state.",
+    dependencies: ["motion"],
+    files: [
+      {
+        path: "components/line-nav/line-nav.tsx",
+        type: "registry:component",
+        target: "@components/line-nav.tsx",
+      },
+    ],
+    categories: ["navigation"],
+    docs: "https://chanhdai.com/components/line-nav",
+  },
+  {
+    name: "share-menu",
+    type: "registry:component",
+    title: "Share Menu",
+    description:
+      "Share menu to copy a link or post to X, LinkedIn, and the native share sheet.",
+    registryDependencies: ["button", "dropdown-menu", "sonner"],
+    files: [
+      {
+        path: "components/share-menu/share-menu.tsx",
+        type: "registry:component",
+        target: "@components/share-menu.tsx",
+      },
+    ],
+    categories: ["menus"],
+    docs: "https://chanhdai.com/components/share-menu",
+  },
+  {
+    name: "spotlight-logo",
+    type: "registry:component",
+    title: "Spotlight Logo",
+    description:
+      "SVG logo with a cursor-tracking gradient highlight and tactile press.",
+    dependencies: ["motion"],
+    registryDependencies: ["@soundcn/metal-click"],
+    files: [
+      {
+        path: "components/spotlight-logo/spotlight-logo.tsx",
+        type: "registry:component",
+        target: "@components/spotlight-logo.tsx",
+      },
+    ],
+    categories: ["effects"],
+    docs: "https://chanhdai.com/components/spotlight-logo",
+  },
 ]

@@ -19,7 +19,7 @@ git clone https://github.com/your-handle/portfolio-template.git minimal-dev-port
 cd minimal-dev-portfolio
 ```
 
-### 2. Install Portless
+### 2. Install portless
 
 Documentation: [port1355.dev](https://port1355.dev)
 
@@ -79,7 +79,7 @@ pnpm registry:validate
 
 This project utilizes **shadcn Registry**, which allows you to manage and distribute custom components, hooks, pages, and other files across multiple React projects. By hosting a registry, you can reuse UI components easily without manually copying code between projects.
 
-### Using Registry in other React projects
+### Using registry in other React projects
 
 If you're working on a different React project and want to reuse the custom components from this repository, visit [paranjay.dev/components](https://paranjay.dev/components) for installation instructions and component documentation.
 
@@ -87,7 +87,7 @@ If you're working on a different React project and want to reuse the custom comp
 
 ### Registry configuration
 
-Documentation: [shadcn Registry Docs](https://ui.shadcn.com/docs/registry)
+Documentation: [shadcn registry docs](https://ui.shadcn.com/docs/registry)
 
 Source files:
 
@@ -100,3 +100,14 @@ pnpm registry:build
 ```
 
 When running the `npx shadcn add <registry-url>` command, the selected component will be automatically downloaded and integrated into your project.
+
+## Screenshots
+
+The site screenshots are captured locally, then published to Cloudflare R2.
+
+```bash
+pnpm capture       # Capture screenshots into .ncdai/screenshots
+pnpm capture:sync  # Upload the folder to Cloudflare R2
+```
+
+`pnpm capture:sync` requires the `R2_*` variables from `.env.example`. It mirrors the local folder structure into the bucket (skipping dotfiles), overwriting existing files but never deleting remote ones.

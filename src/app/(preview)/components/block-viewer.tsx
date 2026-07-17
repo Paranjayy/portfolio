@@ -26,12 +26,6 @@ import type {
 } from "@/lib/registry"
 import { cn } from "@/lib/utils"
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard"
-import { Button } from "@/components/ui/button"
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible"
 import {
   Command,
   CommandEmpty,
@@ -41,16 +35,22 @@ import {
   CommandList,
 } from "@/components/ui/command"
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
-import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable"
-import { Separator } from "@/components/ui/separator"
+import { Button } from "@/components/base/ui/button"
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/base/ui/collapsible"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/base/ui/popover"
+import { Separator } from "@/components/base/ui/separator"
 import {
   Sidebar,
   SidebarGroup,
@@ -61,7 +61,7 @@ import {
   SidebarMenuItem,
   SidebarMenuSub,
   SidebarProvider,
-} from "@/components/ui/sidebar"
+} from "@/components/base/ui/sidebar"
 import {
   Tabs,
   TabsContent,
@@ -75,7 +75,17 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/base/ui/tooltip"
-import { getIconForLanguageExtension, Icons } from "@/components/icons"
+import {
+  DesktopIcon,
+  FolderIcon,
+  FolderOpenIcon,
+  FullScreenIcon,
+  getIconForLanguageExtension,
+  RefreshIcon,
+  SmartPhoneIcon,
+  TabletIcon,
+  TerminalIcon,
+} from "@/components/icons"
 import { OpenInV0Button } from "@/components/v0-open-button"
 import { CopyButton, CopyStateIcon } from "@/registry/components/copy-button"
 import { sendToIframe } from "@/app/(preview)/hooks/use-iframe-sync"
@@ -258,15 +268,15 @@ function BlockViewerToolbar() {
             }}
           >
             <ToggleGroupItem aria-label="Mobile" value="30%">
-              <Icons.smartPhone />
+              <SmartPhoneIcon />
             </ToggleGroupItem>
 
             <ToggleGroupItem aria-label="Tablet" value="60%">
-              <Icons.tablet />
+              <TabletIcon />
             </ToggleGroupItem>
 
             <ToggleGroupItem aria-label="Desktop" value="100%">
-              <Icons.desktop />
+              <DesktopIcon />
             </ToggleGroupItem>
           </ToggleGroup>
 
@@ -279,25 +289,26 @@ function BlockViewerToolbar() {
             className="rounded-sm border-none dark:hover:bg-muted"
             variant="ghost"
             size="icon-xs"
-            asChild
-          >
-            <a
-              href={serializePreviewSearchParams(`/preview/${item.name}`, {
-                theme,
-              })}
-              target="_blank"
-              rel="noopener"
-              aria-label="Open in New Tab"
-              onClick={() =>
-                trackEvent({
-                  name: "block_viewer_open_preview",
-                  properties: { block: item.name },
-                })
-              }
-            >
-              <Icons.fullScreen className="size-4" />
-            </a>
-          </Button>
+            nativeButton={false}
+            render={
+              <a
+                href={serializePreviewSearchParams(`/preview/${item.name}`, {
+                  theme,
+                })}
+                target="_blank"
+                rel="noopener"
+                aria-label="Open in New Tab"
+                onClick={() =>
+                  trackEvent({
+                    name: "block_viewer_open_preview",
+                    properties: { block: item.name },
+                  })
+                }
+              >
+                <FullScreenIcon className="size-4" />
+              </a>
+            }
+          />
 
           <Separator
             orientation="vertical"
@@ -318,7 +329,7 @@ function BlockViewerToolbar() {
               })
             }}
           >
-            <Icons.refresh className="size-4" />
+            <RefreshIcon className="size-4" />
           </Button>
         </div>
 
@@ -342,7 +353,7 @@ function BlockViewerToolbar() {
         >
           <CopyStateIcon
             state={state}
-            idleIcon={<Icons.terminal />}
+            idleIcon={<TerminalIcon />}
             doneIcon={<CheckIcon />}
           />
           <span>
@@ -489,7 +500,7 @@ function BlockViewerCode() {
 
         <div
           key={file?.path}
-          className="h-full overflow-hidden rounded-[9px] border bg-code [&_pre]:no-scrollbar [&_pre]:h-full [&_pre]:overflow-y-auto"
+          className="h-full overflow-hidden rounded-[9px] border bg-code [&_pre]:no-scrollbar [&_pre]:h-full [&_pre]:scroll-fade [&_pre]:overflow-y-auto"
           dangerouslySetInnerHTML={{ __html: file?.highlightedContent ?? "" }}
         />
       </figure>
@@ -557,26 +568,28 @@ function Tree({ item, index }: { item: FileTree; index: number }) {
   return (
     <SidebarMenuItem>
       <Collapsible
-        className="group/collapsible flex flex-col gap-px [&[data-state=open]>button>svg:first-child]:rotate-90"
+        className="group/collapsible flex flex-col gap-px data-open:[&>button>svg:first-child]:rotate-90"
         defaultOpen
       >
-        <CollapsibleTrigger asChild>
-          <SidebarMenuButton
-            className={cn(
-              "rounded-none pl-(--index) whitespace-nowrap [&_svg]:text-muted-foreground",
-              "data-[state=closed]:*:data-[slot=folder]:block data-[state=open]:*:data-[slot=folder-open]:block"
-            )}
-            style={
-              {
-                "--index": `${index * (index === 1 ? 1 : 1.2)}rem`,
-              } as React.CSSProperties
-            }
-          >
-            <ChevronRightIcon className="transition-transform" />
-            <Icons.folder data-slot="folder" className="hidden" />
-            <Icons.folderOpen data-slot="folder-open" className="hidden" />
-            {item.name}
-          </SidebarMenuButton>
+        <CollapsibleTrigger
+          render={
+            <SidebarMenuButton
+              className={cn(
+                "rounded-none pl-(--index) whitespace-nowrap [&_svg]:text-muted-foreground",
+                "aria-[expanded=false]:*:data-[slot=folder]:block aria-expanded:*:data-[slot=folder-open]:block"
+              )}
+              style={
+                {
+                  "--index": `${index * (index === 1 ? 1 : 1.2)}rem`,
+                } as React.CSSProperties
+              }
+            />
+          }
+        >
+          <ChevronRightIcon className="transition-transform" />
+          <FolderIcon data-slot="folder" className="hidden" />
+          <FolderOpenIcon data-slot="folder-open" className="hidden" />
+          {item.name}
         </CollapsibleTrigger>
 
         <CollapsibleContent>
@@ -676,16 +689,18 @@ function ThemePicker() {
       <Tooltip>
         <TooltipTrigger
           render={
-            <PopoverTrigger asChild>
-              <Button
-                className="bg-transparent px-1.75 shadow-none dark:border-border dark:bg-transparent dark:aria-expanded:bg-input/50"
-                variant="outline"
-                size="sm"
-                aria-label="Theme"
-              >
-                <ThemePalette cssVars={themeItem?.cssVars} />
-              </Button>
-            </PopoverTrigger>
+            <PopoverTrigger
+              render={
+                <Button
+                  className="bg-transparent px-1.75 shadow-none dark:border-border dark:bg-transparent dark:aria-expanded:bg-input/50"
+                  variant="outline"
+                  size="sm"
+                  aria-label="Theme"
+                >
+                  <ThemePalette cssVars={themeItem?.cssVars} />
+                </Button>
+              }
+            />
           }
         />
         <TooltipContent>
@@ -708,7 +723,7 @@ function ThemePicker() {
         >
           <CommandInput placeholder="Search theme…" />
 
-          <CommandList className="min-h-80 supports-timeline-scroll:scroll-fade-effect-y">
+          <CommandList className="min-h-80 scroll-fade">
             <CommandEmpty>No results found.</CommandEmpty>
 
             <CommandGroup heading="Current theme">

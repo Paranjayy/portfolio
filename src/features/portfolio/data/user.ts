@@ -9,10 +9,10 @@ export const USER: User = {
   pronouns: "he/him",
   bio: "BS Student (Data Science & Applications) @ IIT Madras. Passionate about building robust, scalable AI systems.",
   flipSentences: [
-    "Night Owl 🦉 building scalable AI systems.",
-    "2,500+ GitHub Contributions in 2026.",
-    "IIT Madras BS Student (DS & Applications).",
-    "Passionate about open-source and modular design.",
+    "Creating with code. Small details matter.",
+    "Design Engineer.",
+    "Open source contributor.",
+    "I own a vintage iPhone.",
   ],
   address: "Gujarat, India",
   email: "a3BhcmFuamF5MjQ1QGdtYWlsLmNvbQ==", // kparanjay245@gmail.com
@@ -29,10 +29,8 @@ export const USER: User = {
       logo: "https://upload.wikimedia.org/wikipedia/en/6/69/IIT_Madras_Logo.svg",
     },
   ],
-  dob: "2005-12-24",
-  about: `
-I'm a **BS Student in Data Science & Applications** at IIT Madras, where I spend my days (and many nights) building **scalable AI systems** and exploring the nuances of **modular design**.
-`,
+  about: `I'm a BS Student in Data Science & Applications at IIT Madras, where I spend my days (and many nights) building scalable AI systems and exploring the nuances of modular design.
+`, 
   avatar: "https://github.com/Paranjayy.png",
   ogImage: "https://paranjay.dev/og.png",
   timeZone: "Asia/Kolkata",

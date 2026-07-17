@@ -2,8 +2,6 @@ import { format } from "date-fns"
 import { Crown, Paperclip } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { Separator } from "@/components/ui/separator"
-import { Prose } from "@/components/ui/typography"
 import {
   Collapsible,
   CollapsibleChevronsUpDownIcon,
@@ -12,6 +10,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/base/ui/collapsible"
+import { Separator } from "@/components/base/ui/separator"
 import {
   Tooltip,
   TooltipContent,
@@ -34,7 +33,7 @@ export function AwardItem({
       <div className="flex items-center hover:bg-accent-muted">
         <div
           className={cn(
-            "mx-4 flex size-6 shrink-0 items-center justify-center rounded-lg border border-muted-foreground/15 bg-muted ring-1 ring-line ring-offset-1 ring-offset-background",
+            "mx-4 flex size-6 shrink-0 items-center justify-center rounded-md border border-muted-foreground/15 bg-muted ring-1 ring-line ring-offset-1 ring-offset-background",
             "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:text-muted-foreground [&_svg:not([class*='size-'])]:size-4"
           )}
         >
@@ -91,14 +90,14 @@ export function AwardItem({
                       href={award.referenceLink}
                       target="_blank"
                       rel="noopener"
-                      aria-label="Open Reference Attachment"
+                      aria-label="Open reference attachment"
                     >
                       <Paperclip />
                     </a>
                   }
                 />
                 <TooltipContent>
-                  <p>Open Reference Attachment</p>
+                  <p>Open reference attachment</p>
                 </TooltipContent>
               </Tooltip>
             )}
@@ -114,9 +113,9 @@ export function AwardItem({
 
       {canExpand && (
         <CollapsibleContent className="overflow-hidden">
-          <Prose className="border-t border-line p-4">
+          <div className="typeset typeset-description border-t border-line p-4">
             <Markdown>{award.description}</Markdown>
-          </Prose>
+          </div>
         </CollapsibleContent>
       )}
     </Collapsible>

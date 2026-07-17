@@ -6,8 +6,8 @@ export default function Testimonials02() {
     <div className="max-w-screen overflow-x-clip">
       <div className="container mx-auto px-4">
         <div className="border-x border-line py-8">
-          <h2 className="screen-line-top screen-line-bottom ml-4 font-heading text-3xl font-semibold tracking-tight">
-            Loved by Devs Worldwide
+          <h2 className="screen-line-top screen-line-bottom ml-4 font-heading text-3xl font-medium tracking-tight">
+            Loved by devs worldwide
           </h2>
 
           <p className="p-4 text-base text-balance text-muted-foreground">

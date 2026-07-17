@@ -1,4 +1,12 @@
-import { Icons } from "@/components/icons"
+import {
+  BunIcon,
+  GitHubIcon,
+  JsIcon,
+  OpenAIIcon,
+  ShadcnIcon,
+  TsIcon,
+  VercelIcon,
+} from "@/components/icons"
 
 import type { TechStack } from "../types/tech-stack"
 
@@ -7,14 +15,14 @@ export const TECH_STACK: TechStack[] = [
     key: "typescript",
     title: "TypeScript",
     href: "https://www.typescriptlang.org",
-    icon: <Icons.ts />,
+    icon: <TsIcon />,
     categories: ["Language"],
   },
   {
     key: "js",
     title: "JavaScript",
     href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
-    icon: <Icons.js />,
+    icon: <JsIcon />,
     categories: ["Language"],
   },
   {
@@ -77,7 +85,7 @@ export const TECH_STACK: TechStack[] = [
     key: "shadcn-ui",
     title: "shadcn/ui",
     href: "https://ui.shadcn.com",
-    icon: <Icons.shadcn />,
+    icon: <ShadcnIcon />,
     categories: ["Frontend"],
   },
   {
@@ -116,6 +124,20 @@ export const TECH_STACK: TechStack[] = [
       <svg viewBox="0 0 24 24" aria-hidden>
         <path
           d="m9.071 7.5-4.747 9H0l3.707-7.027C4.28 8.383 5.715 7.5 6.909 7.5zm10.605 2.25c0-1.243.968-2.25 2.162-2.25S24 8.507 24 9.75 23.032 12 21.838 12s-2.162-1.007-2.162-2.25M9.882 7.5h4.324l-4.747 9H5.135zm5.107 0h4.324l-3.705 7.028c-.575 1.09-2.01 1.972-3.204 1.972h-2.162z"
+          fill="currentColor"
+        />
+      </svg>
+    ),
+    categories: ["Frontend"],
+  },
+  {
+    key: "expo",
+    title: "Expo",
+    href: "https://expo.dev",
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden>
+        <path
+          d="M0 20.084c.043.53.23 1.063.718 1.778.58.849 1.576 1.315 2.303.567.49-.505 5.794-9.776 8.35-13.29a.761.761 0 011.248 0c2.556 3.514 7.86 12.785 8.35 13.29.727.748 1.723.282 2.303-.567.57-.835.728-1.42.728-2.046 0-.426-8.26-15.798-9.092-17.078-.8-1.23-1.044-1.498-2.397-1.542h-1.032c-1.353.044-1.597.311-2.398 1.542C8.267 3.991.33 18.758 0 19.77Z"
           fill="currentColor"
         />
       </svg>
@@ -168,7 +190,7 @@ export const TECH_STACK: TechStack[] = [
     key: "bun",
     title: "Bun",
     href: "https://bun.sh",
-    icon: <Icons.bun />,
+    icon: <BunIcon />,
     categories: ["Backend & Database"],
   },
   {
@@ -273,7 +295,7 @@ export const TECH_STACK: TechStack[] = [
     key: "chatgpt",
     title: "ChatGPT",
     href: "https://chatgpt.com",
-    icon: <Icons.openai />,
+    icon: <OpenAIIcon />,
     categories: ["Workflow & AI"],
   },
   {
@@ -294,7 +316,7 @@ export const TECH_STACK: TechStack[] = [
     key: "github",
     title: "GitHub",
     href: "https://github.com",
-    icon: <Icons.github />,
+    icon: <GitHubIcon />,
     categories: ["Workflow & AI"],
   },
   {
@@ -315,7 +337,7 @@ export const TECH_STACK: TechStack[] = [
     key: "vercel",
     title: "Vercel",
     href: "https://vercel.com",
-    icon: <Icons.vercel />,
+    icon: <VercelIcon />,
     categories: ["Workflow & AI"],
   },
   {

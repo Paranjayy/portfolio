@@ -3,18 +3,20 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { getTableOfContents } from "fumadocs-core/content/toc"
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react"
-import type { BlogPosting as PageSchema, WithContext } from "schema-dts"
+import type { SoftwareSourceCode, WithContext } from "schema-dts"
 
-import { SITE_INFO, X_HANDLE } from "@/config/site"
+import { JSON_LD_ID } from "@/config/json-ld"
+import { LICENSE, SOURCE_CODE_GITHUB_URL, X_HANDLE } from "@/config/site"
 import { jsonLdBreadcrumbList, JsonLdScript } from "@/lib/json-ld"
-import { Button } from "@/components/ui/button"
+import { absoluteUrl } from "@/lib/utils"
 import { Kbd } from "@/components/ui/kbd"
-import { Prose } from "@/components/ui/typography"
+import { Button } from "@/components/base/ui/button"
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/base/ui/tooltip"
+import { Prose } from "@/components/base/ui/typography"
 import { MDX } from "@/components/mdx"
 import { TOCInline } from "@/components/toc-inline"
 import { TOCMinimap } from "@/components/toc-minimap"
@@ -25,20 +27,20 @@ import {
 } from "@/features/doc/components/doc-layout"
 import { LLMCopyButtonWithViewOptions } from "@/features/doc/components/doc-page-actions"
 import { DocShareMenu } from "@/features/doc/components/doc-share-menu"
+import { DocSponsors } from "@/features/doc/components/doc-sponsors"
 import {
   findNeighbour,
+  getComponentDocs,
   getDocBySlug,
-  getDocsByCategory,
 } from "@/features/doc/data/documents"
 import type { Doc } from "@/features/doc/types/document"
-import { USER } from "@/features/portfolio/data/user"
 
 export const revalidate = false
 export const dynamic = "force-static"
 export const dynamicParams = false
 
 export async function generateStaticParams() {
-  const docs = getDocsByCategory("components")
+  const docs = getComponentDocs()
   return docs.map((doc) => ({ slug: doc.slug }))
 }
 
@@ -86,23 +88,35 @@ export async function generateMetadata({
   }
 }
 
-function getPageJsonLd(doc: Doc): WithContext<PageSchema> {
+function getSoftwareSourceCodeJsonLd(
+  doc: Doc
+): WithContext<SoftwareSourceCode> {
   return {
     "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: doc.metadata.title,
+    "@type": "SoftwareSourceCode",
+    "@id": absoluteUrl(`/components/${doc.slug}`),
+    name: doc.metadata.title,
     description: doc.metadata.description,
     image:
       doc.metadata.image ||
-      `/og/simple?title=${encodeURIComponent(doc.metadata.title)}&description=${encodeURIComponent(doc.metadata.description)}`,
-    url: `${SITE_INFO.url}/components/${doc.slug}`,
+      absoluteUrl(
+        `/og/simple?title=${encodeURIComponent(doc.metadata.title)}&description=${encodeURIComponent(doc.metadata.description)}`
+      ),
+    url: absoluteUrl(`/components/${doc.slug}`),
     datePublished: new Date(doc.metadata.createdAt).toISOString(),
     dateModified: new Date(doc.metadata.updatedAt).toISOString(),
-    author: {
-      "@type": "Person",
-      name: USER.displayName,
-      identifier: USER.username,
-      image: USER.avatar,
+    codeRepository: SOURCE_CODE_GITHUB_URL,
+    programmingLanguage: [{ "@type": "ComputerLanguage", name: "TypeScript" }],
+    runtimePlatform: "React 19",
+    codeSampleType: "full (compile ready) solution",
+    keywords: ["react", "shadcn", "component"],
+    license: LICENSE.url,
+    author: { "@id": JSON_LD_ID.person },
+    isPartOf: {
+      "@type": "CollectionPage",
+      "@id": absoluteUrl("/components"),
+      name: "Components",
+      url: absoluteUrl("/components"),
     },
   }
 }
@@ -123,7 +137,7 @@ export default async function Page({
 
   const toc = getTableOfContents(doc.content)
 
-  const allDocs = getDocsByCategory("components")
+  const allDocs = getComponentDocs()
     .slice()
     .sort((a, b) =>
       a.metadata.title.localeCompare(b.metadata.title, "en", {
@@ -135,7 +149,7 @@ export default async function Page({
   return (
     <>
       <DocContentCol>
-        <JsonLdScript data={getPageJsonLd(doc)} />
+        <JsonLdScript data={getSoftwareSourceCodeJsonLd(doc)} />
 
         <JsonLdScript
           data={jsonLdBreadcrumbList([
@@ -165,16 +179,17 @@ export default async function Page({
 
         <div className="flex items-center justify-between p-2 pl-4">
           <Button
-            className="h-7 gap-2 border-none px-0 text-muted-foreground hover:text-foreground hover:no-underline"
+            className="h-7 gap-2 border-none px-0 tracking-wider text-muted-foreground hover:text-foreground hover:no-underline"
             variant="link"
             size="sm"
-            asChild
-          >
-            <Link href="/components">
-              <ArrowLeftIcon />
-              Components
-            </Link>
-          </Button>
+            nativeButton={false}
+            render={
+              <Link href="/components">
+                <ArrowLeftIcon />
+                Components
+              </Link>
+            }
+          />
 
           <div className="flex items-center gap-2">
             <LLMCopyButtonWithViewOptions
@@ -195,20 +210,21 @@ export default async function Page({
                       className="size-7 border-none"
                       variant="secondary"
                       size="icon-sm"
-                      asChild
-                    >
-                      <Link
-                        href={`/components/${previous.slug}`}
-                        aria-label="Previous Component"
-                      >
-                        <ArrowLeftIcon />
-                      </Link>
-                    </Button>
+                      nativeButton={false}
+                      render={
+                        <Link
+                          href={`/components/${previous.slug}`}
+                          aria-label="Previous Component"
+                        >
+                          <ArrowLeftIcon />
+                        </Link>
+                      }
+                    />
                   }
                 />
                 <TooltipContent className="pr-2 pl-3">
                   <div className="flex items-center gap-3">
-                    Previous Component
+                    Previous component
                     <Kbd>
                       <ArrowLeftIcon />
                     </Kbd>
@@ -225,20 +241,21 @@ export default async function Page({
                       className="size-7 border-none"
                       variant="secondary"
                       size="icon-sm"
-                      asChild
-                    >
-                      <Link
-                        href={`/components/${next.slug}`}
-                        aria-label="Next Component"
-                      >
-                        <ArrowRightIcon />
-                      </Link>
-                    </Button>
+                      nativeButton={false}
+                      render={
+                        <Link
+                          href={`/components/${next.slug}`}
+                          aria-label="Next component"
+                        >
+                          <ArrowRightIcon />
+                        </Link>
+                      }
+                    />
                   }
                 />
                 <TooltipContent className="pr-2 pl-3">
                   <div className="flex items-center gap-3">
-                    Next Component
+                    Next component
                     <Kbd>
                       <ArrowRightIcon />
                     </Kbd>
@@ -258,7 +275,7 @@ export default async function Page({
         <div className="screen-dashed-line-bottom after:opacity-80">
           <h1
             data-slot="doc-title"
-            className="screen-line-bottom overflow-x-clip px-4 text-3xl font-semibold tracking-tight text-balance"
+            className="screen-line-bottom overflow-x-clip px-4 text-4xl font-medium tracking-tight text-balance"
           >
             {doc.metadata.title}
           </h1>
@@ -273,6 +290,8 @@ export default async function Page({
             <MDX code={doc.content} />
           </div>
         </Prose>
+
+        <DocSponsors />
 
         <div className="screen-dashed-line-top before:opacity-80">
           <div className="screen-line-top h-4 overflow-x-clip" />

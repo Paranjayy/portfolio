@@ -4,6 +4,7 @@
 
 import { useEffect, useRef } from "react"
 import { useReducedMotion } from "motion/react"
+import { useTheme } from "next-themes"
 import p5 from "p5"
 
 import { cn } from "@/lib/utils"
@@ -12,21 +13,30 @@ import { Ball } from "./ball"
 import { resetGame } from "./brick"
 import { Colors, loadColors } from "./colors"
 import {
+  BALL_DARK_URL,
+  BALL_LIGHT_URL,
   FONT_URL,
+  PADDLE_DARK_URL,
+  PADDLE_LIGHT_URL,
   SOUND_BOUNCE_URL,
   SOUND_BREAK_URL,
   SOUND_GAME_OVER_URL,
 } from "./constants"
+import { getLogoIndex } from "./logos"
 import { Paddle } from "./paddle"
 import type { GameState } from "./types"
 import { UI } from "./ui"
 
 export function Daikanoid({
   className,
+  defaultLogo,
   ...props
-}: Omit<React.ComponentPropsWithRef<"canvas">, "children">) {
+}: Omit<React.ComponentPropsWithRef<"canvas">, "children"> & {
+  defaultLogo?: string
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const shouldReduceMotion = useReducedMotion()
+  const { resolvedTheme } = useTheme()
 
   useEffect(() => {
     loadColors()
@@ -41,13 +51,14 @@ export function Daikanoid({
 
       score: 0,
       bricks: [],
+      logoIndex: getLogoIndex(defaultLogo),
 
       soundBounce: null,
       soundBreak: null,
       soundGameOver: null,
 
-      // ballImage: null,
-      // paddleImage: null,
+      ballImage: null,
+      paddleImage: null,
     }
 
     let font: p5.Font
@@ -66,8 +77,12 @@ export function Daikanoid({
         state.soundBreak = p.createAudio(SOUND_BREAK_URL)
         state.soundGameOver = p.createAudio(SOUND_GAME_OVER_URL)
 
-        // state.ballImage = p.loadImage("/assets/ball.png")
-        // state.paddleImage = p.loadImage("/assets/paddle.png")
+        state.ballImage = p.loadImage(
+          resolvedTheme === "dark" ? BALL_DARK_URL : BALL_LIGHT_URL
+        )
+        state.paddleImage = p.loadImage(
+          resolvedTheme === "dark" ? PADDLE_DARK_URL : PADDLE_LIGHT_URL
+        )
       }
 
       p.setup = () => {
@@ -148,7 +163,7 @@ export function Daikanoid({
       window.removeEventListener("keypress", handleKeyPress)
       p5Instance.remove()
     }
-  }, [shouldReduceMotion])
+  }, [shouldReduceMotion, resolvedTheme, defaultLogo])
 
   return (
     <canvas

@@ -1,20 +1,24 @@
+import { escapeXml, toISODateSafe } from "@/utils/string"
+
 import { SITE_INFO } from "@/config/site"
-import { getAllDocs } from "@/features/doc/data/documents"
+import { getBlogPosts } from "@/features/doc/data/documents"
 
 export const revalidate = false
 export const dynamic = "force-static"
 
 export function GET() {
-  const itemsXml = getAllDocs()
-    .map(
-      (doc) =>
-        `<item>
-          <title>${doc.metadata.title}</title>
+  const itemsXml = getBlogPosts()
+    .map((doc) => {
+      const pubDate = toISODateSafe(doc.metadata.createdAt)
+      if (!pubDate) return null
+      return `<item>
+          <title>${escapeXml(doc.metadata.title)}</title>
           <link>${SITE_INFO.url}/blog/${doc.slug}</link>
-          <description>${doc.metadata.description || ""}</description>
-          <pubDate>${new Date(doc.metadata.createdAt).toISOString()}</pubDate>
+          <description>${escapeXml(doc.metadata.description || "")}</description>
+          <pubDate>${pubDate}</pubDate>
         </item>`
-    )
+    })
+    .filter(Boolean)
     .join("\n")
 
   const rssFeed = `<?xml version="1.0" encoding="UTF-8" ?>

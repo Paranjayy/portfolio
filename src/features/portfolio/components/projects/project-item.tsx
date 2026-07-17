@@ -4,7 +4,6 @@ import { BoxIcon, InfinityIcon, LinkIcon } from "lucide-react"
 
 import { UTM_PARAMS } from "@/config/site"
 import { Tag } from "@/components/ui/tag"
-import { Prose } from "@/components/ui/typography"
 import {
   Collapsible,
   CollapsibleChevronsUpDownIcon,
@@ -89,14 +88,14 @@ export function ProjectItem({
                     href={addQueryParams(project.link, UTM_PARAMS)}
                     target="_blank"
                     rel="noopener"
-                    aria-label="Open Project Link"
+                    aria-label="Open project"
                   >
                     <LinkIcon className="pointer-events-none size-4" />
                   </a>
                 }
               />
               <TooltipContent>
-                <p>Open Project Link</p>
+                <p>Open project</p>
               </TooltipContent>
             </Tooltip>
 
@@ -110,9 +109,9 @@ export function ProjectItem({
       <CollapsibleContent className="overflow-hidden">
         <div className="space-y-4 border-t border-line p-4">
           {project.description && (
-            <Prose>
+            <div className="typeset typeset-description">
               <Markdown>{project.description}</Markdown>
-            </Prose>
+            </div>
           )}
 
           {project.skills.length > 0 && (

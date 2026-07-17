@@ -1,14 +1,13 @@
 import { LICENSE, SOURCE_CODE_GITHUB_URL } from "@/config/site"
 import { cn } from "@/lib/utils"
-import { Icons } from "@/components/icons"
+import { DmcaIcon, GitHubIcon, LinkedInIcon, XIcon } from "@/components/icons"
 import { SiteFooterInteractiveLogotype } from "@/components/site-footer-brand"
-import { getSocialLinkByName } from "@/features/portfolio/data/social-links"
-import { USER } from "@/features/portfolio/data/user"
+import { SOCIAL } from "@/features/portfolio/data/social-links"
 
 export function SiteFooter() {
-  const xLink = getSocialLinkByName("x")
-  const githubLink = getSocialLinkByName("github")
-  const linkedinLink = getSocialLinkByName("linkedin")
+  const xLink = SOCIAL.x
+  const githubLink = SOCIAL.github
+  const linkedinLink = SOCIAL.linkedin
 
   return (
     <footer className="max-w-screen overflow-x-clip px-2">
@@ -23,11 +22,11 @@ export function SiteFooter() {
             <dd>
               <a
                 className="link-underline"
-                href={xLink?.href}
+                href={xLink.href}
                 target="_blank"
                 rel="noopener"
               >
-                {USER.displayName}
+                {xLink.handle}
               </a>
             </dd>
           </Item>
@@ -56,8 +55,17 @@ export function SiteFooter() {
             <dt>Analytics</dt>
             <dd>
               <ul>
-                <li>OpenPanel</li>
-                <li>PostHog</li>
+                <li>
+                  <a
+                    className="link-underline"
+                    href="https://openpanel.dev?utm_source=chanhdai.com&utm_medium=referral&utm_campaign=footer"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    OpenPanel
+                  </a>
+                </li>
+                <li>Google Analytics</li>
               </ul>
             </dd>
           </Item>
@@ -95,36 +103,36 @@ export function SiteFooter() {
           <div className="mx-auto flex items-center justify-center gap-3 border-x border-line bg-background px-4">
             <a
               className="flex items-center text-muted-foreground transition-[color] hover:text-foreground"
-              href={xLink?.href}
+              href={xLink.href}
               target="_blank"
               rel="noopener"
               aria-label="X Profile"
             >
-              <Icons.x className="size-4" />
+              <XIcon className="size-4" />
             </a>
 
             <Separator />
 
             <a
               className="flex items-center text-muted-foreground transition-[color] hover:text-foreground"
-              href={githubLink?.href}
+              href={githubLink.href}
               target="_blank"
               rel="noopener"
               aria-label="GitHub Profile"
             >
-              <Icons.github className="size-4" />
+              <GitHubIcon className="size-4" />
             </a>
 
             <Separator />
 
             <a
               className="flex items-center text-muted-foreground transition-[color] hover:text-foreground"
-              href={linkedinLink?.href}
+              href={linkedinLink.href}
               target="_blank"
               rel="noopener"
               aria-label="LinkedIn Profile"
             >
-              <Icons.linkedin className="size-4" />
+              <LinkedInIcon className="size-4" />
             </a>
 
             <Separator />
@@ -139,7 +147,7 @@ export function SiteFooter() {
               rel="noopener"
               aria-label="DMCA.com Protection Status"
             >
-              <Icons.dmca className="h-4.5 w-auto" />
+              <DmcaIcon className="h-4.5 w-auto" />
             </a>
           </div>
         </div>

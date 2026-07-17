@@ -1,16 +1,23 @@
 import { SITE_INFO } from "@/config/site"
-import { getAllDocs } from "@/features/doc/data/documents"
+import { getBlogPosts, getComponentDocs } from "@/features/doc/data/documents"
 
-const allPosts = getAllDocs()
+const allComponents = getComponentDocs()
+const allPosts = getBlogPosts()
 
 const content = `# Paranjay Khachar
 > BS Student @ IIT Madras | AI Systems & Modular Design Enthusiast
 
-- [About](${SITE_INFO.url}/about.md): Introduction to my journey in Data Science and AI.
-- [Experience](${SITE_INFO.url}/experience.md): Professional history and academic milestones.
-- [Projects](${SITE_INFO.url}/projects.md): A curated collection of AI and full-stack experiments.
-- [Awards](${SITE_INFO.url}/awards.md): Recognition and honors in technology and academia.
-- [Certifications](${SITE_INFO.url}/certifications.md): Academic and professional credentials.
+> A pixel-perfect dev portfolio and shadcn registry showcasing my work as a Design Engineer.
+
+- [About](${SITE_INFO.url}/about.md): A quick intro to me, my tech stack, and how to connect.
+- [Experience](${SITE_INFO.url}/experience.md): Highlights from my career and key roles I've taken on.
+- [Projects](${SITE_INFO.url}/projects.md): Selected projects that show my skills and creativity.
+- [Awards](${SITE_INFO.url}/awards.md): My key awards and honors.
+- [Certifications](${SITE_INFO.url}/certifications.md): Certifications and credentials I've earned.
+
+## Components
+
+${allComponents.map((item) => `- [${item.metadata.title}](${SITE_INFO.url}/components/${item.slug}.mdx): ${item.metadata.description}`).join("\n")}
 
 ## Blog
 

@@ -4,14 +4,14 @@ import { ArrowRightIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/base/ui/button"
-import { ComponentIcon } from "@/components/icons"
 import {
   ComponentItem,
   ComponentItemDot,
   ComponentItemIcon,
   ComponentItemTitle,
 } from "@/app/(app)/(pages)/components/component-item"
-import { getDocsByCategory } from "@/features/doc/data/documents"
+import { ComponentIcon } from "@/features/doc/components/component-icon"
+import { getComponentDocs } from "@/features/doc/data/documents"
 
 import { Panel, PanelHeader, PanelTitle, PanelTitleSup } from "./panel"
 import { PanelTitleCopy } from "./panel-title-copy"
@@ -19,7 +19,7 @@ import { PanelTitleCopy } from "./panel-title-copy"
 const ID = "components"
 
 export function Components() {
-  const components = getDocsByCategory("components")
+  const components = getComponentDocs()
 
   return (
     <Panel id={ID}>
@@ -51,7 +51,7 @@ export function Components() {
             >
               <ComponentItem href={`/components/${c.slug}` as Route}>
                 <ComponentItemIcon>
-                  <ComponentIcon variant={c.slug} />
+                  <ComponentIcon slug={c.slug} />
                   {(c.metadata.new || c.metadata.updated) && (
                     <ComponentItemDot
                       aria-label={c.metadata.new ? "New" : "Updated"}
@@ -77,7 +77,7 @@ export function Components() {
           nativeButton={false}
           render={<Link href="/components" />}
         >
-          All Components
+          All components
           <ArrowRightIcon />
         </Button>
       </div>

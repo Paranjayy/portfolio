@@ -14,15 +14,17 @@ import { Button } from "./ui/button"
 import { Kbd } from "./ui/kbd"
 
 export function ThemeToggle() {
-  const { resolvedTheme, setTheme } = useTheme()
+  const { resolvedTheme, systemTheme, setTheme } = useTheme()
 
   const { setMetaColor } = useMetaColor()
 
   const [click] = useClickSound()
 
   const switchTheme = () => {
+    const next = resolvedTheme === "dark" ? "light" : "dark"
+
     click()
-    setTheme(resolvedTheme === "dark" ? "light" : "dark")
+    setTheme(next === systemTheme ? "system" : next)
     setMetaColor(
       resolvedTheme === "dark"
         ? META_THEME_COLORS.light
@@ -40,7 +42,7 @@ export function ThemeToggle() {
             className="relative touch-manipulation border-none"
             variant="ghost"
             size="icon-sm"
-            aria-label="Toggle Mode"
+            aria-label="Toggle mode"
             onClick={() => switchTheme()}
           >
             <span
@@ -57,7 +59,7 @@ export function ThemeToggle() {
       />
       <TooltipContent className="pr-2 pl-3">
         <div className="flex items-center gap-3">
-          Toggle Mode
+          Toggle mode
           <Kbd>D</Kbd>
         </div>
       </TooltipContent>

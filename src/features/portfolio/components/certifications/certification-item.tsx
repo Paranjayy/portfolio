@@ -3,10 +3,33 @@ import { format } from "date-fns"
 import { ArrowUpRightIcon, CircleCheckBigIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { Separator } from "@/components/ui/separator"
-import { getIcon } from "@/components/icons"
+import { Separator } from "@/components/base/ui/separator"
+import {
+  AccentureIcon,
+  AnimationsDevIcon,
+  CourseraIcon,
+  GoogleIcon,
+  MetaIcon,
+  MicrosoftIcon,
+  VercelIcon,
+} from "@/components/icons"
 
 import type { Certification } from "../../types/certifications"
+
+/**
+ * Issuer logos referenced by name in the data layer (`issuerIconName`).
+ * Closed map so the bundle only retains the icons that can actually appear
+ * here; unknown names fall back to a generic check badge in the UI below.
+ */
+const ISSUER_ICONS: Record<string, React.ReactNode> = {
+  accenture: <AccentureIcon />,
+  animationsdev: <AnimationsDevIcon />,
+  coursera: <CourseraIcon />,
+  google: <GoogleIcon />,
+  meta: <MetaIcon />,
+  microsoft: <MicrosoftIcon />,
+  vercel: <VercelIcon />,
+}
 
 export function CertificationItem({
   className,
@@ -36,12 +59,14 @@ export function CertificationItem({
       ) : (
         <div
           className={cn(
-            "mx-4 flex size-6 shrink-0 items-center justify-center rounded-lg select-none",
+            "mx-4 flex size-6 shrink-0 items-center justify-center rounded-md select-none",
             "border border-muted-foreground/15 ring-1 ring-line ring-offset-1 ring-offset-background",
             "bg-muted text-muted-foreground [&_svg]:size-4"
           )}
         >
-          {getIcon(certification.issuerIconName) ?? <CircleCheckBigIcon />}
+          {(certification.issuerIconName
+            ? ISSUER_ICONS[certification.issuerIconName]
+            : null) ?? <CircleCheckBigIcon />}
         </div>
       )}
 

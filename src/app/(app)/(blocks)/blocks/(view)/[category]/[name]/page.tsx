@@ -2,14 +2,17 @@ import { cache } from "react"
 import type { Metadata, Route } from "next"
 import Link from "next/link"
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react"
+import type { SoftwareSourceCode, WithContext } from "schema-dts"
 
+import { JSON_LD_ID } from "@/config/json-ld"
 import { blockCategories } from "@/config/registry"
-import { X_HANDLE } from "@/config/site"
+import { LICENSE, SOURCE_CODE_GITHUB_URL, X_HANDLE } from "@/config/site"
 import { getAllBlockStaticParams } from "@/lib/blocks"
 import { jsonLdBreadcrumbList, JsonLdScript } from "@/lib/json-ld"
 import { getRegistryItem } from "@/lib/registry"
-import { Button } from "@/components/ui/button"
+import { absoluteUrl } from "@/lib/utils"
 import { Kbd } from "@/components/ui/kbd"
+import { Button } from "@/components/base/ui/button"
 import {
   Tooltip,
   TooltipContent,
@@ -75,6 +78,42 @@ export async function generateMetadata({
   }
 }
 
+function getSoftwareSourceCodeJsonLd(
+  category: string,
+  item: { name: string; description?: string; meta?: { createdAt?: string } }
+): WithContext<SoftwareSourceCode> {
+  const blockUrl = `/blocks/${category}/${item.name}`
+  const description = item.description ?? ""
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    "@id": absoluteUrl(blockUrl),
+    name: item.name,
+    description,
+    image: absoluteUrl(
+      `/og/simple?title=${encodeURIComponent(item.name)}&description=${encodeURIComponent(description)}`
+    ),
+    url: absoluteUrl(blockUrl),
+    datePublished: item.meta?.createdAt
+      ? new Date(item.meta.createdAt).toISOString()
+      : undefined,
+    codeRepository: SOURCE_CODE_GITHUB_URL,
+    programmingLanguage: [{ "@type": "ComputerLanguage", name: "TypeScript" }],
+    runtimePlatform: "React 19",
+    codeSampleType: "full (compile ready) solution",
+    keywords: ["react", "shadcn", "block"],
+    license: LICENSE.url,
+    author: { "@id": JSON_LD_ID.person },
+    isPartOf: {
+      "@type": "CollectionPage",
+      "@id": absoluteUrl("/blocks"),
+      name: "Blocks",
+      url: absoluteUrl("/blocks"),
+    },
+  }
+}
+
 export default async function BlockViewPage({
   params,
 }: PageProps<"/blocks/[category]/[name]">) {
@@ -89,8 +128,14 @@ export default async function BlockViewPage({
 
   const categoryItem = blockCategories.find((c) => c.name === category)
 
+  const item = await getCachedRegistryItem(name)
+
   return (
     <>
+      {item && (
+        <JsonLdScript data={getSoftwareSourceCodeJsonLd(category, item)} />
+      )}
+
       <JsonLdScript
         data={jsonLdBreadcrumbList([
           {
@@ -124,13 +169,14 @@ export default async function BlockViewPage({
           className="h-7 gap-2 border-none px-0 text-muted-foreground hover:text-foreground"
           variant="link"
           size="sm"
-          asChild
-        >
-          <Link href={`/blocks/${category}`}>
-            <ArrowLeftIcon />
-            {categoryItem?.title || "Blocks"}
-          </Link>
-        </Button>
+          nativeButton={false}
+          render={
+            <Link href={`/blocks/${category}`}>
+              <ArrowLeftIcon />
+              {categoryItem?.title || "Blocks"}
+            </Link>
+          }
+        />
 
         <div className="flex items-center gap-2">
           <DocShareMenu title={name} url={`/blocks/${category}/${name}`} />
@@ -143,15 +189,16 @@ export default async function BlockViewPage({
                     className="size-7 border-none"
                     variant="secondary"
                     size="icon-sm"
-                    asChild
-                  >
-                    <Link
-                      href={`/blocks/${previous}`}
-                      aria-label="Previous Block"
-                    >
-                      <ArrowLeftIcon />
-                    </Link>
-                  </Button>
+                    nativeButton={false}
+                    render={
+                      <Link
+                        href={`/blocks/${previous}`}
+                        aria-label="Previous Block"
+                      >
+                        <ArrowLeftIcon />
+                      </Link>
+                    }
+                  />
                 }
               />
               <TooltipContent className="pr-2 pl-3">
@@ -173,12 +220,13 @@ export default async function BlockViewPage({
                     className="size-7 border-none"
                     variant="secondary"
                     size="icon-sm"
-                    asChild
-                  >
-                    <Link href={`/blocks/${next}`} aria-label="Next Block">
-                      <ArrowRightIcon />
-                    </Link>
-                  </Button>
+                    nativeButton={false}
+                    render={
+                      <Link href={`/blocks/${next}`} aria-label="Next Block">
+                        <ArrowRightIcon />
+                      </Link>
+                    }
+                  />
                 }
               />
               <TooltipContent className="pr-2 pl-3">

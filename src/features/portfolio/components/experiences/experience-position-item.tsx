@@ -2,9 +2,7 @@ import { differenceInMonths, parse } from "date-fns"
 import { BriefcaseBusinessIcon, InfinityIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { Separator } from "@/components/ui/separator"
 import { Tag } from "@/components/ui/tag"
-import { Prose } from "@/components/ui/typography"
 import {
   Collapsible,
   CollapsibleChevronsUpDownIcon,
@@ -13,6 +11,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/base/ui/collapsible"
+import { Separator } from "@/components/base/ui/separator"
 import { Markdown } from "@/components/markdown"
 import type { ExperiencePosition } from "@/features/portfolio/types/experiences"
 
@@ -31,10 +30,7 @@ export function ExperiencePositionItem({
       defaultOpen={position.isExpanded}
       disabled={!position.description}
     >
-      <div
-        className="pointer-events-none absolute bottom-0 left-3 hidden size-4 bg-background group-last/experience-position:flex"
-        aria-hidden
-      >
+      <div className="pointer-events-none absolute bottom-0 left-3 hidden size-4 bg-background group-last/experience-position:flex">
         <span className="size-full -translate-y-2.25 rounded-bl-sm border-b border-l" />
       </div>
 
@@ -49,7 +45,7 @@ export function ExperiencePositionItem({
         <div className="relative z-1 mb-1 flex items-start gap-3 text-base">
           <div
             className={cn(
-              "flex size-6 shrink-0 items-center justify-center rounded-lg",
+              "flex size-6 shrink-0 items-center justify-center rounded-md",
               "bg-muted text-muted-foreground",
               "border border-muted-foreground/15 ring-1 ring-line ring-offset-1 ring-offset-background",
               "[&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
@@ -75,7 +71,6 @@ export function ExperiencePositionItem({
               <Separator
                 className="data-vertical:h-4 data-vertical:self-center"
                 orientation="vertical"
-                aria-hidden
               />
             </>
           )}
@@ -89,6 +84,7 @@ export function ExperiencePositionItem({
                 <InfinityIcon
                   className="size-4.5 translate-y-[0.5px]"
                   aria-label="Present"
+                  strokeWidth={1.5}
                 />
               ) : (
                 <span>{end}</span>
@@ -101,7 +97,6 @@ export function ExperiencePositionItem({
               <Separator
                 className="data-vertical:h-4 data-vertical:self-center"
                 orientation="vertical"
-                aria-hidden
               />
               <div>
                 <dt className="sr-only">Duration</dt>
@@ -114,9 +109,9 @@ export function ExperiencePositionItem({
 
       <CollapsibleContent className="overflow-hidden">
         {position.description && (
-          <Prose className="pt-2 pl-9">
+          <div className="typeset typeset-description pt-3 pb-1 pl-9">
             <Markdown>{position.description}</Markdown>
-          </Prose>
+          </div>
         )}
       </CollapsibleContent>
 

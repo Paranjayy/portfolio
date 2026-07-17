@@ -11,7 +11,6 @@ import { SPONSORS } from "@/features/sponsor/data"
 import type { SponsorTier } from "@/features/sponsor/types"
 
 import { Panel, PanelDescription, PanelHeader, PanelTitle } from "./panel"
-import { PanelTitleCopy } from "./panel-title-copy"
 
 const FEATURED_TIERS = new Set<SponsorTier>([
   "osp",
@@ -28,11 +27,11 @@ const ID = "sponsors"
 
 export function Sponsors() {
   return (
-    <Panel id={ID}>
+    <Panel id={ID} className="screen-line-bottom-none">
       <PanelHeader>
         <PanelTitle>
-          <a href={`#${ID}`}>Sponsors</a>
-          <PanelTitleCopy id={ID} />
+          Backed by
+          <span className="block sm:hidden" /> the community
         </PanelTitle>
 
         <PanelDescription>
@@ -63,7 +62,7 @@ export function Sponsors() {
             <SponsorItem
               className="h-full min-h-22.5"
               href={SPONSORSHIP_URL}
-              aria-label="Sponsor My Work"
+              aria-label="Sponsor my work"
             >
               <PlusIcon
                 className="flex size-full items-center justify-center text-muted-foreground"
@@ -83,7 +82,7 @@ export function Sponsors() {
           nativeButton={false}
           render={<Link href="/sponsors" />}
         >
-          All Sponsors
+          All sponsors
           <ArrowRightIcon />
         </Button>
       </div>

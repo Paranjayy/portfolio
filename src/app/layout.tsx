@@ -2,9 +2,11 @@ import "@/styles/globals.css"
 
 import type { Metadata, Viewport } from "next"
 import Script from "next/script"
+import { GoogleTagManager } from "@next/third-parties/google"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
 import type { WebSite, WithContext } from "schema-dts"
 
+import { JSON_LD_ID, personJsonLd } from "@/config/json-ld"
 import { META_THEME_COLORS, SITE_INFO, X_HANDLE } from "@/config/site"
 import { fontVariables } from "@/lib/fonts"
 import { JsonLdScript } from "@/lib/json-ld"
@@ -15,9 +17,10 @@ function getWebSiteJsonLd(): WithContext<WebSite> {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
+    "@id": JSON_LD_ID.website,
     name: SITE_INFO.name,
     url: SITE_INFO.url,
-    alternateName: [USER.username],
+    author: personJsonLd,
   }
 }
 
@@ -100,6 +103,8 @@ export const viewport: Viewport = {
   themeColor: META_THEME_COLORS.light,
 }
 
+const ADSENSE_CLIENT = process.env.NEXT_PUBLIC_ADSENSE_CLIENT
+
 export default function RootLayout({
   children,
 }: {
@@ -129,7 +134,19 @@ export default function RootLayout({
           }}
         />
         <JsonLdScript data={getWebSiteJsonLd()} />
+        {ADSENSE_CLIENT && (
+          <Script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`}
+            crossOrigin="anonymous"
+            strategy="afterInteractive"
+          />
+        )}
       </head>
+
+      {process.env.NEXT_PUBLIC_GTM_ID && (
+        <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />
+      )}
 
       <body>
         <Providers>

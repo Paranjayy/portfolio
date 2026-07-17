@@ -11,7 +11,7 @@ import {
   InputGroupButton,
   InputGroupInput,
 } from "@/components/ui/input-group"
-import { Icons } from "@/components/icons"
+import { SearchIcon } from "@/components/icons"
 
 import { useSearchQuery } from "../hooks/use-search-query"
 
@@ -39,7 +39,7 @@ export function PostSearchInput() {
   return (
     <InputGroup className="rounded-lg shadow-none">
       <InputGroupInput
-        placeholder="Search Blog…"
+        placeholder="Search blog…"
         value={query}
         onChange={(e) => {
           setQuery(e.target.value)
@@ -47,7 +47,7 @@ export function PostSearchInput() {
       />
 
       <InputGroupAddon align="inline-start">
-        <Icons.search />
+        <SearchIcon />
       </InputGroupAddon>
 
       <InputGroupAddon

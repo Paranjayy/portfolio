@@ -914,6 +914,113 @@
       "author": "ncdai <dai@chanhdai.com>"
     },
     {
+      "name": "logos-carousel",
+      "title": "Logos Carousel",
+      "description": "Cycle through logos column by column in a staggered wave.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "src/registry/components/logos-carousel/logos-carousel.tsx",
+          "type": "registry:component",
+          "target": "@components/logos-carousel.tsx"
+        }
+      ],
+      "docs": "https://chanhdai.com/components/logos-carousel",
+      "categories": [
+        "marketing"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "testimonial-2",
+      "title": "Testimonial 2",
+      "description": "Display a testimonial quote with author attribution and source link.",
+      "files": [
+        {
+          "path": "src/registry/components/testimonial-2/testimonial-2.tsx",
+          "type": "registry:component",
+          "target": "@components/testimonial-2.tsx"
+        }
+      ],
+      "docs": "https://chanhdai.com/components/testimonial-2",
+      "categories": [
+        "marketing"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "line-nav",
+      "title": "Line Nav",
+      "description": "Vertical navigation with a line marker that expands on hover and active state.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "src/registry/components/line-nav/line-nav.tsx",
+          "type": "registry:component",
+          "target": "@components/line-nav.tsx"
+        }
+      ],
+      "docs": "https://chanhdai.com/components/line-nav",
+      "categories": [
+        "navigation"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "share-menu",
+      "title": "Share Menu",
+      "description": "Share menu to copy a link or post to X, LinkedIn, and the native share sheet.",
+      "registryDependencies": [
+        "button",
+        "dropdown-menu",
+        "sonner"
+      ],
+      "files": [
+        {
+          "path": "src/registry/components/share-menu/share-menu.tsx",
+          "type": "registry:component",
+          "target": "@components/share-menu.tsx"
+        }
+      ],
+      "docs": "https://chanhdai.com/components/share-menu",
+      "categories": [
+        "menus"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "spotlight-logo",
+      "title": "Spotlight Logo",
+      "description": "SVG logo with a cursor-tracking gradient highlight and tactile press.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "@soundcn/metal-click"
+      ],
+      "files": [
+        {
+          "path": "src/registry/components/spotlight-logo/spotlight-logo.tsx",
+          "type": "registry:component",
+          "target": "@components/spotlight-logo.tsx"
+        }
+      ],
+      "docs": "https://chanhdai.com/components/spotlight-logo",
+      "categories": [
+        "effects"
+      ],
+      "type": "registry:component",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
       "name": "login-01",
       "title": "Login 01",
       "description": "A simple login form.",
@@ -1195,6 +1302,30 @@
       ],
       "meta": {
         "createdAt": "2026-06-16",
+        "previewClassName": "min-h-svh content-center-safe"
+      },
+      "categories": [
+        "marketing"
+      ],
+      "type": "registry:block",
+      "author": "ncdai <dai@chanhdai.com>"
+    },
+    {
+      "name": "social-proof-01",
+      "title": "Social Proof 01",
+      "description": "A social proof section with a logos carousel.",
+      "registryDependencies": [
+        "https://chanhdai.com/r/logos-carousel.json"
+      ],
+      "files": [
+        {
+          "path": "src/registry/blocks/social-proof-01/social-proof-01.tsx",
+          "type": "registry:component",
+          "target": "@components/social-proof-01.tsx"
+        }
+      ],
+      "meta": {
+        "createdAt": "2026-06-26",
         "previewClassName": "min-h-svh content-center-safe"
       },
       "categories": [

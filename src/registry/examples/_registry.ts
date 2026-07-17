@@ -555,4 +555,65 @@ export const examples: Registry["items"] = [
       },
     ],
   },
+  {
+    name: "logos-carousel-demo",
+    type: "registry:example",
+    registryDependencies: [getRegistryItemUrl("logos-carousel")],
+    files: [
+      {
+        path: "examples/logos-carousel-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+    meta: {
+      previewClassName: "min-h-svh place-items-center-safe content-center-safe",
+    },
+  },
+  {
+    name: "testimonial-2-demo",
+    type: "registry:example",
+    registryDependencies: [getRegistryItemUrl("testimonial-2")],
+    files: [
+      {
+        path: "examples/testimonial-2-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "line-nav-demo",
+    type: "registry:example",
+    registryDependencies: [getRegistryItemUrl("line-nav")],
+    files: [
+      {
+        path: "examples/line-nav-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+    meta: {
+      previewClassName: "min-h-svh place-items-center-safe content-center-safe",
+    },
+  },
+  {
+    name: "share-menu-demo",
+    type: "registry:example",
+    registryDependencies: [getRegistryItemUrl("share-menu")],
+    files: [
+      {
+        path: "examples/share-menu-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
+  {
+    name: "spotlight-logo-demo",
+    type: "registry:example",
+    registryDependencies: [getRegistryItemUrl("spotlight-logo")],
+    files: [
+      {
+        path: "examples/spotlight-logo-demo.tsx",
+        type: "registry:example",
+      },
+    ],
+  },
 ]
