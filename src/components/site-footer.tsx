@@ -3,12 +3,13 @@ import { cn } from "@/lib/utils"
 import { DmcaIcon, GitHubIcon, LinkedInIcon, XIcon } from "@/components/icons"
 import { SiteFooterInteractiveLogotype } from "@/components/site-footer-brand"
 import { SOCIAL } from "@/features/portfolio/data/social-links"
-import { NavItemGitHub } from "@/components/nav-item-github"
+import { getStargazerCount } from "@/components/nav-item-github"
 
-export function SiteFooter() {
+export async function SiteFooter() {
   const xLink = SOCIAL.x
   const githubLink = SOCIAL.github
   const linkedinLink = SOCIAL.linkedin
+  const upstreamStars = await getStargazerCount("ncdai/chanhdai.com")
 
   return (
     <footer className="max-w-screen overflow-x-clip px-2">
@@ -36,12 +37,23 @@ export function SiteFooter() {
             <dt>Forked from</dt>
             <dd>
               <a
-                className="link-underline"
+                className="link-underline inline-flex items-center gap-1.5"
                 href="https://github.com/ncdai/chanhdai.com"
                 target="_blank"
                 rel="noopener"
               >
+                <GitHubIcon className="size-3.5" />
                 ncdai/chanhdai.com
+                {upstreamStars > 0 && (
+                  <span className="text-muted-foreground">
+                    {new Intl.NumberFormat("en-US", {
+                      notation: "compact",
+                      compactDisplay: "short",
+                    })
+                      .format(upstreamStars)
+                      .toLowerCase()}
+                  </span>
+                )}
               </a>
             </dd>
           </Item>
@@ -73,7 +85,7 @@ export function SiteFooter() {
                 <li>
                   <a
                     className="link-underline"
-                    href="https://openpanel.dev?utm_source=chanhdai.com&utm_medium=referral&utm_campaign=footer"
+                    href="https://openpanel.dev?utm_source=paranjay.dev&utm_medium=referral&utm_campaign=footer"
                     target="_blank"
                     rel="noopener"
                   >
