@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils"
 import { DmcaIcon, GitHubIcon, LinkedInIcon, XIcon } from "@/components/icons"
 import { SiteFooterInteractiveLogotype } from "@/components/site-footer-brand"
 import { SOCIAL } from "@/features/portfolio/data/social-links"
+import { NavItemGitHub } from "@/components/nav-item-github"
 
 export function SiteFooter() {
   const xLink = SOCIAL.x
@@ -27,6 +28,20 @@ export function SiteFooter() {
                 rel="noopener"
               >
                 {xLink.handle}
+              </a>
+            </dd>
+          </Item>
+
+          <Item>
+            <dt>Forked from</dt>
+            <dd>
+              <a
+                className="link-underline"
+                href="https://github.com/ncdai/chanhdai.com"
+                target="_blank"
+                rel="noopener"
+              >
+                ncdai/chanhdai.com
               </a>
             </dd>
           </Item>

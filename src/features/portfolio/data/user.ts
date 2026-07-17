@@ -10,8 +10,8 @@ export const USER: User = {
   bio: "BS Student (Data Science & Applications) @ IIT Madras. Passionate about building robust, scalable AI systems.",
   flipSentences: [
     "Creating with code. Small details matter.",
-    "Design Engineer.",
     "Open source contributor.",
+    "Data Science student at IIT Madras.",
     "I own a vintage iPhone.",
   ],
   address: "Gujarat, India",
