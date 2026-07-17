@@ -40,6 +40,9 @@ export default function HomePage() {
 
       <div className="[--separator-height:--spacing(8)] **:data-[slot=panel]:scroll-mt-[calc(var(--header-height)+var(--separator-height))]">
         <div className="mx-auto md:max-w-5xl">
+          <div className="mx-4 mb-4 rounded-lg border border-dashed border-muted-foreground/30 bg-muted/30 px-4 py-3 text-center text-sm text-muted-foreground">
+            This portfolio is a work in progress. Some sections may be incomplete or contain placeholder content.
+          </div>
           <ProfileHeader />
           <Separator />
 
