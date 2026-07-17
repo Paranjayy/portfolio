@@ -106,18 +106,28 @@ When pulling upstream changes:
 
 ## Social Media Username Notes
 
-From screenshots and URLs, the actual handles appear to be:
-- **X**: @paranjaydotdev
-- **GitHub**: Paranjayy
-- **LinkedIn**: /in/paranjayy/
-- **Discord**: paranjaydotdev
-- **Spotify**: paranjaydotdev
-- **Telegram**: @paranjaydotdev
-- **Twitch**: paranjaydotdev
-- **Pinterest**: paranjaydotdev
-- **YouTube**: @paranjaydotdev
-- **Duolingo**: paranjaydotdev
-- **Gravatar**: paranjaydotdev
-- **Boot.dev**: paranjaydotdev
+Verified from Gravatar and Linktree (2026-07-17):
 
-Note: Username is NOT ubiquitous across platforms. GitHub is `Paranjayy`, LinkedIn is `paranjayy`, others are `paranjaydotdev`.
+| Platform | Handle | URL |
+|----------|--------|-----|
+| X | paranjay245 | x.com/paranjay245 |
+| GitHub | Paranjayy | github.com/Paranjayy |
+| LinkedIn | paranjayy | linkedin.com/in/paranjayy |
+| Discord | paranjayy | (ID: 999432437740347486) |
+| Spotify | paranjay | open.spotify.com/user/31rwgyebwncfeffpaavx6o5ygvaq |
+| Telegram | Paranjayy | t.me/Paranjayy |
+| Twitch | michaelscott245 | twitch.tv/michaelscott245 |
+| Pinterest | kparanjay | pinterest.com/kparanjay |
+| YouTube | paranjayy | youtube.com/@paranjayy |
+| Instagram | paranjayy | instagram.com/paranjayy |
+| Bluesky | paranjayy.bsky.social | bsky.app/profile/paranjayy.bsky.social |
+| Gravatar | paranjay | gravatar.com/sweetly00638681c8 |
+| Steam | kparanjay245 | steamcommunity.com/id/kparanjay245 |
+| Substack | paranjayy | (via Linktree) |
+| SoundCloud | paranjayy | (via Linktree) |
+| Are.na | paranjay khachar | (via Linktree) |
+| Mobbin | paranjay | (via Linktree) |
+| Devfolio | paranjay k | (via Linktree) |
+| Hashnode | paranjay | (via Linktree) |
+
+Note: Username is NOT ubiquitous. X=`paranjay245`, Twitch=`michaelscott245`, Pinterest=`kparanjay`, Steam=`kparanjay245`, most others=`paranjayy`.

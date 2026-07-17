@@ -8,8 +8,8 @@ import type { SocialProfile } from "@/features/portfolio/types/social-links"
 export const SOCIAL = {
   x: {
     title: "X",
-    handle: "paranjaydotdev",
-    href: "https://x.com/paranjaydotdev",
+    handle: "paranjay245",
+    href: "https://x.com/paranjay245",
     sameAs: true,
   },
   github: {
@@ -21,54 +21,59 @@ export const SOCIAL = {
   linkedin: {
     title: "LinkedIn",
     handle: "paranjayy",
-    href: "https://www.linkedin.com/in/paranjayy/",
+    href: "https://linkedin.com/in/paranjayy",
     sameAs: true,
   },
   discord: {
     title: "Discord",
-    handle: "paranjaydotdev",
+    handle: "paranjayy",
     href: "https://discord.com/users/999432437740347486",
   },
   spotify: {
     title: "Spotify",
-    handle: "paranjaydotdev",
-    href: "https://open.spotify.com/user/31kn4nlswdme2nrb34m6hkjwkrma",
+    handle: "paranjay",
+    href: "https://open.spotify.com/user/31rwgyebwncfeffpaavx6o5ygvaq",
   },
   telegram: {
     title: "Telegram",
-    handle: "paranjaydotdev",
-    href: "https://t.me/paranjaydotdev",
+    handle: "Paranjayy",
+    href: "https://t.me/Paranjayy",
   },
   twitch: {
     title: "Twitch",
-    handle: "paranjaydotdev",
-    href: "https://www.twitch.tv/paranjaydotdev",
+    handle: "michaelscott245",
+    href: "https://twitch.tv/michaelscott245",
   },
   pinterest: {
     title: "Pinterest",
-    handle: "paranjaydotdev",
-    href: "https://pinterest.com/paranjaydotdev/",
+    handle: "kparanjay",
+    href: "https://pinterest.com/kparanjay",
   },
   youtube: {
     title: "YouTube",
-    handle: "paranjaydotdev",
-    href: "https://www.youtube.com/@paranjaydotdev",
+    handle: "paranjayy",
+    href: "https://www.youtube.com/@paranjayy",
     sameAs: true,
   },
-  duolingo: {
-    title: "Duolingo",
-    handle: "paranjaydotdev",
-    href: "https://www.duolingo.com/profile/paranjaydotdev",
+  instagram: {
+    title: "Instagram",
+    handle: "paranjayy",
+    href: "https://instagram.com/paranjayy",
+  },
+  bluesky: {
+    title: "Bluesky",
+    handle: "paranjayy.bsky.social",
+    href: "https://bsky.app/profile/paranjayy.bsky.social",
   },
   gravatar: {
     title: "Gravatar",
-    handle: "paranjaydotdev",
-    href: "https://gravatar.com/paranjaydotdev",
+    handle: "paranjay",
+    href: "https://gravatar.com/sweetly00638681c8",
   },
-  bootdev: {
-    title: "Boot.dev",
-    handle: "paranjaydotdev",
-    href: "https://boot.dev/paranjaydotdev",
+  steam: {
+    title: "Steam",
+    handle: "kparanjay245",
+    href: "https://steamcommunity.com/id/kparanjay245",
   },
 } satisfies Record<string, SocialProfile>
 
