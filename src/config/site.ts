@@ -59,8 +59,8 @@ export const MOBILE_NAV: NavItem<Route>[] = [
 
 export const X_HANDLE = SOCIAL.x.handle
 export const GITHUB_USERNAME = SOCIAL.github.handle
-export const SOURCE_CODE_GITHUB_REPO = "Paranjayy/chanhdai.com"
-export const SOURCE_CODE_GITHUB_URL = "https://github.com/Paranjayy/chanhdai.com"
+export const SOURCE_CODE_GITHUB_REPO = "Paranjayy/portfolio"
+export const SOURCE_CODE_GITHUB_URL = "https://github.com/Paranjayy/portfolio"
 
 export const SPONSORSHIP_URL = "https://github.com/sponsors/Paranjayy"
 
