@@ -13,6 +13,8 @@ import { CertificationItem } from "./certification-item"
 const ID = "certs"
 
 export function Certifications() {
+  if (CERTIFICATIONS.length === 0) return null
+
   return (
     <Panel id={ID}>
       <PanelHeader>

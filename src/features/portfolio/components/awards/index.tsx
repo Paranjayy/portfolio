@@ -19,6 +19,8 @@ const SORTED_AWARDS = [...AWARDS].sort((a, b) => {
 const ID = "awards"
 
 export function Awards() {
+  if (AWARDS.length === 0) return null
+
   return (
     <Panel id={ID}>
       <PanelHeader>

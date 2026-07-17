@@ -61,10 +61,8 @@ export default function HomePage() {
           <Separator />
 
           <Awards />
-          <Separator />
 
           <Certifications />
-          <Separator />
 
           <Bookmarks />
           <Separator />
