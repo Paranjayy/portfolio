@@ -1,117 +1,83 @@
-import { Suspense } from "react"
 import type { Metadata } from "next"
-import type { Blog, WithContext } from "schema-dts"
+import { ArrowUpRightIcon, FilePenLineIcon } from "lucide-react"
 
-import { JSON_LD_ID } from "@/config/json-ld"
-import { X_HANDLE } from "@/config/site"
-import { jsonLdBreadcrumbList, JsonLdScript } from "@/lib/json-ld"
-import { absoluteUrl } from "@/lib/utils"
 import {
   PageHeading,
   PageHeadingTagline,
   PageHeadingTitle,
 } from "@/components/page-heading"
-import { PostList } from "@/features/blog/components/post-list"
-import { PostListWithSearch } from "@/features/blog/components/post-list-with-search"
-import { PostSearchInput } from "@/features/blog/components/post-search-input"
-import { getBlogPosts } from "@/features/doc/data/documents"
-
-const title = "Blog"
-const description = "Writing about code, design, and everything in between."
-
-const ogImage = `/og/simple?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`
+import { SiteFooterInteractiveLogotype } from "@/components/site-footer-brand"
 
 export const metadata: Metadata = {
-  title,
-  description,
-  alternates: {
-    canonical: "/blog",
-  },
-  openGraph: {
-    url: "/blog",
-    type: "website",
-    images: {
-      url: ogImage,
-      width: 1200,
-      height: 630,
-      alt: title,
-    },
-  },
-  twitter: {
-    card: "summary_large_image",
-    site: X_HANDLE,
-    creator: X_HANDLE,
-    images: [ogImage],
-  },
+  title: "Blog",
+  description: "Notes in progress from Paranjay Khachar.",
 }
 
-function getBlogJsonLd(
-  posts: { slug: string; metadata: { title: string; createdAt: string } }[]
-): WithContext<Blog> {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Blog",
-    "@id": absoluteUrl("/blog"),
-    name: title,
-    description,
-    url: absoluteUrl("/blog"),
-    isPartOf: { "@id": JSON_LD_ID.website },
-    blogPost: posts.map((post) => ({
-      "@type": "BlogPosting",
-      "@id": absoluteUrl(`/blog/${post.slug}`),
-      headline: post.metadata.title,
-      url: absoluteUrl(`/blog/${post.slug}`),
-      datePublished: new Date(post.metadata.createdAt).toISOString(),
-    })),
-  }
-}
+const NOTES = [
+  {
+    title: "Building a personal media hub",
+    detail:
+      "Notes from an all-in-one tracker for movies, shows, anime, manga, and books.",
+    href: "https://www.glaze.app/app/media-hub-jItiRx",
+  },
+  {
+    title: "What a profile README can reveal",
+    detail:
+      "A living collection of coding, social, and media signals—without making the portfolio pretend they are live APIs.",
+    href: "https://github.com/Paranjayy",
+  },
+  {
+    title: "7TV Search for Raycast",
+    detail: "A tiny desktop tool for finding and dropping chat emotes quickly.",
+    href: "https://www.raycast.com/Paranjayy/seventv-search",
+  },
+]
 
-export default function Page() {
-  const allPosts = getBlogPosts()
-
+export default function BlogPage() {
   return (
-    <>
-      <JsonLdScript data={getBlogJsonLd(allPosts)} />
+    <div className="min-h-svh">
+      <PageHeading>
+        <PageHeadingTagline>Blog / notes queue</PageHeadingTagline>
+        <PageHeadingTitle>Writing starts before publishing.</PageHeadingTitle>
+      </PageHeading>
 
-      <JsonLdScript
-        data={jsonLdBreadcrumbList([
-          {
-            name: "Home",
-            href: "/",
-          },
-          {
-            name: "Blog",
-            href: "/blog",
-          },
-        ])}
-      />
-
-      <div className="min-h-svh">
-        <PageHeading>
-          <PageHeadingTagline>Blog</PageHeadingTagline>
-          <PageHeadingTitle>
-            Writing about code, design, and everything in between.
-          </PageHeadingTitle>
-        </PageHeading>
-
-        <div className="h-4" />
-
-        <div className="screen-line-top screen-line-bottom p-2">
-          <Suspense
-            fallback={
-              <div className="flex h-9 w-full rounded-lg border border-input dark:bg-input/30" />
-            }
-          >
-            <PostSearchInput />
-          </Suspense>
-        </div>
-
-        <Suspense fallback={<PostList posts={allPosts} />}>
-          <PostListWithSearch posts={allPosts} />
-        </Suspense>
-
-        <div className="h-4" />
+      <div className="container mx-auto max-w-5xl px-4 py-8">
+        <p className="mb-6 max-w-2xl text-sm leading-6 text-muted-foreground">
+          These are real topics connected to shipped or active work. They are
+          labelled as notes until there is an actual article to publish.
+        </p>
+        <ol className="border-t border-line">
+          {NOTES.map((note, index) => (
+            <li key={note.title} className="border-x border-b border-line">
+              <a
+                href={note.href}
+                target="_blank"
+                rel="noopener"
+                className="group grid gap-4 p-5 transition-colors hover:bg-accent-muted sm:grid-cols-[4rem_1fr_auto] sm:items-center"
+              >
+                <span className="font-mono text-xs text-muted-foreground">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span>
+                  <span className="flex items-center gap-2 font-medium">
+                    <FilePenLineIcon className="size-4 text-muted-foreground" />
+                    {note.title}
+                  </span>
+                  <span className="mt-2 block text-sm leading-6 text-muted-foreground">
+                    {note.detail}
+                  </span>
+                </span>
+                <span className="font-mono text-xs tracking-widest text-muted-foreground uppercase">
+                  Note / WIP{" "}
+                  <ArrowUpRightIcon className="ml-1 inline size-3.5" />
+                </span>
+              </a>
+            </li>
+          ))}
+        </ol>
       </div>
-    </>
+
+      <SiteFooterInteractiveLogotype />
+    </div>
   )
 }

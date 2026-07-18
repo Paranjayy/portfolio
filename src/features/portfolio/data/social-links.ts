@@ -106,6 +106,66 @@ export const SOCIAL = {
     href: "https://www.last.fm/user/paranjay",
     category: "play",
   },
+  leetcode: {
+    title: "LeetCode",
+    handle: "Paranjayy",
+    href: "https://leetcode.com/u/Paranjayy/",
+    category: "work",
+  },
+  hackerrank: {
+    title: "HackerRank",
+    handle: "kparanjay245",
+    href: "https://www.hackerrank.com/profile/kparanjay245",
+    category: "work",
+  },
+  codewars: {
+    title: "Codewars",
+    handle: "Paranjayy",
+    href: "https://www.codewars.com/users/Paranjayy",
+    category: "work",
+  },
+  kaggle: {
+    title: "Kaggle",
+    handle: "paranjayy",
+    href: "https://www.kaggle.com/paranjayy",
+    category: "work",
+  },
+  stackoverflow: {
+    title: "Stack Overflow",
+    handle: "Khachar Paranjay",
+    href: "https://stackoverflow.com/users/22587473/khachar-paranjay",
+    category: "work",
+  },
+  hashnode: {
+    title: "Hashnode",
+    handle: "paranjayy",
+    href: "https://hashnode.com/@paranjayy",
+    category: "work",
+  },
+  docker: {
+    title: "Docker Hub",
+    handle: "paranjay245",
+    href: "https://hub.docker.com/u/paranjay245",
+    category: "work",
+  },
+  monkeytype: {
+    title: "Monkeytype",
+    handle: "Paranjayy",
+    href: "https://monkeytype.com/profile/Paranjayy",
+    category: "play",
+  },
+  huggingface: {
+    title: "Hugging Face",
+    handle: "paranjay",
+    href: "https://huggingface.co/paranjay",
+    category: "work",
+  },
+  codepen: {
+    title: "CodePen",
+    handle: "paranjayy",
+    href: "https://codepen.io/paranjayy",
+    category: "work",
+  },
 } satisfies Record<string, SocialProfile>
 
 export type SocialName = keyof typeof SOCIAL
