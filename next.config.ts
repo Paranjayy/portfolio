@@ -69,6 +69,21 @@ const nextConfig: NextConfig = {
         hostname: "images.unsplash.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "0.gravatar.com",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "raw.githubusercontent.com",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "www.glaze.app",
+        port: "",
+      },
     ],
     qualities: [75, 100],
   },

@@ -82,6 +82,30 @@ export const SOCIAL = {
     href: "https://steamcommunity.com/id/kparanjay245",
     category: "play",
   },
+  duolingo: {
+    title: "Duolingo",
+    handle: "Paranjaydotdev",
+    href: "https://www.duolingo.com/profile/Paranjaydotdev",
+    category: "play",
+  },
+  volt: {
+    title: "Volt.fm",
+    handle: "paranjay",
+    href: "https://volt.fm/paranjay",
+    category: "play",
+  },
+  statsfm: {
+    title: "stats.fm",
+    handle: "paranjay",
+    href: "https://stats.fm/paranjay",
+    category: "play",
+  },
+  lastfm: {
+    title: "Last.fm",
+    handle: "paranjay",
+    href: "https://www.last.fm/user/paranjay",
+    category: "play",
+  },
 } satisfies Record<string, SocialProfile>
 
 export type SocialName = keyof typeof SOCIAL

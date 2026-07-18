@@ -57,14 +57,39 @@ export const PROJECTS: Project[] = [
   },
   {
     id: "media-hub",
-    title: "Media Hub",
+    title: "Glaze: Media Hub",
     period: {
-      start: "2024",
+      start: "07.2026",
     },
-    link: "https://github.com/Paranjayy/media-hub",
+    link: "https://www.glaze.app/app/media-hub-jItiRx",
     githubRepo: "Paranjayy/media-hub",
-    skills: ["React", "Trakt API", "Letterboxd", "Tailwind CSS"],
+    skills: ["React 19", "TypeScript", "Glaze", "Dexie"],
+    description: "All-in-one hub for tracking media.",
+    previewImage: "https://www.glaze.app/api/og/app?id=jItiRx",
+  },
+  {
+    id: "seventv-raycast-search",
+    title: "7TV Search",
+    period: {
+      start: "04.2026",
+    },
+    link: "https://www.raycast.com/Paranjayy/seventv-search",
+    skills: ["Raycast", "TypeScript", "7TV API"],
     description:
-      "A personal media dashboard experiment for bringing watch, listen, and reading data together.",
+      "A Raycast extension for searching 7TV emotes and dropping them directly into chat.",
+    logo: "https://raw.githubusercontent.com/Paranjayy/7tv-raycast-search/main/icon.png",
+  },
+  {
+    id: "discord-media-scraper",
+    title: "Discord Media Scraper",
+    period: {
+      start: "06.2026",
+    },
+    link: "https://github.com/Paranjayy/discord-scraper",
+    githubRepo: "Paranjayy/discord-scraper",
+    skills: ["Chrome Extension", "Manifest V3", "TypeScript"],
+    description:
+      "A browser extension for collecting images, videos, archives, and text from Discord channels.",
+    logo: "https://raw.githubusercontent.com/Paranjayy/discord-scraper/main/icons/icon128.png",
   },
 ]

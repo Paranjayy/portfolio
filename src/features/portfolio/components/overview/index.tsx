@@ -1,5 +1,6 @@
 import { urlToName } from "@/utils/url"
 import {
+  CakeIcon,
   LinkIcon,
   MapPinIcon,
   MarsIcon,
@@ -7,6 +8,8 @@ import {
   VenusIcon,
 } from "lucide-react"
 
+import { GitHubIcon } from "@/components/icons"
+import { getGitHubContributionsStats } from "@/features/portfolio/data/github-contributions"
 import { USER } from "@/features/portfolio/data/user"
 import type { User } from "@/features/portfolio/types/user"
 
@@ -20,8 +23,11 @@ import {
   IntroItemLink,
 } from "./intro-item"
 import { JobItem } from "./job-item"
+import { LiveAgeCounter } from "./live-age-counter"
 
-export function Overview() {
+export async function Overview() {
+  const githubStats = await getGitHubContributionsStats()
+
   return (
     <Panel className="screen-line-bottom-none">
       <h2 className="sr-only">Overview</h2>
@@ -76,6 +82,29 @@ export function Overview() {
           <IntroItemIcon>{getGenderIcon(USER.gender)}</IntroItemIcon>
           <IntroItemContent aria-label={`Pronouns: ${USER.pronouns}`}>
             {USER.pronouns}
+          </IntroItemContent>
+        </IntroItem>
+
+        <IntroItem>
+          <IntroItemIcon>
+            <CakeIcon />
+          </IntroItemIcon>
+          <IntroItemContent aria-label="Live age">
+            <LiveAgeCounter />{" "}
+            <span className="text-muted-foreground">years</span>
+          </IntroItemContent>
+        </IntroItem>
+
+        <IntroItem>
+          <IntroItemIcon>
+            <GitHubIcon />
+          </IntroItemIcon>
+          <IntroItemContent aria-label="Average GitHub contributions per day">
+            Avg:{" "}
+            {githubStats.dailyAverage
+              ? githubStats.dailyAverage.toFixed(1)
+              : "--"}{" "}
+            / day
           </IntroItemContent>
         </IntroItem>
       </PanelContent>

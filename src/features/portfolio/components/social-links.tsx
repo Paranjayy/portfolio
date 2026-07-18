@@ -21,8 +21,8 @@ const CATEGORY_LABELS = {
   play: "Off the clock",
 } as const
 
-export function SocialLinks() {
-  const [view, setView] = useState<View>("icons")
+export function SocialLinks({ initialView = "icons" }: { initialView?: View }) {
+  const [view, setView] = useState<View>(initialView)
   const groups = useMemo(
     () =>
       (Object.keys(CATEGORY_LABELS) as Array<keyof typeof CATEGORY_LABELS>).map(

@@ -1,9 +1,9 @@
-import { ArrowLeft } from "lucide-react"
 import type { Metadata } from "next"
 import Link from "next/link"
+import { ArrowLeft } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
 import { SITE_INFO } from "@/config/site"
+import { Button } from "@/components/ui/button"
 import { SocialLinks } from "@/features/portfolio/components/social-links"
 
 export const metadata: Metadata = {
@@ -32,7 +32,7 @@ export default function SocialsPage() {
         </div>
 
         <div className="rounded-xl border border-line bg-background/50 p-6 backdrop-blur-sm">
-          <SocialLinks />
+          <SocialLinks initialView="directory" />
         </div>
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2">

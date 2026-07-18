@@ -15,6 +15,7 @@ export type GitHubContributionsStats = {
   bestStreak: number
   peak: number
   average: number
+  dailyAverage: number
 }
 
 export const getGitHubContributions = unstable_cache(
@@ -39,13 +40,21 @@ export async function getGitHubContributionsStats(): Promise<GitHubContributions
 
 function computeStats(contributions: Activity[]): GitHubContributionsStats {
   if (contributions.length === 0) {
-    return { total: 0, currentStreak: 0, bestStreak: 0, peak: 0, average: 0 }
+    return {
+      total: 0,
+      currentStreak: 0,
+      bestStreak: 0,
+      peak: 0,
+      average: 0,
+      dailyAverage: 0,
+    }
   }
 
   const total = contributions.reduce((sum, c) => sum + (c.count || 0), 0)
   const peak = contributions.reduce((max, c) => Math.max(max, c.count || 0), 0)
   const activeDays = contributions.filter((c) => (c.count || 0) > 0).length
   const average = activeDays > 0 ? total / activeDays : 0
+  const dailyAverage = total / contributions.length
 
   let bestStreak = 0
   let currentStreak = 0
@@ -69,5 +78,5 @@ function computeStats(contributions: Activity[]): GitHubContributionsStats {
     }
   }
 
-  return { total, currentStreak, bestStreak, peak, average }
+  return { total, currentStreak, bestStreak, peak, average, dailyAverage }
 }
