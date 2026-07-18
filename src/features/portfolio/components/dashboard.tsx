@@ -1,11 +1,11 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { Gamepad2Icon, LaptopIcon, MusicIcon } from "lucide-react"
 
+import { cn } from "@/lib/utils"
 import { CountUp } from "@/components/count-up"
 import { DiscordIcon } from "@/components/icons"
-import { cn } from "@/lib/utils"
-import { LaptopIcon, MusicIcon, Gamepad2Icon } from "lucide-react"
 
 import { Panel } from "./panel"
 
@@ -17,6 +17,7 @@ type SpotifyData = {
 }
 
 type WakaTimeData = {
+  available?: boolean
   total_seconds: number
   human_readable_total: string
   daily_average: number
@@ -32,8 +33,8 @@ export function Dashboard() {
         const res = await fetch("/api/spotify/now-playing")
         const data = (await res.json()) as SpotifyData
         setSpotify(data)
-      } catch (e: any) {
-        console.error("Failed to fetch Spotify", e)
+      } catch {
+        console.error("Failed to fetch Spotify")
       }
     }
 
@@ -42,8 +43,8 @@ export function Dashboard() {
         const res = await fetch("/api/stats/wakatime")
         const data = (await res.json()) as WakaTimeData
         setWakatime(data)
-      } catch (e: any) {
-        console.error("Failed to fetch WakaTime", e)
+      } catch {
+        console.error("Failed to fetch WakaTime")
       }
     }
 
@@ -61,7 +62,7 @@ export function Dashboard() {
       <DashboardItem
         title="Coding Activity"
         value={
-          wakatime ? (
+          wakatime && wakatime.available !== false ? (
             <div className="flex items-baseline gap-1">
               <CountUp value={Math.floor(wakatime.total_seconds / 3600)} />
               <span className="text-sm font-medium opacity-40">h</span>
@@ -71,10 +72,16 @@ export function Dashboard() {
               <span className="text-sm font-medium opacity-40">m</span>
             </div>
           ) : (
-            "---"
+            "Unavailable"
           )
         }
-        subtitle={wakatime ? "Last 7 days" : "Loading..."}
+        subtitle={
+          wakatime?.available === false
+            ? "Add WAKATIME_API_KEY to enable"
+            : wakatime
+              ? "Last 7 days via WakaTime"
+              : "Loading..."
+        }
         icon={<LaptopIcon className="size-4" />}
       />
       <DashboardItem
@@ -93,15 +100,17 @@ export function Dashboard() {
       />
       <DashboardItem
         title="Discord"
-        value="Online"
-        subtitle="Idle"
+        value="@paranjaydotdev"
+        subtitle="Profile link"
         icon={<DiscordIcon className="size-4" />}
+        href="https://discord.com/users/999432437740347486"
       />
       <DashboardItem
         title="Steam"
-        value="Offline"
-        subtitle="Last: Elden Ring"
+        value="@kparanjay245"
+        subtitle="Profile link"
         icon={<Gamepad2Icon className="size-4" />}
+        href="https://steamcommunity.com/id/kparanjay245"
       />
     </Panel>
   )

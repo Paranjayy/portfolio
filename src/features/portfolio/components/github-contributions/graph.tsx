@@ -28,7 +28,7 @@ export function GitHubContributionGraph({
 
   return (
     <ContributionGraph
-      className="mx-auto gap-4 py-4"
+      className="mx-auto gap-4 py-4 [--contribution-level-0:var(--muted)] [--contribution-level-1:color-mix(in_oklab,var(--foreground)_32%,var(--background))] [--contribution-level-2:color-mix(in_oklab,var(--foreground)_52%,var(--background))] [--contribution-level-3:color-mix(in_oklab,var(--foreground)_72%,var(--background))] [--contribution-level-4:var(--foreground)]"
       data={data}
       blockSize={12}
       blockMargin={2}

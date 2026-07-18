@@ -28,24 +28,12 @@ export const MAIN_NAV: NavItem<Route>[] = [
     href: "/projects",
   },
   {
-    title: "Components",
-    href: "/components",
-  },
-  {
-    title: "Blocks",
-    href: "/blocks",
-  },
-  {
-    title: "Blog",
-    href: "/blog",
+    title: "Socials",
+    href: "/socials",
   },
   {
     title: "Gallery",
     href: "/gallery",
-  },
-  {
-    title: "Sponsors",
-    href: "/sponsors",
   },
 ]
 

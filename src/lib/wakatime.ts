@@ -1,12 +1,23 @@
 const WAKATIME_API_KEY = process.env.WAKATIME_API_KEY
 
+type WakaTimeResponse = {
+  data?: {
+    total_seconds?: number
+    human_readable_total?: string
+    daily_average?: number
+    human_readable_daily_average?: string
+    languages?: unknown[]
+  }
+}
+
 export const getWakaTimeStats = async () => {
   if (!WAKATIME_API_KEY) {
     return {
-      total_seconds: 152100, // 42h 15m mock
-      human_readable_total: "42h 15m",
-      daily_average: 21600,
-      human_readable_daily_average: "6h 0m",
+      available: false,
+      total_seconds: 0,
+      human_readable_total: "Unavailable",
+      daily_average: 0,
+      human_readable_daily_average: "Unavailable",
     }
   }
 
@@ -20,13 +31,25 @@ export const getWakaTimeStats = async () => {
     }
   )
 
-  const data = (await response.json()) as any
+  if (!response.ok) {
+    return {
+      available: false,
+      total_seconds: 0,
+      human_readable_total: "Unavailable",
+      daily_average: 0,
+      human_readable_daily_average: "Unavailable",
+    }
+  }
+
+  const data = (await response.json()) as WakaTimeResponse
 
   return {
+    available: true,
     total_seconds: data?.data?.total_seconds || 0,
     human_readable_total: data?.data?.human_readable_total || "0h 0m",
     daily_average: data?.data?.daily_average || 0,
-    human_readable_daily_average: data?.data?.human_readable_daily_average || "0h 0m",
+    human_readable_daily_average:
+      data?.data?.human_readable_daily_average || "0h 0m",
     languages: data?.data?.languages || [],
   }
 }

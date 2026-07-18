@@ -1,15 +1,12 @@
 import { LICENSE, SOURCE_CODE_GITHUB_URL } from "@/config/site"
 import { cn } from "@/lib/utils"
-import { DmcaIcon, GitHubIcon, LinkedInIcon, XIcon } from "@/components/icons"
-import { SiteFooterInteractiveLogotype } from "@/components/site-footer-brand"
+import { GitHubIcon, LinkedInIcon, XIcon } from "@/components/icons"
 import { SOCIAL } from "@/features/portfolio/data/social-links"
-import { getStargazerCount } from "@/components/nav-item-github"
 
 export async function SiteFooter() {
   const xLink = SOCIAL.x
   const githubLink = SOCIAL.github
   const linkedinLink = SOCIAL.linkedin
-  const upstreamStars = await getStargazerCount("ncdai/chanhdai.com")
 
   return (
     <footer className="max-w-screen overflow-x-clip px-2">
@@ -18,113 +15,64 @@ export async function SiteFooter() {
           <div className="stripe-divider h-12" />
         </div>
 
-        <dl className="flex flex-col gap-4 py-8 font-mono [&_dd]:text-sm [&_dt]:text-right [&_dt]:text-sm [&_dt]:text-muted-foreground [&_ul]:flex [&_ul]:flex-col [&_ul]:gap-2">
-          <Item>
-            <dt>Crafted by</dt>
-            <dd>
-              <a
-                className="link-underline"
-                href={xLink.href}
-                target="_blank"
-                rel="noopener"
-              >
-                {xLink.handle}
-              </a>
-            </dd>
-          </Item>
+        <div className="grid gap-px bg-line sm:grid-cols-[1.4fr_1fr]">
+          <div className="bg-background px-4 py-5">
+            <p className="font-mono text-[11px] tracking-[0.18em] text-muted-foreground uppercase">
+              Paranjay Khachar / v0.1
+            </p>
+            <p className="mt-2 max-w-md text-sm text-muted-foreground">
+              A personal lab for projects, notes, and systems in progress.
+            </p>
+          </div>
+          <dl className="grid content-center gap-2 bg-background px-4 py-5 font-mono [&_dd]:text-sm [&_dt]:text-right [&_dt]:text-xs [&_dt]:text-muted-foreground">
+            <Item>
+              <dt>Built by</dt>
+              <dd>
+                <a
+                  className="link-underline"
+                  href={xLink.href}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  {xLink.handle}
+                </a>
+              </dd>
+            </Item>
 
-          <Item>
-            <dt>Forked from</dt>
-            <dd>
-              <a
-                className="link-underline inline-flex items-center gap-1.5"
-                href="https://github.com/ncdai/chanhdai.com"
-                target="_blank"
-                rel="noopener"
-              >
-                <GitHubIcon className="size-3.5" />
-                ncdai/chanhdai.com
-                {upstreamStars > 0 && (
-                  <span className="text-muted-foreground">
-                    {new Intl.NumberFormat("en-US", {
-                      notation: "compact",
-                      compactDisplay: "short",
-                    })
-                      .format(upstreamStars)
-                      .toLowerCase()}
-                  </span>
-                )}
-              </a>
-            </dd>
-          </Item>
+            <Item>
+              <dt>Deployed on</dt>
+              <dd>Vercel</dd>
+            </Item>
 
-          <Item>
-            <dt>Inspired by</dt>
-            <dd>
-              <ul>
-                <li>Tailwind CSS</li>
-                <li>shadcn/ui</li>
-                <li>Vercel</li>
-                <li>Evil Charts</li>
-                <li>Devouring Details</li>
-                <li>Skiper UI</li>
-                <li>Making Software</li>
-              </ul>
-            </dd>
-          </Item>
+            <Item>
+              <dt>Source code</dt>
+              <dd>
+                <a
+                  className="link-underline"
+                  href={SOURCE_CODE_GITHUB_URL}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  GitHub
+                </a>
+              </dd>
+            </Item>
 
-          <Item>
-            <dt>Deployed on</dt>
-            <dd>Vercel</dd>
-          </Item>
-
-          <Item>
-            <dt>Analytics</dt>
-            <dd>
-              <ul>
-                <li>
-                  <a
-                    className="link-underline"
-                    href="https://openpanel.dev?utm_source=paranjay.dev&utm_medium=referral&utm_campaign=footer"
-                    target="_blank"
-                    rel="noopener"
-                  >
-                    OpenPanel
-                  </a>
-                </li>
-                <li>Google Analytics</li>
-              </ul>
-            </dd>
-          </Item>
-
-          <Item>
-            <dt>Source code</dt>
-            <dd>
-              <a
-                className="link-underline"
-                href={SOURCE_CODE_GITHUB_URL}
-                target="_blank"
-                rel="noopener"
-              >
-                GitHub
-              </a>
-            </dd>
-          </Item>
-
-          <Item>
-            <dt>License</dt>
-            <dd>
-              <a
-                className="link-underline"
-                href={LICENSE.url}
-                target="_blank"
-                rel="noopener"
-              >
-                {LICENSE.name}
-              </a>
-            </dd>
-          </Item>
-        </dl>
+            <Item>
+              <dt>License</dt>
+              <dd>
+                <a
+                  className="link-underline"
+                  href={LICENSE.url}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  {LICENSE.name}
+                </a>
+              </dd>
+            </Item>
+          </dl>
+        </div>
 
         <div className="screen-line-top screen-line-bottom flex w-full before:z-1 after:z-1">
           <div className="mx-auto flex items-center justify-center gap-3 border-x border-line bg-background px-4">
@@ -163,19 +111,6 @@ export async function SiteFooter() {
             </a>
 
             <Separator />
-
-            <a
-              className="flex text-muted-foreground transition-[color] hover:text-foreground"
-              href={
-                process.env.NEXT_PUBLIC_DMCA_URL ||
-                "https://www.dmca.com/ProtectionPro.aspx"
-              }
-              target="_blank"
-              rel="noopener"
-              aria-label="DMCA.com Protection Status"
-            >
-              <DmcaIcon className="h-4.5 w-auto" />
-            </a>
           </div>
         </div>
 
@@ -184,8 +119,6 @@ export async function SiteFooter() {
           <div className="right-[-4.5px] bottom-[-3.5px]" />
         </div> */}
       </div>
-
-      <SiteFooterInteractiveLogotype />
 
       <div className="h-(--fade-bottom-height)" />
       <div className="pb-[env(safe-area-inset-bottom,0)]" />

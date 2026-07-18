@@ -41,12 +41,15 @@ export function ChanhDaiMarkIsometric({ className }: Props) {
           style={{ transform: "translate(4px, 4px)" }}
         >
           <path d="M0 0H32V48H48V32H64V16H80V0H112V32H96V48H80V64H96V80H112V128H80V112H64V96H48V80H32V128H0V0Z" />
-          <path d="M128 0H224V16H240V32H256V80H240V96H224V112H160V128H128V0ZM160 32V80H224V32H160Z" />
+          <path d="M128 0H224V16H240V32H256V80H240V96H160V128H128V0ZM160 32V64H224V32H160Z" />
         </g>
         {/* Top layer (foreground) */}
         <g fill="currentColor">
           <path d="M0 0H32V48H48V32H64V16H80V0H112V32H96V48H80V64H96V80H112V128H80V112H64V96H48V80H32V128H0V0Z" />
-          <path d="M128 0H224V16H240V32H256V80H240V96H224V112H160V128H128V0ZM160 32V80H224V32H160Z" fillRule="evenodd" />
+          <path
+            d="M128 0H224V16H240V32H256V80H240V96H160V128H128V0ZM160 32V64H224V32H160Z"
+            fillRule="evenodd"
+          />
         </g>
       </motion.svg>
     </div>

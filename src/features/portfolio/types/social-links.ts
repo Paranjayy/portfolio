@@ -3,6 +3,8 @@ export type SocialProfile = {
   title: string
   handle: string
   href: string
+  /** Used to group profiles in the directory view. */
+  category: "work" | "community" | "play"
   /** Opt-in: include this profile in JSON-LD `sameAs` (public profile page). */
   sameAs?: boolean
 }

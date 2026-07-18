@@ -7,11 +7,10 @@ export const USER: User = {
   username: "Paranjayy",
   gender: "male",
   pronouns: "he/him",
-  bio: "BS Student (Data Science & Applications) @ IIT Madras. Passionate about building robust, scalable AI systems.",
+  bio: "Night Owl 🦉 building scalable AI systems.",
   flipSentences: [
-    "Night Owl building scalable AI systems.",
-    "2,500+ GitHub Contributions in 2026.",
-    "IIT Madras BS Student (DS & Applications).",
+    "Night Owl 🦉 building scalable AI systems.",
+    "BS Student (Data Science & Applications) @ IIT Madras.",
     "Passionate about open-source and modular design.",
   ],
   address: "Gujarat, India",
@@ -36,7 +35,6 @@ I'm a **BS Student in Data Science & Applications** at IIT Madras, where I spend
   avatar: "https://github.com/Paranjayy.png",
   ogImage: "https://paranjay.dev/og.png",
   timeZone: "Asia/Kolkata",
-  namePronunciationUrl: "https://utfs.io/f/pronunciation-placeholder.mp3",
   keywords: [
     "software engineer",
     "ai",
