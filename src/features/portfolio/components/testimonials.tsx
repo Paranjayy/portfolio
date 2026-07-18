@@ -34,7 +34,13 @@ import {
 } from "@/features/portfolio/data/testimonials"
 import type { Testimonial as TestimonialType } from "@/features/portfolio/types/testimonials"
 
-import { Panel, PanelContent, PanelHeader, PanelTitle } from "./panel"
+import {
+  Panel,
+  PanelContent,
+  PanelDescription,
+  PanelHeader,
+  PanelTitle,
+} from "./panel"
 
 const ID = "testimonials"
 
@@ -71,6 +77,9 @@ export function Testimonials() {
             𝕏
           </a>
         </PanelTitle>
+        <PanelDescription>
+          Placeholder layout — real endorsements will replace these examples.
+        </PanelDescription>
       </PanelHeader>
 
       <div className="grid gap-4 py-4 sm:hidden">

@@ -22,7 +22,7 @@ const CATEGORY_LABELS = {
 } as const
 
 export function SocialLinks() {
-  const [view, setView] = useState<View>("directory")
+  const [view, setView] = useState<View>("icons")
   const groups = useMemo(
     () =>
       (Object.keys(CATEGORY_LABELS) as Array<keyof typeof CATEGORY_LABELS>).map(
@@ -41,9 +41,6 @@ export function SocialLinks() {
           <h2 className="font-mono text-xs font-semibold tracking-widest uppercase">
             Find me elsewhere
           </h2>
-          <p className="mt-0.5 text-xs text-muted-foreground">
-            A small directory, not a wall of icons.
-          </p>
         </div>
         <div
           className="flex rounded-md border border-line p-0.5"
@@ -87,7 +84,7 @@ export function SocialLinks() {
             {SOCIAL_LINKS.map((item) => (
               <li key={item.name} className="bg-background">
                 <a
-                  className="flex size-11 items-center justify-center text-muted-foreground transition-colors hover:bg-accent-muted hover:text-foreground"
+                  className="flex size-10 items-center justify-center text-muted-foreground transition-colors hover:bg-accent-muted hover:text-foreground [&_img]:size-4.5 [&_svg]:size-4.5"
                   href={addQueryParams(item.href, UTM_PARAMS)}
                   target="_blank"
                   rel="noopener"

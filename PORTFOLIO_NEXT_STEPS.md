@@ -8,11 +8,12 @@ This is Paranjay's personal portfolio first: a quiet, pixel-grid lab for project
 
 ## Done in this pass
 
-- Replaced the social icon wall with a grouped social directory and an icon-only alternate view.
+- Kept the compact social icon view as the default; the grouped directory is an optional alternate view.
 - Corrected the IIT Madras entry to describe student status, updated the Discord handle, and restored the Night Owl bio.
 - Removed placeholder WakaTime data and hard-coded Discord/Steam presence claims.
-- Removed inherited components, blocks, blog, testimonial, and sponsor surfaces from the homepage/navigation.
-- Simplified the footer and removed the oversized repeated-name treatment.
+- Removed inherited components, blocks, blog, and sponsor surfaces from the homepage/navigation.
+- Restored the original structured attribution footer and its interactive bottom wordmark.
+- Hid analytics insights until they are connected to Paranjay's own analytics source.
 - Made the GitHub graph contrast readable and stopped hard-coding contribution claims in the profile copy.
 - Adjusted the pixel P opening to improve its legibility at small sizes.
 
@@ -23,6 +24,8 @@ This is Paranjay's personal portfolio first: a quiet, pixel-grid lab for project
 - Project audit: approve which public GitHub repositories and local projects are genuinely portfolio-ready, plus final descriptions, URLs, dates, and visuals.
 - Social audit: confirm each current profile, especially older Twitch, YouTube, Pinterest, Gravatar, and Steam links; remove inactive accounts rather than presenting them as current.
 - Gallery: provide images/captions or decide whether it should become a build log instead.
+- Testimonials: replace the current fictional/sample data with real testimonials, or hide the section until there are any. Never present examples as real endorsements.
+- Awards and certifications: send the source details (issuer, date, credential URL, title, and image/logo where available).
 
 ## Next build sequence
 
@@ -30,7 +33,8 @@ This is Paranjay's personal portfolio first: a quiet, pixel-grid lab for project
 2. Add project metadata (`status`, `role`, `year`, `featured`, `case study`) and support grid/list/filter views.
 3. Add a concise `/now` or build-log page for current work, instead of inherited blog/component content.
 4. Make integrations explicit: show live data only when configured, otherwise show a useful setup/empty state.
-5. Once the data model has survived personal use, create a `portfolio.config.ts` plus a setup script that asks for identity, links, projects, and integrations. That becomes the fork-friendly template layer.
+5. Add a pronunciation button only after choosing a source: a recorded audio clip is best; browser TTS can be a temporary fallback but needs a confirmed pronunciation and voice quality check.
+6. Once the data model has survived personal use, create a `portfolio.config.ts` plus a setup script that asks for identity, links, projects, and integrations. That becomes the fork-friendly template layer.
 
 ## Template principles
 

@@ -1,4 +1,3 @@
-import { Suspense } from "react"
 import type { Metadata } from "next"
 import type { ProfilePage, WithContext } from "schema-dts"
 
@@ -8,18 +7,14 @@ import { absoluteUrl, cn } from "@/lib/utils"
 import { Awards } from "@/features/portfolio/components/awards"
 import { Dashboard } from "@/features/portfolio/components/dashboard"
 import { Education } from "@/features/portfolio/components/education"
-import { Experiences } from "@/features/portfolio/components/experiences"
 import { GitHubContributions } from "@/features/portfolio/components/github-contributions"
 import { Hello } from "@/features/portfolio/components/hello"
-import {
-  Insights,
-  InsightsSkeleton,
-} from "@/features/portfolio/components/insights"
 import { Overview } from "@/features/portfolio/components/overview"
 import { ProfileHeader } from "@/features/portfolio/components/profile-header"
 import { Projects } from "@/features/portfolio/components/projects"
 import { SocialLinks } from "@/features/portfolio/components/social-links"
 import { TechStack } from "@/features/portfolio/components/tech-stack"
+import { Testimonials } from "@/features/portfolio/components/testimonials"
 import { USER } from "@/features/portfolio/data/user"
 
 export const metadata: Metadata = {
@@ -51,10 +46,10 @@ export default function HomePage() {
           <Hello />
           <Separator />
 
-          <TechStack />
+          <Testimonials />
           <Separator />
 
-          <Experiences />
+          <TechStack />
           <Separator />
 
           <Education />
@@ -64,11 +59,6 @@ export default function HomePage() {
           <Separator />
 
           <Awards />
-
-          <Suspense fallback={<InsightsSkeleton />}>
-            <Insights />
-          </Suspense>
-          <Separator />
         </div>
       </div>
     </>
