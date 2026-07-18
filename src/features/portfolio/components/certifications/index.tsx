@@ -1,6 +1,7 @@
 import { CollapsibleList } from "@/components/collapsible-list"
 import {
   Panel,
+  PanelContent,
   PanelHeader,
   PanelTitle,
   PanelTitleSup,
@@ -13,8 +14,6 @@ import { CertificationItem } from "./certification-item"
 const ID = "certs"
 
 export function Certifications() {
-  if (CERTIFICATIONS.length === 0) return null
-
   return (
     <Panel id={ID}>
       <PanelHeader>
@@ -25,11 +24,17 @@ export function Certifications() {
         </PanelTitle>
       </PanelHeader>
 
-      <CollapsibleList
-        items={CERTIFICATIONS}
-        max={6}
-        renderItem={(item) => <CertificationItem certification={item} />}
-      />
+      {CERTIFICATIONS.length > 0 ? (
+        <CollapsibleList
+          items={CERTIFICATIONS}
+          max={6}
+          renderItem={(item) => <CertificationItem certification={item} />}
+        />
+      ) : (
+        <PanelContent className="font-mono text-sm text-muted-foreground">
+          Credentials are being collected and verified.
+        </PanelContent>
+      )}
     </Panel>
   )
 }

@@ -24,7 +24,7 @@ export const USER: User = {
       title: "BS Student (Data Science & Applications)",
       company: "IIT Madras",
       website: "https://www.iitm.ac.in/",
-      experienceId: "iit-madras",
+      educationId: "iit-madras",
       logo: "https://upload.wikimedia.org/wikipedia/en/6/69/IIT_Madras_Logo.svg",
     },
   ],

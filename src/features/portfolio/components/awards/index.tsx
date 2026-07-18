@@ -3,6 +3,7 @@ import { compareDesc } from "date-fns"
 import { CollapsibleList } from "@/components/collapsible-list"
 import {
   Panel,
+  PanelContent,
   PanelHeader,
   PanelTitle,
   PanelTitleSup,
@@ -19,8 +20,6 @@ const SORTED_AWARDS = [...AWARDS].sort((a, b) => {
 const ID = "awards"
 
 export function Awards() {
-  if (AWARDS.length === 0) return null
-
   return (
     <Panel id={ID}>
       <PanelHeader>
@@ -31,12 +30,18 @@ export function Awards() {
         </PanelTitle>
       </PanelHeader>
 
-      <CollapsibleList
-        items={SORTED_AWARDS}
-        max={6}
-        keyExtractor={(item) => item.id}
-        renderItem={(item) => <AwardItem award={item} />}
-      />
+      {AWARDS.length > 0 ? (
+        <CollapsibleList
+          items={SORTED_AWARDS}
+          max={6}
+          keyExtractor={(item) => item.id}
+          renderItem={(item) => <AwardItem award={item} />}
+        />
+      ) : (
+        <PanelContent className="font-mono text-sm text-muted-foreground">
+          Awards will appear here once they are ready to share.
+        </PanelContent>
+      )}
     </Panel>
   )
 }

@@ -5,11 +5,15 @@ import { JSON_LD_ID } from "@/config/json-ld"
 import { JsonLdScript } from "@/lib/json-ld"
 import { absoluteUrl, cn } from "@/lib/utils"
 import { Awards } from "@/features/portfolio/components/awards"
+import { Bookmarks } from "@/features/portfolio/components/bookmarks"
+import { Certifications } from "@/features/portfolio/components/certifications"
 import { Dashboard } from "@/features/portfolio/components/dashboard"
 import { Education } from "@/features/portfolio/components/education"
+import { Experiences } from "@/features/portfolio/components/experiences"
 import { GitHubContributions } from "@/features/portfolio/components/github-contributions"
 import { Hello } from "@/features/portfolio/components/hello"
 import { Overview } from "@/features/portfolio/components/overview"
+import { PortfolioLab } from "@/features/portfolio/components/portfolio-lab"
 import { ProfileHeader } from "@/features/portfolio/components/profile-header"
 import { Projects } from "@/features/portfolio/components/projects"
 import { SocialLinks } from "@/features/portfolio/components/social-links"
@@ -52,13 +56,25 @@ export default function HomePage() {
           <TechStack />
           <Separator />
 
+          <Experiences />
+          <Separator />
+
           <Education />
           <Separator />
 
           <Projects />
           <Separator />
 
+          <PortfolioLab />
+          <Separator />
+
           <Awards />
+          <Separator />
+
+          <Certifications />
+          <Separator />
+
+          <Bookmarks />
         </div>
       </div>
     </>

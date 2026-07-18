@@ -8,6 +8,7 @@ import {
 } from "@/components/base/ui/collapsible"
 import {
   Panel,
+  PanelContent,
   PanelHeader,
   PanelTitle,
 } from "@/features/portfolio/components/panel"
@@ -30,38 +31,47 @@ export function Experiences() {
         </PanelTitle>
       </PanelHeader>
 
-      <div className="pr-2 pl-4">
-        <ExperienceList experiences={EXPERIENCES.slice(0, MAX)} />
-      </div>
-
-      {EXPERIENCES.length > MAX && (
-        <Collapsible className="group/collapsible">
-          <CollapsibleContent render={<div className="pr-2 pl-4" />}>
-            <ExperienceList experiences={EXPERIENCES.slice(MAX)} />
-          </CollapsibleContent>
-
-          <div className="-mt-px flex items-center justify-center py-2">
-            <CollapsibleTrigger
-              render={
-                <Button
-                  className="gap-2 pr-2.5 pl-3"
-                  variant="secondary"
-                  size="sm"
-                >
-                  <span className="hidden group-data-closed/collapsible:block">
-                    Show more
-                  </span>
-
-                  <span className="hidden group-data-open/collapsible:block">
-                    Show less
-                  </span>
-
-                  <ChevronDownIcon className="group-data-open/collapsible:rotate-180" />
-                </Button>
-              }
-            />
+      {EXPERIENCES.length === 0 ? (
+        <PanelContent className="font-mono text-sm text-muted-foreground">
+          No employment entries yet — education, projects, and experiments are
+          documented elsewhere on this page.
+        </PanelContent>
+      ) : (
+        <>
+          <div className="pr-2 pl-4">
+            <ExperienceList experiences={EXPERIENCES.slice(0, MAX)} />
           </div>
-        </Collapsible>
+
+          {EXPERIENCES.length > MAX && (
+            <Collapsible className="group/collapsible">
+              <CollapsibleContent render={<div className="pr-2 pl-4" />}>
+                <ExperienceList experiences={EXPERIENCES.slice(MAX)} />
+              </CollapsibleContent>
+
+              <div className="-mt-px flex items-center justify-center py-2">
+                <CollapsibleTrigger
+                  render={
+                    <Button
+                      className="gap-2 pr-2.5 pl-3"
+                      variant="secondary"
+                      size="sm"
+                    >
+                      <span className="hidden group-data-closed/collapsible:block">
+                        Show more
+                      </span>
+
+                      <span className="hidden group-data-open/collapsible:block">
+                        Show less
+                      </span>
+
+                      <ChevronDownIcon className="group-data-open/collapsible:rotate-180" />
+                    </Button>
+                  }
+                />
+              </div>
+            </Collapsible>
+          )}
+        </>
       )}
     </Panel>
   )

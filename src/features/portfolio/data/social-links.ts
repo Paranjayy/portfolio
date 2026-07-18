@@ -33,12 +33,6 @@ export const SOCIAL = {
     href: "https://discord.com/users/999432437740347486",
     category: "community",
   },
-  duolingo: {
-    title: "Duolingo",
-    handle: "Paranjaydotdev",
-    href: "https://www.duolingo.com/profile/Paranjaydotdev",
-    category: "play",
-  },
   spotify: {
     title: "Spotify",
     handle: "paranjay",

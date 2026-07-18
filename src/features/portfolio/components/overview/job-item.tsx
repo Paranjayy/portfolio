@@ -1,5 +1,11 @@
+import Image from "next/image"
 import { addQueryParams } from "@/utils/url"
-import { BriefcaseBusinessIcon, CodeXmlIcon, LightbulbIcon } from "lucide-react"
+import {
+  BriefcaseBusinessIcon,
+  CodeXmlIcon,
+  GraduationCapIcon,
+  LightbulbIcon,
+} from "lucide-react"
 
 import { UTM_PARAMS } from "@/config/site"
 
@@ -14,26 +20,41 @@ type JobItemProps = {
   title: string
   company: string
   website: string
-  experienceId?: string
+  educationId?: string
+  logo?: string
 }
 
 export function JobItem({
   title,
   company,
   website,
-  experienceId,
+  educationId,
+  logo,
 }: JobItemProps) {
   return (
     <IntroItem className="sm:col-span-2">
-      <IntroItemIcon>{getJobIcon(title)}</IntroItemIcon>
+      <IntroItemIcon>
+        {logo ? (
+          <Image
+            src={logo}
+            alt=""
+            width={24}
+            height={24}
+            className="size-4 object-contain"
+            unoptimized
+          />
+        ) : (
+          getJobIcon(title)
+        )}
+      </IntroItemIcon>
 
       <IntroItemContent>
         {title} <span aria-label="at">@</span>
         <IntroItemLink
           className="ml-0.5 font-medium"
-          {...(experienceId
+          {...(educationId
             ? {
-                href: `#experience-${experienceId}`,
+                href: `#education-${educationId}`,
                 target: "_self",
                 rel: "",
               }
@@ -49,6 +70,9 @@ export function JobItem({
 }
 
 function getJobIcon(title: string) {
+  if (/student|bachelor|master|phd/i.test(title)) {
+    return <GraduationCapIcon />
+  }
   if (/(developer|engineer)/i.test(title)) {
     return <CodeXmlIcon />
   }

@@ -23,12 +23,12 @@ export type User = {
   website: string
   /** Primary/current role shown on profile */
   jobTitle: string
-  /** Work history entries */
+  /** Current profile affiliations (employment or education). */
   jobs: {
     title: string
     company: string
     website: string
-    experienceId?: string
+    educationId?: string
     logo?: string
   }[]
   /** Rich about section; supports Markdown */
