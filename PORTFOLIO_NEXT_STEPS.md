@@ -20,6 +20,7 @@ This is Paranjay's personal portfolio first: a quiet, pixel-grid lab for project
 - Recovered Duolingo and added the verified Volt.fm, stats.fm, and Last.fm profile links.
 - Added the hidden live-age metadata and a cached, data-backed GitHub contributions-per-day average.
 - Audited local project repositories, then added real 7TV Search and Discord Media Scraper entries using their repository icons. Updated Media Hub with its public Glaze page and preview.
+- Added a dedicated `/lab` route for original experiments so the personal site has a real successor to inherited component/block catalogue surfaces.
 
 ## Needs Paranjay's input
 
