@@ -7,7 +7,6 @@ import {
   siCodewars,
   siDocker,
   siDuolingo,
-  siGithub,
   siGravatar,
   siHackerrank,
   siHashnode,
@@ -22,11 +21,15 @@ import {
   siSteam,
   siTelegram,
   siTwitch,
-  siX,
   siYoutube,
 } from "simple-icons"
 
-import { DiscordIcon, LinkedInIcon } from "@/components/icons"
+import {
+  DiscordIcon,
+  GitHubIcon,
+  LinkedInIcon,
+  XIcon,
+} from "@/components/icons"
 import type { SocialName } from "@/features/portfolio/data/social-links"
 
 /**
@@ -34,8 +37,8 @@ import type { SocialName } from "@/features/portfolio/data/social-links"
  * CDN, keeping the social directory both recognisable and reliable.
  */
 export const SOCIAL_ICONS: Record<SocialName, React.JSX.Element> = {
-  x: <BrandIcon icon={siX} />,
-  github: <BrandIcon icon={siGithub} />,
+  x: <XIcon />,
+  github: <GitHubIcon />,
   linkedin: <LinkedInIcon />,
   discord: <DiscordIcon />,
   spotify: <BrandIcon icon={siSpotify} />,
