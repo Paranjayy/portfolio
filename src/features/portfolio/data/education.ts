@@ -11,6 +11,15 @@ export const EDUCATION: Education[] = [
     },
     description: `Pursuing Bachelor of Science in Data Science and Applications. Learning foundations of data science, programming, and mathematics.`,
     logo: "https://upload.wikimedia.org/wikipedia/en/6/69/IIT_Madras_Logo.svg",
-    skills: ["Data Science", "Python", "Mathematics", "Statistics"],
+    skills: [
+      "Data Science",
+      "Python",
+      "Mathematics",
+      "Statistics",
+      "Machine Learning",
+      "SQL",
+      "Data Analysis",
+      "Programming",
+    ],
   },
 ]

@@ -7,4 +7,6 @@ export type SocialProfile = {
   category: "work" | "community" | "play"
   /** Opt-in: include this profile in JSON-LD `sameAs` (public profile page). */
   sameAs?: boolean
+  /** Keep secondary profiles on the full social directory, not the home strip. */
+  showOnHome?: boolean
 }

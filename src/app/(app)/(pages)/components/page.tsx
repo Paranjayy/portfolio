@@ -7,7 +7,7 @@ import {
   PageHeadingTitle,
 } from "@/components/page-heading"
 import { SiteFooterInteractiveLogotype } from "@/components/site-footer-brand"
-import { LabSignalBlock } from "@/features/portfolio/components/lab-signal-block"
+import { ComponentsWorkbench } from "@/features/portfolio/components/components-workbench"
 
 export const metadata: Metadata = {
   title: "Components",
@@ -27,7 +27,7 @@ export default function ComponentsPage() {
           This library starts with original portfolio experiments. It does not
           present inherited examples as Paranjay&apos;s work.
         </p>
-        <LabSignalBlock />
+        <ComponentsWorkbench />
 
         <a
           href="/lab"

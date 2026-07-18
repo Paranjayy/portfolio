@@ -42,7 +42,7 @@ export default function HomePage() {
           <Separator />
 
           <Overview />
-          <SocialLinks initialView="directory" />
+          <SocialLinks compact />
           <GitHubContributions />
           <Dashboard />
           <Separator />

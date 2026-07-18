@@ -84,6 +84,11 @@ const nextConfig: NextConfig = {
         hostname: "www.glaze.app",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "play-lh.googleusercontent.com",
+        port: "",
+      },
     ],
     qualities: [75, 100],
   },

@@ -23,13 +23,17 @@ This is Paranjay's personal portfolio first: a quiet, pixel-grid lab for project
 - Added a dedicated `/lab` route for original experiments so the personal site has a real successor to inherited component/block catalogue surfaces.
 - Restored exact, bundled brand marks for social profiles and expanded the directory from the verified GitHub profile README (including CodePen, Monkeytype, Hugging Face, and coding platforms).
 - Turned `/components`, `/blocks`, and `/blog` into explicit personal WIP surfaces with an original interactive preview and source-backed notes queue.
+- Restored the compact core-social strip on the homepage while keeping the full directory on `/socials`; secondary coding profiles stay directory-only.
+- Replaced the Duolingo glyph with the supplied official app asset and made the Steam mark inherit readable foreground contrast.
+- Added a data-backed weekly contribution axis below the heatmap; each week reveals its range, total, and average daily contributions on hover.
+- Added card/list views to the personal Components and Blog surfaces instead of presenting a single static WIP page.
 
 ## Needs Paranjay's input
 
 - Name pronunciation: provide an audio file URL or a confirmed phonetic spelling before enabling the button again.
 - Live integrations: provide/confirm WakaTime and Spotify credentials in `.env.local`; Steam presence needs a chosen provider or Steam API key. Discord presence requires an explicit Discord/Lanyard integration decision.
 - Project audit: approve which public GitHub repositories and local projects are genuinely portfolio-ready, plus final descriptions, URLs, dates, and visuals.
-- Social audit: confirm each current profile, especially older Twitch, YouTube, Pinterest, Gravatar, and Steam links; remove inactive accounts rather than presenting them as current.
+- Social audit: confirm each current profile, especially older Twitch, YouTube, Pinterest, Gravatar, and Steam links; remove inactive accounts rather than presenting them as current. Duolingo is confirmed.
 - Letterboxd and Trakt: provide the final profile URLs before adding them. Review LeetCode, HackerRank, Codewars, Kaggle, Stack Overflow, Hashnode, Docker Hub, Monkeytype, Hugging Face, and CodePen before adding any of them to the site.
 - Gallery: provide images/captions or decide whether it should become a build log instead.
 - Testimonials: replace the current fictional/sample data with real testimonials, or hide the section until there are any. Never present examples as real endorsements.

@@ -21,17 +21,30 @@ const CATEGORY_LABELS = {
   play: "Off the clock",
 } as const
 
-export function SocialLinks({ initialView = "icons" }: { initialView?: View }) {
+export function SocialLinks({
+  initialView = "icons",
+  compact = false,
+}: {
+  initialView?: View
+  compact?: boolean
+}) {
   const [view, setView] = useState<View>(initialView)
+  const links = useMemo(
+    () =>
+      compact
+        ? SOCIAL_LINKS.filter((link) => link.showOnHome !== false)
+        : SOCIAL_LINKS,
+    [compact]
+  )
   const groups = useMemo(
     () =>
       (Object.keys(CATEGORY_LABELS) as Array<keyof typeof CATEGORY_LABELS>).map(
         (category) => ({
           category,
-          links: SOCIAL_LINKS.filter((link) => link.category === category),
+          links: links.filter((link) => link.category === category),
         })
       ),
-    []
+    [links]
   )
 
   return (
@@ -81,7 +94,7 @@ export function SocialLinks({ initialView = "icons" }: { initialView?: View }) {
           </div>
         ) : (
           <ul className="flex flex-wrap gap-px bg-line">
-            {SOCIAL_LINKS.map((item) => (
+            {links.map((item) => (
               <li key={item.name} className="bg-background">
                 <a
                   className="flex size-10 items-center justify-center text-muted-foreground transition-colors hover:bg-accent-muted hover:text-foreground [&_img]:size-4.5 [&_svg]:size-4.5"

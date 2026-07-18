@@ -1,7 +1,7 @@
 "use client"
 
 import { use } from "react"
-import { format } from "date-fns"
+import { format, getISOWeek, startOfWeek } from "date-fns"
 import { LoaderIcon } from "lucide-react"
 
 import {
@@ -63,6 +63,8 @@ export function GitHubContributionGraph({
         )}
       </ContributionGraphCalendar>
 
+      <WeeklyContributionAxis contributions={data} />
+
       <ContributionGraphFooter className="gap-4 px-4 leading-none">
         <ContributionGraphTotalCount>
           {({ totalCount }) => (
@@ -76,6 +78,87 @@ export function GitHubContributionGraph({
         <ContributionGraphLegend aria-hidden />
       </ContributionGraphFooter>
     </ContributionGraph>
+  )
+}
+
+type WeekSummary = {
+  key: string
+  label: string
+  start: Date
+  total: number
+  days: number
+}
+
+function WeeklyContributionAxis({
+  contributions,
+}: {
+  contributions: Activity[]
+}) {
+  const weeks = [...contributions]
+    .sort((a, b) => a.date.localeCompare(b.date))
+    .reduce<WeekSummary[]>((summaries, activity) => {
+      const date = new Date(`${activity.date}T12:00:00`)
+      const start = startOfWeek(date, { weekStartsOn: 0 })
+      const key = format(start, "yyyy-MM-dd")
+      const last = summaries.at(-1)
+
+      if (last?.key === key) {
+        last.total += activity.count
+        last.days += 1
+        return summaries
+      }
+
+      summaries.push({
+        key,
+        label: `W${String(getISOWeek(date)).padStart(2, "0")}`,
+        start,
+        total: activity.count,
+        days: 1,
+      })
+      return summaries
+    }, [])
+
+  if (weeks.length === 0) return null
+
+  return (
+    <div className="-mt-3 no-scrollbar overflow-x-auto px-4 pb-0">
+      <div
+        className="ml-7.5 flex w-max gap-0.5"
+        aria-label="Weekly contribution averages"
+      >
+        {weeks.map((week, index) => {
+          const average = week.total / week.days
+          const range = `${format(week.start, "dd MMM")}–${format(
+            new Date(week.start.getTime() + 6 * 86_400_000),
+            "dd MMM"
+          )}`
+
+          return (
+            <Tooltip key={week.key}>
+              <TooltipTrigger
+                render={
+                  <button
+                    type="button"
+                    className="w-3.5 shrink-0 text-left font-mono text-[8px] leading-none text-muted-foreground/55 transition-colors hover:text-foreground focus-visible:text-foreground focus-visible:outline-none"
+                    aria-label={`${week.label}: ${average.toFixed(1)} average contributions per day`}
+                  >
+                    {index % 4 === 0 ? week.label : ""}
+                  </button>
+                }
+              />
+              <TooltipContent className="font-sans">
+                <p className="font-medium">
+                  {week.label} · {range}
+                </p>
+                <p className="text-muted-foreground">
+                  {week.total} contributions · {average.toFixed(1)} avg/day
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          )
+        })}
+      </div>
+    </div>
   )
 }
 

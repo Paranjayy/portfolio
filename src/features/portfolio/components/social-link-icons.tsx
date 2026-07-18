@@ -1,3 +1,4 @@
+import Image from "next/image"
 import { CodepenIcon } from "@hugeicons/core-free-icons"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { ChartNoAxesCombinedIcon, WavesIcon } from "lucide-react"
@@ -6,7 +7,6 @@ import {
   siBluesky,
   siCodewars,
   siDocker,
-  siDuolingo,
   siGravatar,
   siHackerrank,
   siHashnode,
@@ -48,8 +48,8 @@ export const SOCIAL_ICONS: Record<SocialName, React.JSX.Element> = {
   youtube: <BrandIcon icon={siYoutube} />,
   bluesky: <BrandIcon icon={siBluesky} />,
   gravatar: <BrandIcon icon={siGravatar} />,
-  steam: <BrandIcon icon={siSteam} />,
-  duolingo: <BrandIcon icon={siDuolingo} />,
+  steam: <BrandIcon icon={siSteam} monochrome />,
+  duolingo: <DuolingoIcon />,
   volt: <WavesIcon className="text-[#ff5d9e]" />,
   statsfm: <ChartNoAxesCombinedIcon className="text-[#1ed760]" />,
   lastfm: <BrandIcon icon={siLastdotfm} />,
@@ -65,16 +65,35 @@ export const SOCIAL_ICONS: Record<SocialName, React.JSX.Element> = {
   codepen: <CodePenIcon />,
 }
 
-function BrandIcon({ icon }: { icon: SimpleIcon }) {
+function BrandIcon({
+  icon,
+  monochrome = false,
+}: {
+  icon: SimpleIcon
+  monochrome?: boolean
+}) {
   return (
     <svg
       viewBox="0 0 24 24"
       role="img"
       aria-hidden="true"
-      fill={`#${icon.hex}`}
+      fill={monochrome ? "currentColor" : `#${icon.hex}`}
     >
       <path d={icon.path} />
     </svg>
+  )
+}
+
+function DuolingoIcon() {
+  return (
+    <Image
+      src="https://play-lh.googleusercontent.com/Q-wEiKezZQEspFNNrWfKjcEgAqdWy_b98_tXTAZaXGgm9y1HZ1zi-JSZXA7Tmur9MjcM0xoIA0BdXEN0Bt54=w240-h480-rw"
+      width={48}
+      height={48}
+      className="rounded-[3px] object-cover"
+      alt=""
+      aria-hidden="true"
+    />
   )
 }
 

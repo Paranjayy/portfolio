@@ -8,7 +8,7 @@ This is Paranjay's personal portfolio before it is a reusable template. Every vi
 
 - IIT Madras is education, never employment. Use the IITM mark or education icon and link to `#education-iit-madras`.
 - Do not invent testimonials, awards, certifications, projects, activity status, or analytics. Example content must say it is an example.
-- Do not add socials from the GitHub README until ownership and current handles are confirmed. Instagram and Duolingo are excluded for now.
+- Do not add socials from the GitHub README until ownership and current handles are confirmed. Instagram remains excluded; Duolingo is confirmed and uses the supplied official app mark.
 - Preserve the grid, stripe dividers, profile cover interaction, footer composition, and shimmer effect unless replacing them with an equally intentional tested design.
 - Do not hide empty product surfaces. Give them an honest, elegant WIP state instead.
 
@@ -25,3 +25,4 @@ This is Paranjay's personal portfolio before it is a reusable template. Every vi
 - Add real project logos and audited metadata from GitHub/local projects.
 - Add a single clearly labelled lab/example block, then expand only with original work.
 - Add live Discord, Steam, Spotify, WakaTime, and analytics only after credentials/provider decisions are made.
+- Keep the homepage social surface compact; the complete, grouped directory belongs on `/socials`.
