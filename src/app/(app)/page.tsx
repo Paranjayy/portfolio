@@ -10,6 +10,7 @@ import { Blog } from "@/features/portfolio/components/blog"
 import { Bookmarks } from "@/features/portfolio/components/bookmarks"
 import { Certifications } from "@/features/portfolio/components/certifications"
 import { Components } from "@/features/portfolio/components/components"
+import { Dashboard } from "@/features/portfolio/components/dashboard"
 import { Education } from "@/features/portfolio/components/education"
 import { Experiences } from "@/features/portfolio/components/experiences"
 import { GitHubContributions } from "@/features/portfolio/components/github-contributions"
@@ -49,6 +50,7 @@ export default function HomePage() {
           <Overview />
           <SocialLinks />
           <GitHubContributions />
+          <Dashboard />
           <Separator />
 
           <Hello />

@@ -1,12 +1,17 @@
 import { Suspense } from "react"
 
-import { getGitHubContributions } from "@/features/portfolio/data/github-contributions"
+import {
+  getGitHubContributions,
+  getGitHubContributionsStats,
+} from "@/features/portfolio/data/github-contributions"
 
 import { Panel } from "../panel"
 import { GitHubContributionFallback, GitHubContributionGraph } from "./graph"
+import { GitHubContributionStats } from "./stats"
 
-export function GitHubContributions() {
+export async function GitHubContributions() {
   const contributions = getGitHubContributions()
+  const stats = await getGitHubContributionsStats()
 
   return (
     <Panel className="screen-line-top-none">
@@ -16,7 +21,11 @@ export function GitHubContributions() {
         <GitHubContributionGraph contributions={contributions} />
       </Suspense>
 
-      <div className="h-px" />
+      <div className="border-t border-line px-4 py-3">
+        <Suspense fallback={null}>
+          <GitHubContributionStats stats={stats} />
+        </Suspense>
+      </div>
     </Panel>
   )
 }
