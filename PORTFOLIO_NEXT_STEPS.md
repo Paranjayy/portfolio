@@ -30,7 +30,7 @@ This is Paranjay's personal portfolio first: a quiet, pixel-grid lab for project
 
 ## Next build sequence
 
-1. Audit projects from GitHub and local work; replace generic Unsplash images and missing logos with real project assets. The project data currently points to logo files that do not exist, so this is the first visual-content task.
+1. GitHub audit completed for the current five project slots: Learning OSS, Workout Buddy, Inbox Zero, IPL 2026 Engine, and Media Hub are verified public repositories. Replace their generic project treatments with real project assets/logos once those assets are supplied or extracted from the repos.
 2. Add project metadata (`status`, `role`, `year`, `featured`, `case study`) and support grid/list/filter views.
 3. Add a concise `/now` or build-log page for current work, instead of inherited blog/component content.
 4. Make integrations explicit: show live data only when configured, otherwise show a useful setup/empty state.

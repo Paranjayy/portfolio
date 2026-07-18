@@ -1,6 +1,6 @@
 import Image from "next/image"
 import { addQueryParams } from "@/utils/url"
-import { BoxIcon, InfinityIcon, LinkIcon } from "lucide-react"
+import { BoxIcon, GithubIcon, InfinityIcon, LinkIcon } from "lucide-react"
 
 import { UTM_PARAMS } from "@/config/site"
 import { Tag } from "@/components/ui/tag"
@@ -48,7 +48,11 @@ export function ProjectItem({
           />
         ) : (
           <div className="mx-4 flex size-6 shrink-0 items-center justify-center rounded-lg border border-muted-foreground/15 bg-muted text-muted-foreground ring-1 ring-line ring-offset-1 ring-offset-background select-none">
-            <BoxIcon className="size-4" />
+            {project.githubRepo ? (
+              <GithubIcon className="size-4" />
+            ) : (
+              <BoxIcon className="size-4" />
+            )}
           </div>
         )}
 
