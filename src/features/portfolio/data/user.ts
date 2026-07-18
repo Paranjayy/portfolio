@@ -9,7 +9,7 @@ export const USER: User = {
   pronouns: "he/him",
   bio: "Night Owl 🦉 building scalable AI systems.",
   flipSentences: [
-    "Night Owl 🦉 building scalable AI systems.",
+    "Night Owl building scalable AI systems.",
     "BS Student (Data Science & Applications) @ IIT Madras.",
     "Passionate about open-source and modular design.",
   ],

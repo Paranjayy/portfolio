@@ -23,7 +23,7 @@ This is Paranjay's personal portfolio first: a quiet, pixel-grid lab for project
 - Live integrations: provide/confirm WakaTime and Spotify credentials in `.env.local`; Steam presence needs a chosen provider or Steam API key. Discord presence requires an explicit Discord/Lanyard integration decision.
 - Project audit: approve which public GitHub repositories and local projects are genuinely portfolio-ready, plus final descriptions, URLs, dates, and visuals.
 - Social audit: confirm each current profile, especially older Twitch, YouTube, Pinterest, Gravatar, and Steam links; remove inactive accounts rather than presenting them as current.
-- Social backlog from the GitHub profile: review LeetCode, HackerRank, Codewars, Kaggle, Stack Overflow, Hashnode, Docker Hub, Duolingo, Monkeytype, Hugging Face, and CodePen before adding any of them to the site.
+- Added the verified Duolingo profile from the GitHub README. Review LeetCode, HackerRank, Codewars, Kaggle, Stack Overflow, Hashnode, Docker Hub, Monkeytype, Hugging Face, and CodePen before adding any of them to the site.
 - Gallery: provide images/captions or decide whether it should become a build log instead.
 - Testimonials: replace the current fictional/sample data with real testimonials, or hide the section until there are any. Never present examples as real endorsements.
 - Awards and certifications: send the source details (issuer, date, credential URL, title, and image/logo where available).
@@ -37,6 +37,7 @@ This is Paranjay's personal portfolio first: a quiet, pixel-grid lab for project
 5. Add a pronunciation button only after choosing a source: a recorded audio clip is best; browser TTS can be a temporary fallback but needs a confirmed pronunciation and voice quality check.
 6. Once the data model has survived personal use, create a `portfolio.config.ts` plus a setup script that asks for identity, links, projects, and integrations. That becomes the fork-friendly template layer.
 7. Keep a single small “examples” surface for one clearly labelled external component/block and a few personal bookmarks; keep the full inherited components/blocks catalog off the personal homepage.
+8. Design a bespoke hero mark from scratch. The current KP attempt is a temporary experiment; it should be evaluated against the original cover for geometry, negative space, and small-screen legibility before it becomes the permanent identity.
 
 ## Template principles
 

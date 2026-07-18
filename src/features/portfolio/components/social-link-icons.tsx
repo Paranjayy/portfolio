@@ -36,6 +36,7 @@ export const SOCIAL_ICONS: Record<SocialName, React.JSX.Element> = {
   github: <GitHubIcon />,
   linkedin: <LinkedInIcon />,
   discord: <DiscordIcon />,
+  duolingo: <CdnIcon slug="duolingo" alt="Duolingo" />,
   spotify: <CdnIcon slug="spotify" alt="Spotify" />,
   telegram: <CdnIcon slug="telegram" alt="Telegram" />,
   twitch: <CdnIcon slug="twitch" alt="Twitch" />,
