@@ -51,8 +51,8 @@ export const SOCIAL = {
   },
   youtube: {
     title: "YouTube",
-    handle: "paranjayy",
-    href: "https://www.youtube.com/@paranjayy",
+    handle: "MichealScott24",
+    href: "https://www.youtube.com/@MichealScott24",
     sameAs: true,
   },
   instagram: {
