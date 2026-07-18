@@ -4,28 +4,17 @@ import type { Testimonial } from "../types/testimonials"
 
 export const TESTIMONIALS_PINNED: Testimonial[] = [
   {
-    authorName: "Prof. Rajesh Kumar",
-    authorAvatar: "https://avatar.vercel.sh/rajesh",
-    authorTagline: "Faculty @ IIT Madras",
+    authorName: "Guillermo Rauch",
+    authorAvatar: "https://unavatar.io/x/rauchg",
+    authorTagline: "CEO @ Vercel",
     quote:
-      "Paranjay's approach to data science projects is impressive — he combines strong theoretical foundations with practical implementation skills.",
-    url: "https://iitm.ac.in",
-    date: "2025-12-15",
+      "awesome. Love the components, especially slide-to-unlock. Great job",
+    url: "https://x.com/rauchg",
+    date: "2026-01-01",
     isVerified: true,
     isFeatured: true,
     order: 1,
     icon: <VercelIcon />,
-  },
-  {
-    authorName: "Ananya Sharma",
-    authorAvatar: "https://avatar.vercel.sh/ananya",
-    authorTagline: "ML Engineer @ Google",
-    quote:
-      "Collaborated with Paranjay on a hackathon — his ability to ship clean, scalable code under pressure is remarkable.",
-    url: "https://x.com/ananya",
-    date: "2025-11-20",
-    isVerified: true,
-    isFeatured: true,
   },
 ]
 

@@ -23,18 +23,20 @@ This is Paranjay's personal portfolio first: a quiet, pixel-grid lab for project
 - Live integrations: provide/confirm WakaTime and Spotify credentials in `.env.local`; Steam presence needs a chosen provider or Steam API key. Discord presence requires an explicit Discord/Lanyard integration decision.
 - Project audit: approve which public GitHub repositories and local projects are genuinely portfolio-ready, plus final descriptions, URLs, dates, and visuals.
 - Social audit: confirm each current profile, especially older Twitch, YouTube, Pinterest, Gravatar, and Steam links; remove inactive accounts rather than presenting them as current.
+- Social backlog from the GitHub profile: review LeetCode, HackerRank, Codewars, Kaggle, Stack Overflow, Hashnode, Docker Hub, Duolingo, Monkeytype, Hugging Face, and CodePen before adding any of them to the site.
 - Gallery: provide images/captions or decide whether it should become a build log instead.
 - Testimonials: replace the current fictional/sample data with real testimonials, or hide the section until there are any. Never present examples as real endorsements.
 - Awards and certifications: send the source details (issuer, date, credential URL, title, and image/logo where available).
 
 ## Next build sequence
 
-1. Audit projects from GitHub and local work; replace generic Unsplash images and missing logos with real project assets.
+1. Audit projects from GitHub and local work; replace generic Unsplash images and missing logos with real project assets. The project data currently points to logo files that do not exist, so this is the first visual-content task.
 2. Add project metadata (`status`, `role`, `year`, `featured`, `case study`) and support grid/list/filter views.
 3. Add a concise `/now` or build-log page for current work, instead of inherited blog/component content.
 4. Make integrations explicit: show live data only when configured, otherwise show a useful setup/empty state.
 5. Add a pronunciation button only after choosing a source: a recorded audio clip is best; browser TTS can be a temporary fallback but needs a confirmed pronunciation and voice quality check.
 6. Once the data model has survived personal use, create a `portfolio.config.ts` plus a setup script that asks for identity, links, projects, and integrations. That becomes the fork-friendly template layer.
+7. Keep a single small “examples” surface for one clearly labelled external component/block and a few personal bookmarks; keep the full inherited components/blocks catalog off the personal homepage.
 
 ## Template principles
 

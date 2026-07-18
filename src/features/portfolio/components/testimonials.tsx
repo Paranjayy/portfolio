@@ -31,6 +31,7 @@ import { SOCIAL } from "@/features/portfolio/data/social-links"
 import {
   TESTIMONIALS_1,
   TESTIMONIALS_2,
+  TESTIMONIALS_PINNED,
 } from "@/features/portfolio/data/testimonials"
 import type { Testimonial as TestimonialType } from "@/features/portfolio/types/testimonials"
 
@@ -44,9 +45,11 @@ import {
 
 const ID = "testimonials"
 
-const TESTIMONIALS = [...TESTIMONIALS_1, ...TESTIMONIALS_2].sort(
-  (a, b) => Number(a.order ?? 999) - Number(b.order ?? 999)
-)
+const TESTIMONIALS = [
+  ...TESTIMONIALS_PINNED,
+  ...TESTIMONIALS_1,
+  ...TESTIMONIALS_2,
+].sort((a, b) => Number(a.order ?? 999) - Number(b.order ?? 999))
 
 const TESTIMONIALS_MOBILE = TESTIMONIALS.slice(0, 8)
 

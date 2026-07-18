@@ -7,14 +7,10 @@ export const EDUCATION: Education[] = [
     degree: "Bachelor's degree",
     fieldOfStudy: "Data Science & Applications",
     period: {
-      start: "08.2024",
+      start: "06.2024",
     },
     description: `Pursuing Bachelor of Science in Data Science and Applications. Learning foundations of data science, programming, and mathematics.`,
-    skills: [
-      "Data Science",
-      "Python",
-      "Mathematics",
-      "Statistics",
-    ],
+    logo: "https://upload.wikimedia.org/wikipedia/en/6/69/IIT_Madras_Logo.svg",
+    skills: ["Data Science", "Python", "Mathematics", "Statistics"],
   },
 ]

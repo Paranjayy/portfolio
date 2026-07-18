@@ -64,12 +64,6 @@ export const SOCIAL = {
     category: "play",
     sameAs: true,
   },
-  instagram: {
-    title: "Instagram",
-    handle: "paranjayy",
-    href: "https://instagram.com/paranjayy",
-    category: "community",
-  },
   bluesky: {
     title: "Bluesky",
     handle: "paranjayy.bsky.social",

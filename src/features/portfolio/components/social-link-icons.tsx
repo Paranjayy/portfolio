@@ -7,10 +7,18 @@ import {
 } from "@/components/icons"
 import type { SocialName } from "@/features/portfolio/data/social-links"
 
-function CdnIcon({ slug, alt }: { slug: string; alt: string }) {
+function CdnIcon({
+  slug,
+  alt,
+  color,
+}: {
+  slug: string
+  alt: string
+  color?: string
+}) {
   return (
     <img
-      src={`https://cdn.simpleicons.org/${slug}`}
+      src={`https://cdn.simpleicons.org/${slug}${color ? `/${color}` : ""}`}
       alt={alt}
       className="size-4.5"
       loading="lazy"
@@ -33,8 +41,7 @@ export const SOCIAL_ICONS: Record<SocialName, React.JSX.Element> = {
   twitch: <CdnIcon slug="twitch" alt="Twitch" />,
   pinterest: <CdnIcon slug="pinterest" alt="Pinterest" />,
   youtube: <YouTubeIcon />,
-  instagram: <CdnIcon slug="instagram" alt="Instagram" />,
-  bluesky: <CdnIcon slug="bsky" alt="Bluesky" />,
+  bluesky: <CdnIcon slug="bluesky" alt="Bluesky" />,
   gravatar: <CdnIcon slug="gravatar" alt="Gravatar" />,
-  steam: <CdnIcon slug="steam" alt="Steam" />,
+  steam: <CdnIcon slug="steam" color="ffffff" alt="Steam" />,
 }
