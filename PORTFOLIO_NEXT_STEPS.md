@@ -27,6 +27,8 @@ This is Paranjay's personal portfolio first: a quiet, pixel-grid lab for project
 - Replaced the Duolingo glyph with the supplied official app asset and made the Steam mark inherit readable foreground contrast.
 - Added a data-backed weekly contribution axis below the heatmap; each week reveals its range, total, and average daily contributions on hover.
 - Added card/list views to the personal Components and Blog surfaces instead of presenting a single static WIP page.
+- Added Field Notes v0: a manual, Git-backed public-writing surface with tags, card/list views, an explicit revision trail, and a clearly labelled demo note.
+- Added verified MakerWorld, Figma, and Behance profiles to the full social directory. They remain out of the compact homepage strip; DeviantArt remains intentionally unlisted.
 
 ## Needs Paranjay's input
 
@@ -49,6 +51,7 @@ This is Paranjay's personal portfolio first: a quiet, pixel-grid lab for project
 6. Once the data model has survived personal use, create a `portfolio.config.ts` plus a setup script that asks for identity, links, projects, and integrations. That becomes the fork-friendly template layer.
 7. Keep the Lab as one clearly labelled component/block experimentation surface and expand it only with original work. The homepage now includes real bookmarks plus honest WIP states for Experience, Awards, and Certifications.
 8. Design a bespoke hero mark from scratch. The current KP attempt is a temporary experiment; it should be evaluated against the original cover for geometry, negative space, and small-screen legibility before it becomes the permanent identity.
+9. Field Notes: add real handwritten entries, then consider Git-derived diffs, immutable revision snapshots, RSS, searchable tags, and links between notes, projects, media, and gallery entries. Do not automate authorship signals before they are manually reviewed.
 
 ## Template principles
 

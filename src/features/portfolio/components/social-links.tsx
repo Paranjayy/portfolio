@@ -19,6 +19,7 @@ const CATEGORY_LABELS = {
   work: "Work",
   community: "Community",
   play: "Off the clock",
+  design: "Making & design",
 } as const
 
 export function SocialLinks({

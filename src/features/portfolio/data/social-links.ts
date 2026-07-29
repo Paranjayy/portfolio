@@ -176,6 +176,27 @@ export const SOCIAL = {
     category: "work",
     showOnHome: false,
   },
+  makerworld: {
+    title: "MakerWorld",
+    handle: "paranjay",
+    href: "https://makerworld.com/en/@paranjay",
+    category: "design",
+    showOnHome: false,
+  },
+  figma: {
+    title: "Figma",
+    handle: "paranjay",
+    href: "https://www.figma.com/@paranjay",
+    category: "design",
+    showOnHome: false,
+  },
+  behance: {
+    title: "Behance",
+    handle: "paranjay",
+    href: "https://www.behance.net/paranjay",
+    category: "design",
+    showOnHome: false,
+  },
 } satisfies Record<string, SocialProfile>
 
 export type SocialName = keyof typeof SOCIAL

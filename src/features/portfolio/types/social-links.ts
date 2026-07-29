@@ -4,7 +4,7 @@ export type SocialProfile = {
   handle: string
   href: string
   /** Used to group profiles in the directory view. */
-  category: "work" | "community" | "play"
+  category: "work" | "community" | "play" | "design"
   /** Opt-in: include this profile in JSON-LD `sameAs` (public profile page). */
   sameAs?: boolean
   /** Keep secondary profiles on the full social directory, not the home strip. */

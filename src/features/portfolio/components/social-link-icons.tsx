@@ -1,12 +1,14 @@
 import Image from "next/image"
 import { CodepenIcon } from "@hugeicons/core-free-icons"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { ChartNoAxesCombinedIcon, WavesIcon } from "lucide-react"
+import { BoxIcon, ChartNoAxesCombinedIcon, WavesIcon } from "lucide-react"
 import type { SimpleIcon } from "simple-icons"
 import {
+  siBehance,
   siBluesky,
   siCodewars,
   siDocker,
+  siFigma,
   siGravatar,
   siHackerrank,
   siHashnode,
@@ -63,6 +65,9 @@ export const SOCIAL_ICONS: Record<SocialName, React.JSX.Element> = {
   monkeytype: <BrandIcon icon={siMonkeytype} />,
   huggingface: <BrandIcon icon={siHuggingface} />,
   codepen: <CodePenIcon />,
+  makerworld: <BoxIcon className="text-[#ff6b00]" />,
+  figma: <BrandIcon icon={siFigma} />,
+  behance: <BrandIcon icon={siBehance} />,
 }
 
 function BrandIcon({
